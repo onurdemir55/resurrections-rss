@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * CDATA value class. When you want to create CDATA use this class object
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

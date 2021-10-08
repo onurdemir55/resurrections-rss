@@ -7,6 +7,10 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import com.resurrections.rss.feed.Rss;
 
+/**
+ * Rss Generator class
+ * Creates XML output String.
+ */
 public class RssOutput {
 
     public static String outputString(final Rss rss) throws JsonProcessingException {
