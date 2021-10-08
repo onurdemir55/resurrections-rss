@@ -18,7 +18,7 @@ Literally they did a great job. Congratulations to the whole contributors. Just 
 Just CDATA. Sorry but Rome not support that :(
 
 If your output content is HTML, CDATA output more readable. (Encoded format is not preferable). Some News Editors,
-checks the Rss News output manually, select and decides _item_. So some customers can expect to see CDATA output.
+checks the Rss News output manually, selects and decides _item_. So some customers can expect to see CDATA output.
 
 ### Features
 
