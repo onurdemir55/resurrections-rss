@@ -10,6 +10,9 @@ import lombok.Builder;
 
 import java.util.Set;
 
+/**
+ * item element bean of Rss.
+ */
 @Builder
 @JsonPropertyOrder({"title", "link", "description", "category", "pubDate"})
 @JsonInclude(JsonInclude.Include.NON_EMPTY)

@@ -6,6 +6,10 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+/**
+ * Rss 2.0 accept RFC 1123 and RFC822 time format
+ * This class formats by given Date and Instant
+ */
 public class DateParser {
 
     // pubDate supported format
