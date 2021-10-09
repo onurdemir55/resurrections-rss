@@ -92,6 +92,36 @@ Create a feed:
         String xmlOutput = RssOutput.outputString(rss);
 ```
 
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[sample title]]></title>
+    <link>https://www.google.com/</link>
+    <description><![CDATA[sample description]]></description>
+    <language>en</language>
+    <pubDate>Sat, 9 Oct 2021 20:38:50 GMT</pubDate>
+    <item>
+      <title>sample title</title>
+      <link><![CDATA[https://www.google.com/]]></link>
+      <description><![CDATA[sample description]]></description>
+      <category>category-3</category>
+      <category>category-2</category>
+      <category>category-1</category>
+      <pubDate>Sat, 9 Oct 2021 20:38:50 GMT</pubDate>
+    </item>
+    <item>
+      <title><![CDATA[sample title]]></title>
+      <link><![CDATA[https://www.google.com/]]></link>
+      <description><![CDATA[sample description]]></description>
+      <category><![CDATA[category-2]]></category>
+      <category><![CDATA[category-1]]></category>
+      <pubDate><![CDATA[Sat, 9 Oct 2021 20:38:50 GMT]]></pubDate>
+    </item>
+  </channel>
+</rss>
+
+```
 ---
 
 
