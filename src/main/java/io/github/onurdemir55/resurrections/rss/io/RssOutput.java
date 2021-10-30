@@ -1,11 +1,11 @@
-package com.resurrections.rss.io;
+package io.github.onurdemir55.resurrections.rss.io;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
-import com.resurrections.rss.feed.Rss;
+import io.github.onurdemir55.resurrections.rss.feed.Rss;
 
 /**
  * Rss Generator class

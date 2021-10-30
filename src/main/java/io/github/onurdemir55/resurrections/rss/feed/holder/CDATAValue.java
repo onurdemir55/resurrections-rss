@@ -1,4 +1,4 @@
-package com.resurrections.rss.feed.holder;
+package io.github.onurdemir55.resurrections.rss.feed.holder;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
