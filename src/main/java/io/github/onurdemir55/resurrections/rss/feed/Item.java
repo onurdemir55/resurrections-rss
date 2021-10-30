@@ -1,11 +1,11 @@
-package com.resurrections.rss.feed;
+package io.github.onurdemir55.resurrections.rss.feed;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import com.resurrections.rss.feed.holder.Value;
+import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import lombok.Builder;
 
 import java.util.Set;

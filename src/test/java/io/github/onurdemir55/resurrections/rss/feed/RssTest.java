@@ -1,10 +1,10 @@
-package com.resurrections.rss.feed;
+package io.github.onurdemir55.resurrections.rss.feed;
 
-import com.resurrections.rss.feed.holder.CDATAValue;
-import com.resurrections.rss.feed.holder.SimpleValue;
-import com.resurrections.rss.feed.holder.Value;
-import com.resurrections.rss.io.RssOutput;
-import com.resurrections.rss.util.DateParser;
+import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
+import io.github.onurdemir55.resurrections.rss.io.RssOutput;
+import io.github.onurdemir55.resurrections.rss.util.DateParser;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
