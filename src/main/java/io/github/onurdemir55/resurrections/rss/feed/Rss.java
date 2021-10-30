@@ -1,4 +1,4 @@
-package com.resurrections.rss.feed;
+package io.github.onurdemir55.resurrections.rss.feed;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
