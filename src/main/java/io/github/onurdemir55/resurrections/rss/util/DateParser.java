@@ -1,4 +1,4 @@
-package com.resurrections.rss.util;
+package io.github.onurdemir55.resurrections.rss.util;
 
 import java.time.Instant;
 import java.time.OffsetDateTime;
