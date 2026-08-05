@@ -92,6 +92,9 @@ publishing {
                         name = 'Onur Demir'
                         email = 'onurdemir55@gmail.com'
                         url = 'https://github.com/onurdemir55'
+                        // The POM schema has no dedicated field for a social profile, but it
+                        // does allow arbitrary developer properties.
+                        properties = ['linkedin': 'https://www.linkedin.com/in/onurdemir55/']
                     }
                 }
 
