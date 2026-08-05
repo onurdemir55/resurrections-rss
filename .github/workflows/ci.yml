@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [develop, master]
+  pull_request:
+    branches: [develop, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build (JDK ${{ matrix.jdk }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The compile target is pinned to 17 by the Gradle toolchain. This matrix
+        # varies the JDK that Gradle itself runs on, which is what broke before:
+        # the build must survive newer JDKs, not just the one it targets.
+        jdk: ['17', '21', '25']
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          # 17 is always installed so the toolchain resolves; the matrix JDK is
+          # listed last and therefore becomes JAVA_HOME.
+          java-version: |
+            17
+            ${{ matrix.jdk }}
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Build, test and check
+        run: ./gradlew build --stacktrace
+
+      - name: Verify publishable artifacts
+        run: ./gradlew publishToMavenLocal
+
+      - name: Upload reports on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reports-jdk-${{ matrix.jdk }}
+          path: |
+            build/reports/
+            build/test-results/
+          retention-days: 7

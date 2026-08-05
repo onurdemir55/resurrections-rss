@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+    <!--
+      DateParser.format_RFC1123_RFC822 does not follow Java method naming.
+      Renaming it changes the public API, so it is deliberately deferred to the
+      correctness phase (roadmap 4.5), where the old name stays as a @Deprecated
+      alias. Until then the violation is suppressed rather than silently relaxing
+      MethodName for the whole codebase.
+    -->
+    <suppress checks="MethodName" files="[\\/]util[\\/]DateParser\.java$"/>
+</suppressions>

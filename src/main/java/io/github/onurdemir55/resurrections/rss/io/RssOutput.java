@@ -11,7 +11,11 @@ import io.github.onurdemir55.resurrections.rss.feed.Rss;
  * Rss Generator class
  * Creates XML output String.
  */
-public class RssOutput {
+public final class RssOutput {
+
+    private RssOutput() {
+        // utility class
+    }
 
     public static String outputString(final Rss rss) throws JsonProcessingException {
         JacksonXmlModule xmlModule = new JacksonXmlModule();

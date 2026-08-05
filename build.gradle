@@ -1,14 +1,23 @@
 plugins {
-    id 'java'
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+    id 'checkstyle'
 }
 
 group = 'io.github.onurdemir55'
 version = '2.0-SNAPSHOT'
 
+description = 'Easy-peasy Java library for creating RSS 2.0 feeds, with first-class CDATA support.'
+
+ext.projectUrl = 'https://github.com/onurdemir55/resurrections-rss'
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+    withSourcesJar()
+    withJavadocJar()
 }
 
 repositories {
@@ -16,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.22.1'
+    api 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.22.1'
 
     testImplementation platform('org.junit:junit-bom:6.1.2')
     testImplementation 'org.junit.jupiter:junit-jupiter'
@@ -27,6 +36,77 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
+tasks.withType(Javadoc).configureEach {
+    options.encoding = 'UTF-8'
+    // Report real javadoc errors (broken syntax and links) but do not demand
+    // a doc comment on every member.
+    options.addStringOption('Xdoclint:all,-missing', '-quiet')
+}
+
+checkstyle {
+    // 13.x requires a JVM newer than our Java 17 toolchain; 12.x targets Java 17.
+    toolVersion = '12.3.1'
+    configFile = file('config/checkstyle/checkstyle.xml')
+}
+
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+
+            pom {
+                name = 'resurrections-rss'
+                description = project.description
+                url = project.projectUrl
+                inceptionYear = '2021'
+
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                        distribution = 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'onurdemir55'
+                        name = 'Onur Demir'
+                        email = 'onurdemir55@gmail.com'
+                        url = 'https://github.com/onurdemir55'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:https://github.com/onurdemir55/resurrections-rss.git'
+                    developerConnection = 'scm:git:ssh://git@github.com/onurdemir55/resurrections-rss.git'
+                    url = project.projectUrl
+                }
+
+                issueManagement {
+                    system = 'GitHub Issues'
+                    url = "${project.projectUrl}/issues"
+                }
+            }
+        }
+    }
+}
+
+// Signing is required by Maven Central but must not break local builds.
+// Supply an ASCII-armored key through SIGNING_KEY / SIGNING_PASSWORD (or the
+// signingKey / signingPassword Gradle properties) to enable it.
+signing {
+    def signingKey = System.getenv('SIGNING_KEY') ?: findProperty('signingKey')
+    def signingPassword = System.getenv('SIGNING_PASSWORD') ?: findProperty('signingPassword')
+
+    if (signingKey && signingPassword) {
+        useInMemoryPgpKeys(signingKey.toString(), signingPassword.toString())
+        sign publishing.publications.maven
+    } else {
+        logger.lifecycle('Signing is disabled: SIGNING_KEY / SIGNING_PASSWORD not set.')
+    }
 }
