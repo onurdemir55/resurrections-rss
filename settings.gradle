@@ -1,2 +1,28 @@
+plugins {
+    // OSSRH was shut down in June 2025 and the Central Portal has no official Gradle
+    // plugin, so publishing goes through the Portal publisher API. This plugin only
+    // uploads publications; maven-publish still creates them.
+    //
+    // It currently triggers one Gradle 10 deprecation warning of its own, from the way its
+    // aggregation collects projects. That is the plugin's to fix and does not affect the
+    // build on Gradle 9.
+    id 'com.gradleup.nmcp.settings' version '1.6.1'
+}
+
 rootProject.name = 'resurrections-rss'
 
+nmcpSettings {
+    centralPortal {
+        // Portal tokens, never the account password. Read from the environment so they stay
+        // out of the repository; locally they can also live in ~/.gradle/gradle.properties
+        // as centralPortalUsername / centralPortalPassword.
+        username = System.getenv('CENTRAL_PORTAL_USERNAME')
+                ?: providers.gradleProperty('centralPortalUsername').getOrElse('')
+        password = System.getenv('CENTRAL_PORTAL_PASSWORD')
+                ?: providers.gradleProperty('centralPortalPassword').getOrElse('')
+
+        // Upload and validate, but leave the release button to a human. A release to Maven
+        // Central is permanent and cannot be deleted or overwritten.
+        publishingType = 'USER_MANAGED'
+    }
+}
