@@ -1,6 +1,7 @@
 package io.github.onurdemir55.resurrections.rss.feed;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import io.github.onurdemir55.resurrections.rss.feed.element.AtomLink;
@@ -72,9 +73,13 @@ public final class Rss {
     /**
      * The declared namespaces, prefix to URI, without the {@code xmlns:} that appears in the
      * serialized attribute name.
+     * <p>
+     * This is not itself serialized as an element; {@link #namespaceDeclarations()} is what
+     * Jackson writes, folded into attributes on the root element.
      *
      * @return the declared namespaces, empty if none were declared
      */
+    @JsonIgnore
     public Map<String, String> getNamespaces() {
         return namespaces;
     }

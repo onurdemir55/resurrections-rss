@@ -21,6 +21,10 @@ no compatibility to preserve.
 - `DateParser` no longer follows the platform locale, which could emit non-English day and
   month names and produce an unparseable feed.
 - `RssOutput` no longer rebuilds its `XmlMapper` on every call.
+- `RssOutput.output(Rss, OutputStream)` and `output(Rss, Writer)` no longer close the
+  caller's stream. The javadoc always said "flushed but not closed"; Jackson's default is to
+  close the target after writing, so that was not true until now. A caller using
+  try-with-resources around their own stream would have hit a double-close.
 
 ### Added
 
@@ -37,7 +41,7 @@ no compatibility to preserve.
   without title, link or description, an item without a title or a description, a `link` or
   `url` without a URI scheme, an `enclosure` that is not `http(s)`, or a document declaring a
   version other than `2.0` are all rejected before they become an invalid feed.
-- Getters on `Rss`, `Channel` and `Item` for every element.
+- Getters on `Rss`, `Channel` and `Item` for every element, including `Rss.getNamespaces()`.
 - `RssOutput.output(Rss, OutputStream | Writer | Path)`, alongside `outputString`.
 - Validated against the specification's own sample feed and against the W3C Feed Validation
   Service (the software behind the RSS Validator): 0 errors on every generated sample.
