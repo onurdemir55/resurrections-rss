@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'signing'
     id 'checkstyle'
+    id 'jacoco'
 }
 
 group = 'io.github.onurdemir55'
@@ -51,6 +52,15 @@ checkstyle {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
 }
 
 publishing {
