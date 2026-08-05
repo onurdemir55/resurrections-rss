@@ -1,5 +1,6 @@
 package io.github.onurdemir55.resurrections.rss.feed;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -13,7 +14,11 @@ import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import io.github.onurdemir55.resurrections.rss.util.Uris;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * An {@code <item>} element of a {@link Channel}.
@@ -61,6 +66,9 @@ public final class Item {
     @JacksonXmlProperty(localName = "source")
     private final Source source;
 
+    /** Elements from other namespaces, keyed by their prefixed name. */
+    private final Map<String, Value> extensions;
+
     private Item(final Builder builder) {
         this.title = builder.title;
         this.link = builder.link;
@@ -72,6 +80,19 @@ public final class Item {
         this.guid = builder.guid;
         this.pubDate = builder.pubDate;
         this.source = builder.source;
+        // LinkedHashMap, not Map.copyOf: the output order must be the order they
+        // were declared in, so the same feed serializes the same way every time.
+        this.extensions = Collections.unmodifiableMap(new LinkedHashMap<>(builder.extensions));
+    }
+
+    /**
+     * Extension elements, written with the prefixed name they were registered under.
+     *
+     * @return the extension elements
+     */
+    @JsonAnyGetter
+    Map<String, Value> extensions() {
+        return extensions;
     }
 
     /**
@@ -96,6 +117,7 @@ public final class Item {
         private Guid guid;
         private Value pubDate;
         private Source source;
+        private final Map<String, Value> extensions = new LinkedHashMap<>();
 
         private Builder() {
         }
@@ -198,6 +220,24 @@ public final class Item {
          * @throws IllegalStateException if neither a title nor a description is set
          * @throws IllegalArgumentException if the link has no URI scheme
          */
+        /**
+         * Adds an element from another namespace, which is the only kind of element the
+         * specification permits beyond the ones it describes.
+         * <p>
+         * The prefix has to be declared on the document with
+         * {@link Rss.Builder#namespace(String, String)}.
+         *
+         * @param prefixedName the element name including its prefix, for example
+         *     {@code content:encoded}
+         * @param value the element text, plain or CDATA
+         */
+        public Builder extension(final String prefixedName, final Value value) {
+            this.extensions.put(
+                    Objects.requireNonNull(prefixedName, "an extension needs a name"),
+                    Objects.requireNonNull(value, "an extension needs a value"));
+            return this;
+        }
+
         public Item build() {
             if (title == null && description == null) {
                 throw new IllegalStateException(

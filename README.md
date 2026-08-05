@@ -112,6 +112,58 @@ Write somewhere other than a `String`:
 
 ---
 
+### Extending the feed
+
+The specification permits elements it does not describe, on one condition: they must be
+defined in a namespace. So a declaration goes on the root element and the prefix goes on the
+element name.
+
+```java
+        Item item = Item.builder()
+                        .title(new SimpleValue("An item"))
+                        .extension("content:encoded", new CDATAValue("<p>rich <b>html</b></p>"))
+                        .extension("dc:creator", new SimpleValue("Onur Demir"))
+                        .build();
+
+        Channel channel = Channel.builder()
+                                 .title(new SimpleValue("Sample"))
+                                 .link(new SimpleValue("https://example.com/"))
+                                 .description(new SimpleValue("Sample feed"))
+                                 // the RSS Best Practices Profile asks for this one
+                                 .atomLink(AtomLink.self("https://example.com/feed.xml"))
+                                 .items(item)
+                                 .build();
+
+        Rss rss = Rss.builder()
+                     .namespace("content", "http://purl.org/rss/1.0/modules/content/")
+                     .namespace("dc", "http://purl.org/dc/elements/1.1/")
+                     .channel(channel)
+                     .build();
+```
+
+```xml
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sample</title>
+    <link>https://example.com/</link>
+    <description>Sample feed</description>
+    <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>An item</title>
+      <content:encoded><![CDATA[<p>rich <b>html</b></p>]]></content:encoded>
+      <dc:creator>Onur Demir</dc:creator>
+    </item>
+  </channel>
+</rss>
+```
+
+`xmlns:atom` is declared without being asked for, because `atomLink` was used and a prefixed
+element without its declaration is not well-formed XML. Extension elements take a `Value`,
+so they choose plain text or CDATA like everything else.
+
+---
+
 ### Validation
 
 The rules the specification states are enforced when you build, not discovered later by a

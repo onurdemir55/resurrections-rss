@@ -1,10 +1,12 @@
 package io.github.onurdemir55.resurrections.rss.feed;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import io.github.onurdemir55.resurrections.rss.feed.element.AtomLink;
 import io.github.onurdemir55.resurrections.rss.feed.element.Category;
 import io.github.onurdemir55.resurrections.rss.feed.element.Cloud;
 import io.github.onurdemir55.resurrections.rss.feed.element.Image;
@@ -15,7 +17,11 @@ import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import io.github.onurdemir55.resurrections.rss.util.Uris;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * The {@code <channel>} element of an RSS feed.
@@ -26,7 +32,7 @@ import java.util.List;
  * <p>
  * Instances are immutable and created through {@link #builder()}.
  */
-@JsonPropertyOrder({"title", "link", "description", "language", "copyright", "managingEditor",
+@JsonPropertyOrder({"title", "link", "description", "atom:link", "language", "copyright", "managingEditor",
                     "webMaster", "pubDate", "lastBuildDate", "category", "generator", "docs",
                     "cloud", "ttl", "image", "rating", "textInput", "skipHours", "skipDays",
                     "item"})
@@ -42,6 +48,9 @@ public final class Channel {
 
     @JacksonXmlProperty(localName = "description")
     private final Value description;
+
+    @JacksonXmlProperty(localName = "atom:link")
+    private final AtomLink atomLink;
 
     @JacksonXmlProperty(localName = "language")
     private final Value language;
@@ -96,10 +105,17 @@ public final class Channel {
     @JacksonXmlProperty(localName = "item")
     private final List<Item> items;
 
+    /**
+     * Elements from other namespaces, keyed by their prefixed name. The specification allows
+     * elements it does not describe only when they are defined in a namespace.
+     */
+    private final Map<String, Value> extensions;
+
     private Channel(final Builder builder) {
         this.title = builder.title;
         this.link = builder.link;
         this.description = builder.description;
+        this.atomLink = builder.atomLink;
         this.language = builder.language;
         this.copyright = builder.copyright;
         this.managingEditor = builder.managingEditor;
@@ -117,6 +133,27 @@ public final class Channel {
         this.skipHours = builder.skipHours;
         this.skipDays = builder.skipDays;
         this.items = builder.items;
+        // LinkedHashMap, not Map.copyOf: the output order must be the order they
+        // were declared in, so the same feed serializes the same way every time.
+        this.extensions = Collections.unmodifiableMap(new LinkedHashMap<>(builder.extensions));
+    }
+
+    /**
+     * Extension elements, written with the prefixed name they were registered under.
+     *
+     * @return the extension elements
+     */
+    @JsonAnyGetter
+    Map<String, Value> extensions() {
+        return extensions;
+    }
+
+    /**
+     * @return whether this channel carries an Atom element, and so needs the Atom namespace
+     *     declared on the document
+     */
+    boolean usesAtom() {
+        return atomLink != null;
     }
 
     /**
@@ -134,6 +171,7 @@ public final class Channel {
         private Value title;
         private Value link;
         private Value description;
+        private AtomLink atomLink;
         private Value language;
         private Value copyright;
         private Value managingEditor;
@@ -151,6 +189,7 @@ public final class Channel {
         private SkipHours skipHours;
         private SkipDays skipDays;
         private List<Item> items;
+        private final Map<String, Value> extensions = new LinkedHashMap<>();
 
         private Builder() {
         }
@@ -167,6 +206,36 @@ public final class Channel {
 
         public Builder description(final Value description) {
             this.description = description;
+            return this;
+        }
+
+        /**
+         * The {@code atom:link} the Best Practices Profile recommends, pointing at the feed's
+         * own address. Setting it makes the document declare {@code xmlns:atom} on its own.
+         *
+         * @param atomLink the link
+         */
+        public Builder atomLink(final AtomLink atomLink) {
+            this.atomLink = atomLink;
+            return this;
+        }
+
+        /**
+         * Adds an element from another namespace, which is the only kind of element the
+         * specification permits beyond the ones it describes.
+         * <p>
+         * The prefix has to be declared on the document with
+         * {@link Rss.Builder#namespace(String, String)}, otherwise the result is not
+         * well-formed XML.
+         *
+         * @param prefixedName the element name including its prefix, for example
+         *     {@code content:encoded}
+         * @param value the element text, plain or CDATA
+         */
+        public Builder extension(final String prefixedName, final Value value) {
+            this.extensions.put(
+                    Objects.requireNonNull(prefixedName, "an extension needs a name"),
+                    Objects.requireNonNull(value, "an extension needs a value"));
             return this;
         }
 
