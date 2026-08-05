@@ -1,80 +1,102 @@
 package io.github.onurdemir55.resurrections.rss.util;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * RSS 2.0 requires dates to follow RFC 822, with a four digit year preferred.
+ * RSS 2.0 requires the RFC 822 date format, with a four digit year preferred.
+ * <p>
+ * The whole class runs with a Turkish default locale. Day and month names are part of the
+ * wire format, so formatting must not follow the platform locale: a feed reading
+ * {@code Cum, 07 Eyl 2002} is unparseable. Setting the locale for the class rather than a
+ * single test means every assertion here also guards that.
  */
 class DateParserTest {
 
     /** 2002-09-07T00:00:01Z, the example used by the RSS specification. */
     private static final Instant SPEC_EXAMPLE = Instant.parse("2002-09-07T00:00:01Z");
 
+    private static final String SPEC_EXAMPLE_FORMATTED = "Sat, 07 Sep 2002 00:00:01 GMT";
+
+    private static Locale originalLocale;
+
+    @BeforeAll
+    static void useNonEnglishLocale() {
+        originalLocale = Locale.getDefault();
+        Locale.setDefault(Locale.forLanguageTag("tr-TR"));
+    }
+
+    @AfterAll
+    static void restoreLocale() {
+        Locale.setDefault(originalLocale);
+    }
+
     @Test
-    @DisplayName("formats an Instant as RFC 1123 in GMT")
-    void formatsInstant() {
-        String formatted = DateParser.format_RFC1123_RFC822(SPEC_EXAMPLE);
+    @DisplayName("matches the example in the specification exactly")
+    void matchesSpecificationExample() {
+        assertEquals(SPEC_EXAMPLE_FORMATTED, DateParser.formatRfc822(SPEC_EXAMPLE));
+    }
+
+    @Test
+    @DisplayName("a single digit day is padded to two digits")
+    void singleDigitDayIsPadded() {
+        String formatted = DateParser.formatRfc822(Instant.parse("2021-10-09T20:38:50Z"));
+
+        assertEquals("Sat, 09 Oct 2021 20:38:50 GMT", formatted);
+    }
+
+    @Test
+    @DisplayName("a two digit day is unchanged")
+    void twoDigitDay() {
+        String formatted = DateParser.formatRfc822(Instant.parse("2002-09-17T12:30:00Z"));
+
+        assertEquals("Tue, 17 Sep 2002 12:30:00 GMT", formatted);
+    }
+
+    @Test
+    @DisplayName("day and month names stay English under a Turkish locale")
+    void namesAreEnglishRegardlessOfLocale() {
+        String formatted = DateParser.formatRfc822(SPEC_EXAMPLE);
 
         assertAll(
-                () -> assertTrue(formatted.startsWith("Sat, "), () -> formatted),
-                () -> assertTrue(formatted.contains("Sep 2002"), () -> formatted),
-                () -> assertTrue(formatted.endsWith("GMT"), () -> formatted),
-                () -> assertTrue(formatted.contains("00:00:01"), () -> formatted));
+                () -> assertEquals("tr", Locale.getDefault().getLanguage(),
+                        "the test should be running under a Turkish locale"),
+                () -> assertEquals(SPEC_EXAMPLE_FORMATTED, formatted));
     }
 
     @Test
     @DisplayName("the Date and Instant overloads agree")
     void overloadsAgree() {
-        String fromInstant = DateParser.format_RFC1123_RFC822(SPEC_EXAMPLE);
-        String fromDate = DateParser.format_RFC1123_RFC822(Date.from(SPEC_EXAMPLE));
-
-        assertEquals(fromInstant, fromDate);
+        assertEquals(
+                DateParser.formatRfc822(SPEC_EXAMPLE),
+                DateParser.formatRfc822(Date.from(SPEC_EXAMPLE)));
     }
 
     @Test
-    @DisplayName("the result is always GMT, regardless of the default time zone")
+    @DisplayName("the result is always GMT, whatever the default time zone")
     void alwaysGmt() {
-        String formatted = DateParser.format_RFC1123_RFC822(Instant.parse("2021-10-09T20:38:50Z"));
+        String formatted = DateParser.formatRfc822(Instant.parse("2021-10-09T20:38:50Z"));
 
-        assertEquals("Sat, 9 Oct 2021 20:38:50 GMT", formatted);
+        assertEquals("Sat, 09 Oct 2021 20:38:50 GMT", formatted);
     }
 
     @Test
-    @DisplayName("the year is four digits, as the specification prefers")
-    void fourDigitYear() {
-        String formatted = DateParser.format_RFC1123_RFC822(SPEC_EXAMPLE);
-
-        assertTrue(formatted.contains("2002"), () -> formatted);
-    }
-
-    /**
-     * Characterization test. RFC 822 allows a one or two digit day, so this output is
-     * valid, but every example in the RSS specification pads to two digits
-     * ({@code Sat, 07 Sep 2002}) and that is the common convention in the wild.
-     * Aligning with it is tracked as a later correctness change; this test records
-     * what the library does today so the change is visible when it happens.
-     */
-    @Test
-    @DisplayName("CURRENT BEHAVIOUR: single digit days are not zero padded")
-    void singleDigitDayIsNotPadded() {
-        String formatted = DateParser.format_RFC1123_RFC822(SPEC_EXAMPLE);
-
-        assertEquals("Sat, 7 Sep 2002 00:00:01 GMT", formatted);
-    }
-
-    @Test
-    @DisplayName("two digit days are unaffected")
-    void twoDigitDay() {
-        String formatted = DateParser.format_RFC1123_RFC822(Instant.parse("2002-09-17T12:30:00Z"));
-
-        assertEquals("Tue, 17 Sep 2002 12:30:00 GMT", formatted);
+    @DisplayName("the deprecated names still work and delegate to the new ones")
+    @SuppressWarnings({"deprecation", "removal"})
+    void deprecatedAliasesDelegate() {
+        assertAll(
+                () -> assertEquals(SPEC_EXAMPLE_FORMATTED,
+                        DateParser.format_RFC1123_RFC822(SPEC_EXAMPLE)),
+                () -> assertEquals(SPEC_EXAMPLE_FORMATTED,
+                        DateParser.format_RFC1123_RFC822(Date.from(SPEC_EXAMPLE))));
     }
 }

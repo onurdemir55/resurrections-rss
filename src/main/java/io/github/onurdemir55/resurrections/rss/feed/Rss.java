@@ -36,14 +36,18 @@ public final class Rss {
      */
     public static final class Builder {
 
-        private String version;
+        /** RSS 2.0 is the only version this library emits, so it is the default. */
+        private String version = "2.0";
         private Channel channel;
 
         private Builder() {
         }
 
         /**
-         * @param version the {@code version} attribute; must be {@code "2.0"} for RSS 2.0
+         * Overrides the {@code version} attribute. Defaults to {@code "2.0"}, which is what
+         * the specification requires for a document that conforms to it.
+         *
+         * @param version the value of the {@code version} attribute
          */
         public Builder version(final String version) {
             this.version = version;

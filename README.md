@@ -39,12 +39,11 @@ checks the Rss News output manually, selects and decides _item_. So some custome
 ## Examples
 
 ```java
-        // creates plaint text holder
-        Value plainText=new SimpleValue("simple value")
+        // plain text: XML special characters are escaped
+        Value plainText = new SimpleValue("simple value");
 
-        // creates cdata holder
-        Value cdata=new CDATAValue("cdata value")
-
+        // CDATA: markup stays readable
+        Value cdata = new CDATAValue("<b>cdata value</b>");
 ```
 
 ---
@@ -52,73 +51,64 @@ checks the Rss News output manually, selects and decides _item_. So some custome
 Create a feed:
 
 ```java
-        Set<Value> set = new HashSet<>(Arrays.asList(
-                                            new SimpleValue("category-1"),
-                                            new SimpleValue("category-2"),
-                                            new SimpleValue("category-3"),
-                                            new SimpleValue("category-3")));
+        String published = DateParser.formatRfc822(Instant.now());
 
         Item item = Item.builder()
                         .title(new SimpleValue("sample title"))
-                        .category(set)
-                        .description(new CDATAValue("sample description"))
                         .link(new CDATAValue("https://www.google.com/"))
-                        .pubDate(new SimpleValue(DateParser.format_RFC1123_RFC822(new Date())))
+                        .description(new CDATAValue("sample description"))
+                        .category(new SimpleValue("category-1"), new SimpleValue("category-2"))
+                        .pubDate(new SimpleValue(published))
                         .build();
 
-        // items
-        List<Item> items = Arrays.asList(item);
-
-
         Channel channel = Channel.builder()
-                                .items(items)
-                                .language(new SimpleValue("en"))
-                                .pubDate(new SimpleValue(DateParser.format_RFC1123_RFC822(Instant.now())))
-                                .title(new CDATAValue("sample title"))
-                                .description(new CDATAValue("sample description"))
-                                .link(new SimpleValue("https://www.google.com/"))
-                                .build();
+                                 .title(new CDATAValue("sample title"))
+                                 .link(new SimpleValue("https://www.google.com/"))
+                                 .description(new CDATAValue("sample description"))
+                                 .language(new SimpleValue("en"))
+                                 .pubDate(new SimpleValue(published))
+                                 .items(List.of(item))
+                                 .build();
 
-
-        Rss rss = Rss.builder()
-                      .version("2.0")
-                      .channel(channel)
-                      .build();
+        // version defaults to "2.0"
+        Rss rss = Rss.builder().channel(channel).build();
 
         String xmlOutput = RssOutput.outputString(rss);
 ```
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <rss version="2.0">
   <channel>
     <title><![CDATA[sample title]]></title>
     <link>https://www.google.com/</link>
     <description><![CDATA[sample description]]></description>
     <language>en</language>
-    <pubDate>Sat, 9 Oct 2021 20:38:50 GMT</pubDate>
+    <pubDate>Sat, 07 Sep 2002 00:00:01 GMT</pubDate>
     <item>
       <title>sample title</title>
       <link><![CDATA[https://www.google.com/]]></link>
       <description><![CDATA[sample description]]></description>
-      <category>category-3</category>
-      <category>category-2</category>
       <category>category-1</category>
-      <pubDate>Sat, 9 Oct 2021 20:38:50 GMT</pubDate>
-    </item>
-    <item>
-      <title><![CDATA[sample title]]></title>
-      <link><![CDATA[https://www.google.com/]]></link>
-      <description><![CDATA[sample description]]></description>
-      <category><![CDATA[category-2]]></category>
-      <category><![CDATA[category-1]]></category>
-      <pubDate><![CDATA[Sat, 9 Oct 2021 20:38:50 GMT]]></pubDate>
+      <category>category-2</category>
+      <pubDate>Sat, 07 Sep 2002 00:00:01 GMT</pubDate>
     </item>
   </channel>
 </rss>
-
 ```
+
+This exact output is asserted by `ReadmeExampleTest`, so the example cannot drift from
+what the library actually produces.
+
 ---
+
+Write somewhere other than a `String`:
+
+```java
+        RssOutput.output(rss, Path.of("feed.xml"));   // UTF-8
+        RssOutput.output(rss, outputStream);          // UTF-8
+        RssOutput.output(rss, writer);                // encoding is the writer's business
+```
 
 
 

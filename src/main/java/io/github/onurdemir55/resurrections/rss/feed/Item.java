@@ -7,7 +7,8 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * An {@code <item>} element of a {@link Channel}.
@@ -30,7 +31,7 @@ public final class Item {
 
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "category")
-    private final Set<Value> category;
+    private final List<Value> category;
 
     @JacksonXmlProperty(localName = "pubDate")
     private final Value pubDate;
@@ -58,7 +59,7 @@ public final class Item {
         private Value title;
         private Value link;
         private Value description;
-        private Set<Value> category;
+        private List<Value> category;
         private Value pubDate;
 
         private Builder() {
@@ -79,8 +80,28 @@ public final class Item {
             return this;
         }
 
-        public Builder category(final Set<Value> category) {
+        /**
+         * Categories for this item, emitted as one {@code <category>} element each, in the
+         * order given.
+         * <p>
+         * This takes a {@code List} rather than a {@code Set} on purpose. A set left the
+         * output order undefined, and it silently dropped categories that share the same
+         * text, which the specification explicitly allows across different taxonomies.
+         *
+         * @param category the categories, in the order they should appear
+         */
+        public Builder category(final List<Value> category) {
             this.category = category;
+            return this;
+        }
+
+        /**
+         * Convenience form of {@link #category(List)}.
+         *
+         * @param category the categories, in the order they should appear
+         */
+        public Builder category(final Value... category) {
+            this.category = Arrays.asList(category);
             return this;
         }
 

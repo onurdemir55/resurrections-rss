@@ -1,29 +1,73 @@
 package io.github.onurdemir55.resurrections.rss.util;
 
 import java.time.Instant;
-import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
 /**
- * Rss 2.0 accept RFC 1123 and RFC822 time format
- * This class formats by given Date and Instant
+ * Formats dates the way RSS 2.0 wants them.
+ * <p>
+ * The specification requires the RFC 822 date and time format, with a four digit year
+ * preferred, and every example in it pads the day to two digits:
+ * {@code Sat, 07 Sep 2002 00:00:01 GMT}.
  */
 public final class DateParser {
+
+    /**
+     * {@code Locale.ENGLISH} is not optional. The day and month names are part of the wire
+     * format, so with the default locale a Turkish or German system would emit
+     * {@code Cum, 07 Eyl 2002} and produce a feed no reader can parse.
+     */
+    private static final DateTimeFormatter RFC_822 =
+            DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'", Locale.ENGLISH);
 
     private DateParser() {
         // utility class
     }
 
-    // pubDate supported format
-    public static String format_RFC1123_RFC822(final Date date) {
-        OffsetDateTime offsetDateTime = date.toInstant().atOffset(ZoneOffset.UTC);
-        return offsetDateTime.format(DateTimeFormatter.RFC_1123_DATE_TIME);
+    /**
+     * Formats an instant as an RSS 2.0 date, in GMT.
+     *
+     * @param instant the instant to format
+     * @return for example {@code Sat, 07 Sep 2002 00:00:01 GMT}
+     */
+    public static String formatRfc822(final Instant instant) {
+        return RFC_822.format(instant.atOffset(ZoneOffset.UTC));
     }
 
+    /**
+     * Formats a date as an RSS 2.0 date, in GMT.
+     *
+     * @param date the date to format
+     * @return for example {@code Sat, 07 Sep 2002 00:00:01 GMT}
+     */
+    public static String formatRfc822(final Date date) {
+        return formatRfc822(date.toInstant());
+    }
+
+    /**
+     * @param date the date to format
+     * @return for example {@code Sat, 07 Sep 2002 00:00:01 GMT}
+     * @deprecated the name does not follow Java conventions. Use {@link #formatRfc822(Date)}.
+     *     Note that the output now pads a single digit day to two digits, matching the
+     *     examples in the specification.
+     */
+    @Deprecated(since = "2.0", forRemoval = true)
+    public static String format_RFC1123_RFC822(final Date date) {
+        return formatRfc822(date);
+    }
+
+    /**
+     * @param instant the instant to format
+     * @return for example {@code Sat, 07 Sep 2002 00:00:01 GMT}
+     * @deprecated the name does not follow Java conventions. Use {@link #formatRfc822(Instant)}.
+     *     Note that the output now pads a single digit day to two digits, matching the
+     *     examples in the specification.
+     */
+    @Deprecated(since = "2.0", forRemoval = true)
     public static String format_RFC1123_RFC822(final Instant instant) {
-        OffsetDateTime offsetDateTime = instant.atOffset(ZoneOffset.UTC);
-        return offsetDateTime.format(DateTimeFormatter.RFC_1123_DATE_TIME);
+        return formatRfc822(instant);
     }
 }

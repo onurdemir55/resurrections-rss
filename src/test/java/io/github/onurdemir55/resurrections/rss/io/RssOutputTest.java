@@ -10,10 +10,15 @@ import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
-import java.util.LinkedHashSet;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -178,7 +183,7 @@ class RssOutputTest {
                     .title(new SimpleValue("t"))
                     .link(new SimpleValue("https://example.com/"))
                     .description(new SimpleValue("d"))
-                    .category(singleCategory("news"))
+                    .category(new SimpleValue("news"))
                     .pubDate(new SimpleValue("Sat, 07 Sep 2002 00:00:01 GMT"))
                     .build();
 
@@ -201,18 +206,49 @@ class RssOutputTest {
         }
 
         @Test
-        @DisplayName("categories repeat the element instead of nesting a wrapper")
-        void categoriesRepeatTheElement() throws JsonProcessingException {
-            Set<Value> categories = new LinkedHashSet<>();
-            categories.add(new SimpleValue("first"));
-            categories.add(new SimpleValue("second"));
-            Item item = Item.builder().title(new SimpleValue("t")).category(categories).build();
+        @DisplayName("categories repeat the element, in the order given")
+        void categoriesRepeatTheElementInOrder() throws JsonProcessingException {
+            Item item = Item.builder()
+                    .title(new SimpleValue("t"))
+                    .category(new SimpleValue("first"), new SimpleValue("second"))
+                    .build();
 
             String xml = RssOutput.outputString(feedWithItems(List.of(item)));
 
             assertAll(
                     () -> assertEquals(2, countOccurrences(xml, "<category>"), () -> xml),
-                    () -> assertFalse(xml.contains("<categories>"), () -> xml));
+                    () -> assertFalse(xml.contains("<categories>"), () -> xml),
+                    () -> assertInOrder(xml, "<category>first</category>", "<category>second</category>"));
+        }
+
+        @Test
+        @DisplayName("the List and varargs category forms behave identically")
+        void categoryOverloadsAgree() throws JsonProcessingException {
+            Item fromVarargs = Item.builder()
+                    .title(new SimpleValue("t"))
+                    .category(new SimpleValue("a"), new CDATAValue("b"))
+                    .build();
+            Item fromList = Item.builder()
+                    .title(new SimpleValue("t"))
+                    .category(List.of(new SimpleValue("a"), new CDATAValue("b")))
+                    .build();
+
+            assertEquals(
+                    RssOutput.outputString(feedWithItems(List.of(fromVarargs))),
+                    RssOutput.outputString(feedWithItems(List.of(fromList))));
+        }
+
+        @Test
+        @DisplayName("repeated category text is kept, since taxonomies may overlap")
+        void repeatedCategoryTextIsKept() throws JsonProcessingException {
+            Item item = Item.builder()
+                    .title(new SimpleValue("t"))
+                    .category(new SimpleValue("same"), new SimpleValue("same"))
+                    .build();
+
+            String xml = RssOutput.outputString(feedWithItems(List.of(item)));
+
+            assertEquals(2, countOccurrences(xml, "<category>same</category>"), () -> xml);
         }
 
         @Test
@@ -224,6 +260,63 @@ class RssOutputTest {
                     () -> assertFalse(xml.contains("<language"), () -> "language was not set:\n" + xml),
                     () -> assertFalse(xml.contains("<pubDate"), () -> "pubDate was not set:\n" + xml),
                     () -> assertFalse(xml.contains("<item"), () -> "no items were set:\n" + xml));
+        }
+    }
+
+    @Nested
+    @DisplayName("Output targets")
+    class OutputTargets {
+
+        @Test
+        @DisplayName("all targets produce the same document as outputString")
+        void targetsAgree(@TempDir final Path dir) throws IOException {
+            Rss rss = feedWithTitle(new CDATAValue("same everywhere"));
+            String expected = RssOutput.outputString(rss);
+
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            RssOutput.output(rss, bytes);
+
+            StringWriter writer = new StringWriter();
+            RssOutput.output(rss, writer);
+
+            Path file = dir.resolve("feed.xml");
+            RssOutput.output(rss, file);
+
+            assertAll(
+                    () -> assertEquals(expected, bytes.toString(StandardCharsets.UTF_8)),
+                    () -> assertEquals(expected, writer.toString()),
+                    () -> assertEquals(expected, Files.readString(file, StandardCharsets.UTF_8)));
+        }
+
+        @Test
+        @DisplayName("the stream is written as UTF-8, matching the declared encoding")
+        void streamIsUtf8() throws IOException {
+            Rss rss = feedWithTitle(new SimpleValue("ünïcödé ığşç"));
+
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            RssOutput.output(rss, bytes);
+
+            String decoded = bytes.toString(StandardCharsets.UTF_8);
+            assertAll(
+                    () -> assertTrue(decoded.contains("ünïcödé ığşç"), () -> decoded),
+                    () -> assertTrue(decoded.contains("UTF-8"), () -> decoded));
+        }
+    }
+
+    @Nested
+    @DisplayName("Defaults")
+    class Defaults {
+
+        @Test
+        @DisplayName("version defaults to 2.0 without being set")
+        void versionDefaultsToTwoPointZero() throws JsonProcessingException {
+            Rss rss = Rss.builder()
+                    .channel(Channel.builder().title(new SimpleValue("t")).build())
+                    .build();
+
+            String xml = RssOutput.outputString(rss);
+
+            assertTrue(xml.contains("<rss version=\"2.0\">"), () -> xml);
         }
     }
 
@@ -241,12 +334,6 @@ class RssOutputTest {
                 .version("2.0")
                 .channel(Channel.builder().title(new SimpleValue("feed")).items(items).build())
                 .build();
-    }
-
-    private static Set<Value> singleCategory(final String name) {
-        Set<Value> categories = new LinkedHashSet<>();
-        categories.add(new SimpleValue(name));
-        return categories;
     }
 
     private static void assertInOrder(final String xml, final String... fragments) {

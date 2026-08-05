@@ -10,6 +10,11 @@ import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
 
 import javax.xml.stream.XMLOutputFactory;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Renders an {@link Rss} feed as XML.
@@ -35,6 +40,46 @@ public final class RssOutput {
      */
     public static String outputString(final Rss rss) throws JsonProcessingException {
         return MAPPER.writeValueAsString(rss);
+    }
+
+    /**
+     * Writes the feed to a stream as UTF-8, which is the encoding the XML declaration
+     * announces. The stream is flushed but not closed.
+     *
+     * @param rss the feed to render
+     * @param out where to write
+     * @throws IOException if the feed cannot be serialized or written
+     */
+    public static void output(final Rss rss, final OutputStream out) throws IOException {
+        MAPPER.writeValue(out, rss);
+    }
+
+    /**
+     * Writes the feed to a character stream. The writer is flushed but not closed.
+     * <p>
+     * The XML declaration announces UTF-8, so the writer should encode as UTF-8;
+     * otherwise the document will misdeclare its own encoding. Prefer
+     * {@link #output(Rss, OutputStream)}, which cannot get this wrong.
+     *
+     * @param rss the feed to render
+     * @param out where to write
+     * @throws IOException if the feed cannot be serialized or written
+     */
+    public static void output(final Rss rss, final Writer out) throws IOException {
+        MAPPER.writeValue(out, rss);
+    }
+
+    /**
+     * Writes the feed to a file as UTF-8.
+     *
+     * @param rss the feed to render
+     * @param target the file to write, created or truncated
+     * @throws IOException if the feed cannot be serialized or written
+     */
+    public static void output(final Rss rss, final Path target) throws IOException {
+        try (OutputStream out = Files.newOutputStream(target)) {
+            output(rss, out);
+        }
     }
 
     private static XmlMapper createMapper() {
