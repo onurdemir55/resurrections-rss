@@ -69,7 +69,7 @@ class ItemElementsTest {
         @Test
         @DisplayName("a guid without a value is rejected")
         void valueIsRequired() {
-            assertThrows(NullPointerException.class, () -> Guid.of(null));
+            assertThrows(NullPointerException.class, () -> Guid.of((String) null));
         }
     }
 
@@ -127,7 +127,7 @@ class ItemElementsTest {
         void requiredParts() {
             assertAll(
                     () -> assertThrows(NullPointerException.class,
-                            () -> Source.of(null, "http://example.com/feed.xml")),
+                            () -> Source.of((String) null, "http://example.com/feed.xml")),
                     () -> assertThrows(NullPointerException.class,
                             () -> Source.of("A Feed", null)));
         }
@@ -170,7 +170,7 @@ class ItemElementsTest {
         @Test
         @DisplayName("a category without a value is rejected")
         void valueIsRequired() {
-            assertThrows(NullPointerException.class, () -> Category.of(null));
+            assertThrows(NullPointerException.class, () -> Category.of((String) null));
         }
     }
 
@@ -211,6 +211,76 @@ class ItemElementsTest {
 
             assertTrue(xml.contains("<comments><![CDATA[http://example.com/?a=1&b=2]]></comments>"),
                     () -> xml);
+        }
+    }
+
+    @Nested
+    @DisplayName("CDATA in elements that also carry attributes")
+    class CdataWithAttributes {
+
+        @Test
+        @DisplayName("a category keeps its domain attribute alongside a CDATA value")
+        void categoryWithDomainAndCdata() throws JsonProcessingException {
+            String xml = itemXml(Item.builder()
+                    .title(new SimpleValue("t"))
+                    .category(Category.cdata("Top/News & <b>Sports</b>", "urn:taxonomy"))
+                    .build());
+
+            assertTrue(xml.contains(
+                    "<category domain=\"urn:taxonomy\"><![CDATA[Top/News & <b>Sports</b>]]></category>"),
+                    () -> xml);
+        }
+
+        @Test
+        @DisplayName("a source keeps its url attribute alongside a CDATA value")
+        void sourceWithUrlAndCdata() throws JsonProcessingException {
+            String xml = itemXml(Item.builder()
+                    .title(new SimpleValue("t"))
+                    .source(Source.cdata("Tomalak's <i>Realm</i>", "http://www.tomalak.org/links2.xml"))
+                    .build());
+
+            assertTrue(xml.contains("<source url=\"http://www.tomalak.org/links2.xml\">"
+                    + "<![CDATA[Tomalak's <i>Realm</i>]]></source>"), () -> xml);
+        }
+
+        @Test
+        @DisplayName("a guid keeps its isPermaLink attribute alongside a CDATA value")
+        void guidWithAttributeAndCdata() throws JsonProcessingException {
+            String xml = itemXml(Item.builder()
+                    .title(new SimpleValue("t"))
+                    .guid(Guid.cdata("urn:id:a&b", false))
+                    .build());
+
+            assertTrue(xml.contains("<guid isPermaLink=\"false\"><![CDATA[urn:id:a&b]]></guid>"),
+                    () -> xml);
+        }
+
+        @Test
+        @DisplayName("the cdata factories work without an attribute too")
+        void cdataWithoutAttribute() throws JsonProcessingException {
+            String xml = itemXml(Item.builder()
+                    .title(new SimpleValue("t"))
+                    .category(Category.cdata("Top/News & <b>Sports</b>"))
+                    .guid(Guid.cdata("urn:id:a&b"))
+                    .build());
+
+            assertAll(
+                    () -> assertTrue(xml.contains(
+                            "<category><![CDATA[Top/News & <b>Sports</b>]]></category>"), () -> xml),
+                    () -> assertTrue(xml.contains("<guid><![CDATA[urn:id:a&b]]></guid>"), () -> xml));
+        }
+
+        @Test
+        @DisplayName("the plain form of the same element escapes instead of wrapping")
+        void plainFormStillEscapes() throws JsonProcessingException {
+            String xml = itemXml(Item.builder()
+                    .title(new SimpleValue("t"))
+                    .category(Category.of("a & b"))
+                    .build());
+
+            assertAll(
+                    () -> assertTrue(xml.contains("<category>a &amp; b</category>"), () -> xml),
+                    () -> assertFalse(xml.contains("CDATA[a"), () -> xml));
         }
     }
 

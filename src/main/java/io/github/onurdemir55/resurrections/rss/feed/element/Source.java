@@ -1,7 +1,10 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
+import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 
 import java.util.Objects;
 
@@ -11,10 +14,10 @@ import java.util.Objects;
  * Its purpose is to propagate credit when an item is forwarded, so the value is the source
  * channel's title and the required {@code url} attribute points at that channel's feed.
  *
- * @param value the title of the originating channel
+ * @param value the title of the originating channel, plain or CDATA
  * @param url the url of the originating feed, required by the specification
  */
-public record Source(@JacksonXmlText String value,
+public record Source(@JsonUnwrapped Value value,
                      @JacksonXmlProperty(isAttribute = true, localName = "url") String url) {
 
     public Source {
@@ -23,11 +26,20 @@ public record Source(@JacksonXmlText String value,
     }
 
     /**
-     * @param value the title of the originating channel
+     * @param value the plain text title of the originating channel
      * @param url the url of the originating feed
      * @return the source
      */
     public static Source of(final String value, final String url) {
-        return new Source(value, url);
+        return new Source(new SimpleValue(value), url);
+    }
+
+    /**
+     * @param value the title of the originating channel, wrapped in a CDATA section
+     * @param url the url of the originating feed
+     * @return the source
+     */
+    public static Source cdata(final String value, final String url) {
+        return new Source(new CDATAValue(value), url);
     }
 }
