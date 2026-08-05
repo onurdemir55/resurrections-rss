@@ -18,7 +18,6 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -93,22 +92,42 @@ class RssOutputTest {
     class CdataTerminator {
 
         /**
-         * Characterization test: this pins down today's behaviour, which is a defect.
-         * Content containing {@code ]]>} closes the CDATA section early, so it has to be
-         * split across sections. Woodstox refuses instead of splitting, and the whole feed
-         * fails to serialize. The fix replaces this expectation with an assertion on the
-         * split output.
+         * Content containing {@code ]]>} would close the CDATA section early, so it has to
+         * be split across two sections. A parser concatenates adjacent CDATA sections, so
+         * the original text survives. This matters because the library exists to carry
+         * HTML, and HTML can contain {@code ]]>}.
          */
         @Test
-        @DisplayName("KNOWN DEFECT: content containing ']]>' fails to serialize")
-        void contentWithCdataTerminatorCurrentlyThrows() {
-            Rss rss = feedWithTitle(new CDATAValue("danger ]]> after"));
+        @DisplayName("content containing ']]>' is split across two CDATA sections")
+        void contentWithCdataTerminatorIsSplit() throws JsonProcessingException {
+            String xml = RssOutput.outputString(feedWithTitle(new CDATAValue("danger ]]> after")));
 
-            JsonProcessingException thrown =
-                    assertThrows(JsonProcessingException.class, () -> RssOutput.outputString(rss));
+            assertAll(
+                    () -> assertTrue(
+                            xml.contains("<title><![CDATA[danger ]]]]><![CDATA[> after]]></title>"),
+                            () -> xml),
+                    () -> assertEquals("danger ]]> after", concatenatedCdata(xml),
+                            () -> "the split must reassemble to the original text:\n" + xml));
+        }
 
-            assertTrue(thrown.getMessage().contains("]]>"),
-                    () -> "expected a complaint about the CDATA terminator, got: " + thrown.getMessage());
+        @Test
+        @DisplayName("several ']]>' occurrences are all handled")
+        void severalTerminators() throws JsonProcessingException {
+            String text = "a ]]> b ]]> c";
+
+            String xml = RssOutput.outputString(feedWithTitle(new CDATAValue(text)));
+
+            assertEquals(text, concatenatedCdata(xml), () -> xml);
+        }
+
+        @Test
+        @DisplayName("real HTML containing ']]>' serializes and reassembles")
+        void htmlWithTerminator() throws JsonProcessingException {
+            String html = "<script>if (a[b[c]]> 0) x();</script>";
+
+            String xml = RssOutput.outputString(feedWithTitle(new CDATAValue(html)));
+
+            assertEquals(html, concatenatedCdata(xml), () -> xml);
         }
 
         @Test
@@ -253,5 +272,27 @@ class RssOutputTest {
             index = haystack.indexOf(needle, index + needle.length());
         }
         return count;
+    }
+
+    /**
+     * Concatenates the contents of every CDATA section in the document, which is what a
+     * parser does with adjacent sections. Used to assert that splitting a section around
+     * {@code ]]>} preserves the original text.
+     */
+    private static String concatenatedCdata(final String xml) {
+        StringBuilder text = new StringBuilder();
+        String open = "<![CDATA[";
+        String close = "]]>";
+        int cursor = xml.indexOf(open);
+        while (cursor >= 0) {
+            int contentStart = cursor + open.length();
+            int contentEnd = xml.indexOf(close, contentStart);
+            if (contentEnd < 0) {
+                throw new AssertionError("unterminated CDATA section in:\n" + xml);
+            }
+            text.append(xml, contentStart, contentEnd);
+            cursor = xml.indexOf(open, contentEnd + close.length());
+        }
+        return text.toString();
     }
 }

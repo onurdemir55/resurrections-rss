@@ -28,6 +28,10 @@ repositories {
 dependencies {
     api 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.22.1'
 
+    // Already a transitive dependency of jackson-dataformat-xml, but declared here
+    // because RssOutput configures Woodstox directly to keep CDATA sections valid.
+    implementation 'com.fasterxml.woodstox:woodstox-core:7.2.0'
+
     testImplementation platform('org.junit:junit-bom:6.1.2')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
