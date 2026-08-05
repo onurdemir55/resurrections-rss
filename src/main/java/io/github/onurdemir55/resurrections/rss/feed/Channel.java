@@ -12,6 +12,7 @@ import io.github.onurdemir55.resurrections.rss.feed.element.SkipDays;
 import io.github.onurdemir55.resurrections.rss.feed.element.SkipHours;
 import io.github.onurdemir55.resurrections.rss.feed.element.TextInput;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
+import io.github.onurdemir55.resurrections.rss.util.Uris;
 
 import java.util.Arrays;
 import java.util.List;
@@ -350,8 +351,25 @@ public final class Channel {
             return this;
         }
 
+        /**
+         * @return the channel
+         * @throws IllegalStateException if a required element is missing
+         * @throws IllegalArgumentException if the link has no URI scheme
+         */
         public Channel build() {
+            requirePresent("title", title);
+            requirePresent("link", link);
+            requirePresent("description", description);
+            Uris.requireScheme("channel link", link.value());
             return new Channel(this);
+        }
+
+        private static void requirePresent(final String element, final Value value) {
+            if (value == null) {
+                throw new IllegalStateException(
+                        "channel requires " + element + "; the specification lists title, link "
+                                + "and description as required elements");
+            }
         }
     }
 }

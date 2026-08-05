@@ -311,9 +311,7 @@ class RssOutputTest {
         @Test
         @DisplayName("version defaults to 2.0 without being set")
         void versionDefaultsToTwoPointZero() throws JsonProcessingException {
-            Rss rss = Rss.builder()
-                    .channel(Channel.builder().title(new SimpleValue("t")).build())
-                    .build();
+            Rss rss = Rss.builder().channel(channel().build()).build();
 
             String xml = RssOutput.outputString(rss);
 
@@ -323,18 +321,20 @@ class RssOutputTest {
 
     // helpers
 
+    /** The specification requires a channel to carry title, link and description. */
+    private static Channel.Builder channel() {
+        return Channel.builder()
+                .title(new SimpleValue("feed"))
+                .link(new SimpleValue("https://example.com/"))
+                .description(new SimpleValue("a feed"));
+    }
+
     private static Rss feedWithTitle(final Value title) {
-        return Rss.builder()
-                .version("2.0")
-                .channel(Channel.builder().title(title).build())
-                .build();
+        return Rss.builder().channel(channel().title(title).build()).build();
     }
 
     private static Rss feedWithItems(final List<Item> items) {
-        return Rss.builder()
-                .version("2.0")
-                .channel(Channel.builder().title(new SimpleValue("feed")).items(items).build())
-                .build();
+        return Rss.builder().channel(channel().items(items).build()).build();
     }
 
     private static void assertInOrder(final String xml, final String... fragments) {

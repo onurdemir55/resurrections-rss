@@ -13,6 +13,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 @JacksonXmlRootElement(localName = "rss")
 public final class Rss {
 
+    /** The only version a document conforming to this specification may declare. */
+    public static final String VERSION_2_0 = "2.0";
+
     @JacksonXmlProperty(isAttribute = true, localName = "version")
     private final String version;
 
@@ -37,7 +40,7 @@ public final class Rss {
     public static final class Builder {
 
         /** RSS 2.0 is the only version this library emits, so it is the default. */
-        private String version = "2.0";
+        private String version = VERSION_2_0;
         private Channel channel;
 
         private Builder() {
@@ -60,6 +63,14 @@ public final class Rss {
         }
 
         public Rss build() {
+            if (!VERSION_2_0.equals(version)) {
+                throw new IllegalStateException(
+                        "a document conforming to RSS 2.0 must declare version=\"" + VERSION_2_0
+                                + "\", and this one declares: " + version);
+            }
+            if (channel == null) {
+                throw new IllegalStateException("rss requires a channel");
+            }
             return new Rss(this);
         }
     }

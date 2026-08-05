@@ -1,6 +1,7 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import io.github.onurdemir55.resurrections.rss.util.Uris;
 
 import java.util.Objects;
 
@@ -22,6 +23,10 @@ public record Enclosure(@JacksonXmlProperty(isAttribute = true, localName = "url
     public Enclosure {
         Objects.requireNonNull(url, "enclosure url is required");
         Objects.requireNonNull(type, "enclosure type is required");
+        Uris.requireHttpScheme("enclosure url", url);
+        if (length < 0) {
+            throw new IllegalArgumentException("enclosure length cannot be negative, was " + length);
+        }
     }
 
     /**

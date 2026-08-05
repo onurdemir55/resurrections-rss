@@ -10,6 +10,7 @@ import io.github.onurdemir55.resurrections.rss.feed.element.Enclosure;
 import io.github.onurdemir55.resurrections.rss.feed.element.Guid;
 import io.github.onurdemir55.resurrections.rss.feed.element.Source;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
+import io.github.onurdemir55.resurrections.rss.util.Uris;
 
 import java.util.Arrays;
 import java.util.List;
@@ -192,7 +193,20 @@ public final class Item {
             return this;
         }
 
+        /**
+         * @return the item
+         * @throws IllegalStateException if neither a title nor a description is set
+         * @throws IllegalArgumentException if the link has no URI scheme
+         */
         public Item build() {
+            if (title == null && description == null) {
+                throw new IllegalStateException(
+                        "an item requires a title or a description; the specification allows "
+                                + "every other element to be omitted, but not both of these");
+            }
+            if (link != null) {
+                Uris.requireScheme("item link", link.value());
+            }
             return new Item(this);
         }
     }

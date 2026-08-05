@@ -5,6 +5,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
+import io.github.onurdemir55.resurrections.rss.util.Uris;
 
 import java.util.Objects;
 
@@ -23,6 +24,7 @@ public record Source(@JsonUnwrapped Value value,
     public Source {
         Objects.requireNonNull(value, "source value is required");
         Objects.requireNonNull(url, "source url is required");
+        Uris.requireScheme("source url", url);
     }
 
     /**

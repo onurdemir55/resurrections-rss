@@ -316,6 +316,8 @@ class ItemElementsTest {
         return RssOutput.outputString(Rss.builder()
                 .channel(Channel.builder()
                         .title(new SimpleValue("feed"))
+                        .link(new SimpleValue("https://example.com/"))
+                        .description(new SimpleValue("a feed"))
                         .items(List.of(item))
                         .build())
                 .build());

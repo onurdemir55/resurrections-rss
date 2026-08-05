@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
+import io.github.onurdemir55.resurrections.rss.util.Uris;
 
 import java.util.Objects;
 
@@ -43,6 +44,8 @@ public record Image(@JacksonXmlProperty(localName = "url") Value url,
         Objects.requireNonNull(url, "image url is required");
         Objects.requireNonNull(title, "image title is required");
         Objects.requireNonNull(link, "image link is required");
+        Uris.requireScheme("image url", url.value());
+        Uris.requireScheme("image link", link.value());
         checkBound("width", width, MAX_WIDTH);
         checkBound("height", height, MAX_HEIGHT);
     }

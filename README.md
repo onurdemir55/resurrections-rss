@@ -110,5 +110,41 @@ Write somewhere other than a `String`:
         RssOutput.output(rss, writer);                // encoding is the writer's business
 ```
 
+---
+
+### Validation
+
+The rules the specification states are enforced when you build, not discovered later by a
+reader that refuses your feed. There is no lenient mode.
+
+```java
+        Channel.builder().title(new SimpleValue("t")).build();
+        // IllegalStateException: channel requires link; the specification lists
+        // title, link and description as required elements
+
+        Item.builder().link(new SimpleValue("https://example.com/a")).build();
+        // IllegalStateException: an item requires a title or a description
+
+        Channel.builder()
+               .title(new SimpleValue("t"))
+               .link(new SimpleValue("www.example.com"))
+               .description(new SimpleValue("d"))
+               .build();
+        // IllegalArgumentException: channel link must begin with a URI scheme
+```
+
+What is checked:
+
+* `channel` requires `title`, `link` and `description`
+* an `item` requires a `title` or a `description`
+* `rss` must declare `version="2.0"`, which is also the default
+* `link` and `url` values must carry a URI scheme; any scheme is accepted, not just `http`
+* an `enclosure` url must be `http` or `https`, as the specification says explicitly
+* an `image` is at most 144 wide and 400 tall
+* a `skipHours` hour is between 0 and 23, and neither `skipHours` nor `skipDays` may repeat
+  a value or be empty
+* elements the specification marks required cannot be `null`, and neither can element text.
+  To leave an element out of the feed, do not set it.
+
 
 

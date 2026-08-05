@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
+import io.github.onurdemir55.resurrections.rss.util.Uris;
 
 import java.util.Objects;
 
@@ -30,6 +31,7 @@ public record TextInput(@JacksonXmlProperty(localName = "title") Value title,
         Objects.requireNonNull(description, "textInput description is required");
         Objects.requireNonNull(name, "textInput name is required");
         Objects.requireNonNull(link, "textInput link is required");
+        Uris.requireScheme("textInput link", link.value());
     }
 
     /**
