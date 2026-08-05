@@ -2,6 +2,7 @@ package io.github.onurdemir55.resurrections.rss.io;
 
 import com.ctc.wstx.api.WstxOutputProperties;
 import com.ctc.wstx.stax.WstxOutputFactory;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlFactory;
@@ -109,6 +110,17 @@ public final class RssOutput {
         // reusing a stream for more writes afterward would get an IOException instead.
         mapper.disable(SerializationFeature.CLOSE_CLOSEABLE);
         mapper.getFactory().disable(com.fasterxml.jackson.core.JsonGenerator.Feature.AUTO_CLOSE_TARGET);
+        // Serialize only what the model explicitly annotates. By default Jackson treats every
+        // public getter as a property, which means adding an ordinary getter to the model
+        // silently changes the XML: Rss.getNamespaces() once leaked a whole <namespaces>
+        // element into every feed that declared one. The element names all come from
+        // @JacksonXmlProperty on the fields anyway, so nothing is lost by turning discovery
+        // off, and a class of accident goes away with it.
+        mapper.setVisibility(mapper.getSerializationConfig().getDefaultVisibilityChecker()
+                .withFieldVisibility(JsonAutoDetect.Visibility.NONE)
+                .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withIsGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
         return mapper;
     }
 
