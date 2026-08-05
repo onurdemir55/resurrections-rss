@@ -6,38 +6,101 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
-import lombok.Builder;
 
 import java.util.List;
 
 /**
- * channel element bean of Rss.
+ * The {@code <channel>} element of an RSS feed.
+ * <p>
+ * Instances are immutable and created through {@link #builder()}.
  */
-@Builder
 @JsonPropertyOrder({"title", "link", "description", "language", "pubDate", "item"})
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JacksonXmlRootElement(localName = "channel")
-public class Channel {
+public final class Channel {
 
     @JacksonXmlProperty(localName = "title")
-    Value title;
+    private final Value title;
 
     @JacksonXmlProperty(localName = "link")
-    Value link;
+    private final Value link;
 
     @JacksonXmlProperty(localName = "description")
-    Value description;
+    private final Value description;
 
     @JacksonXmlProperty(localName = "language")
-    Value language;
+    private final Value language;
 
     @JacksonXmlProperty(localName = "pubDate")
-    Value pubDate;
+    private final Value pubDate;
 
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "item")
-    private List<Item> items;
+    private final List<Item> items;
 
+    private Channel(final Builder builder) {
+        this.title = builder.title;
+        this.link = builder.link;
+        this.description = builder.description;
+        this.language = builder.language;
+        this.pubDate = builder.pubDate;
+        this.items = builder.items;
+    }
+
+    /**
+     * @return a new builder for {@code <channel>}
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Builder for {@link Channel}.
+     */
+    public static final class Builder {
+
+        private Value title;
+        private Value link;
+        private Value description;
+        private Value language;
+        private Value pubDate;
+        private List<Item> items;
+
+        private Builder() {
+        }
+
+        public Builder title(final Value title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder link(final Value link) {
+            this.link = link;
+            return this;
+        }
+
+        public Builder description(final Value description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder language(final Value language) {
+            this.language = language;
+            return this;
+        }
+
+        public Builder pubDate(final Value pubDate) {
+            this.pubDate = pubDate;
+            return this;
+        }
+
+        public Builder items(final List<Item> items) {
+            this.items = items;
+            return this;
+        }
+
+        public Channel build() {
+            return new Channel(this);
+        }
+    }
 }
-
-

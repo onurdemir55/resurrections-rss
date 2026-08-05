@@ -22,23 +22,19 @@ checks the Rss News output manually, selects and decides _item_. So some custome
 
 ### Features
 
-* [x] Works on Java version 8 or later.
+* [x] Requires Java 17 or later.
 * [x] Elements support Plain Text and CDATA format. You can set your encoded data or you can set them as CDATA.
 * [x] [jackson](https://github.com/FasterXML/jackson-dataformat-xml)  XML data format
-* [x] [Lombok](https://github.com/projectlombok/lombok) keeps code clean and easy to use Builder Pattern
+* [x] No annotation processor, no IDE plugin, no build-time magic. Jackson is the only dependency.
+* [x] Immutable feed model with builders
 * [x] Easy and Peasy development
 * [x] Simple and easy to extend for optional elements if needed. Just add fields to entity classes.
 * [x] MIT licensed
 
-#### Basic Setting Before Coding
-
-* [x] Work with lombok, make [this](https://projectlombok.org/setup/intellij) basic setting.
-* [x] Possible errors,
-  check [this](https://stackoverflow.com/questions/9424364/cant-compile-project-when-im-using-lombok-under-intellij-idea)
-
 #### Overview Info
 * [orelly](https://www.oreilly.com/library/view/developing-feeds-with/0596008813/ch04s02.html)
 * [w3](https://validator.w3.org/feed/docs/rss2.html)
+* [RSS 2.0 Specification](https://www.rssboard.org/rss-specification)
 
 ## Examples
 

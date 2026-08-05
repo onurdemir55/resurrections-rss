@@ -1,18 +1,14 @@
 package io.github.onurdemir55.resurrections.rss.feed.holder;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
- * Simple plain text value class. String can be encoded or you can choose CDATAValue.
+ * Plain text element content. XML special characters are escaped by the serializer,
+ * so {@code &} becomes {@code &amp;}.
+ * <p>
+ * Use {@link CDATAValue} instead when the content is markup that should stay readable.
+ *
+ * @param value the text content
  */
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-public class SimpleValue implements Value {
-
-    @JacksonXmlText
-    String value;
+public record SimpleValue(@JacksonXmlText String value) implements Value {
 }

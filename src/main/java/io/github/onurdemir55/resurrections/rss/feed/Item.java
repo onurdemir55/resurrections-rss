@@ -6,33 +6,91 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
-import lombok.Builder;
 
 import java.util.Set;
 
 /**
- * item element bean of Rss.
+ * An {@code <item>} element of a {@link Channel}.
+ * <p>
+ * Instances are immutable and created through {@link #builder()}.
  */
-@Builder
 @JsonPropertyOrder({"title", "link", "description", "category", "pubDate"})
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JacksonXmlRootElement(localName = "item")
-public class Item {
+public final class Item {
 
     @JacksonXmlProperty(localName = "title")
-    Value title;
+    private final Value title;
 
     @JacksonXmlProperty(localName = "link")
-    Value link;
+    private final Value link;
 
     @JacksonXmlProperty(localName = "description")
-    Value description;
+    private final Value description;
 
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "category")
-    private Set<Value> category;
+    private final Set<Value> category;
 
     @JacksonXmlProperty(localName = "pubDate")
-    Value pubDate;
+    private final Value pubDate;
 
+    private Item(final Builder builder) {
+        this.title = builder.title;
+        this.link = builder.link;
+        this.description = builder.description;
+        this.category = builder.category;
+        this.pubDate = builder.pubDate;
+    }
+
+    /**
+     * @return a new builder for {@code <item>}
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Builder for {@link Item}.
+     */
+    public static final class Builder {
+
+        private Value title;
+        private Value link;
+        private Value description;
+        private Set<Value> category;
+        private Value pubDate;
+
+        private Builder() {
+        }
+
+        public Builder title(final Value title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder link(final Value link) {
+            this.link = link;
+            return this;
+        }
+
+        public Builder description(final Value description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder category(final Set<Value> category) {
+            this.category = category;
+            return this;
+        }
+
+        public Builder pubDate(final Value pubDate) {
+            this.pubDate = pubDate;
+            return this;
+        }
+
+        public Item build() {
+            return new Item(this);
+        }
+    }
 }
