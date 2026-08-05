@@ -156,6 +156,133 @@ public final class Channel {
         return atomLink != null;
     }
 
+
+    /**
+     * @return the channel title, never {@code null}
+     */
+    public Value getTitle() {
+        return title;
+    }
+    /**
+     * @return the channel link, never {@code null}
+     */
+    public Value getLink() {
+        return link;
+    }
+    /**
+     * @return the channel description, never {@code null}
+     */
+    public Value getDescription() {
+        return description;
+    }
+    /**
+     * @return the Atom self link, or {@code null}
+     */
+    public AtomLink getAtomLink() {
+        return atomLink;
+    }
+    /**
+     * @return the language code, or {@code null}
+     */
+    public Value getLanguage() {
+        return language;
+    }
+    /**
+     * @return the copyright notice, or {@code null}
+     */
+    public Value getCopyright() {
+        return copyright;
+    }
+    /**
+     * @return the editor's email address, or {@code null}
+     */
+    public Value getManagingEditor() {
+        return managingEditor;
+    }
+    /**
+     * @return the webmaster's email address, or {@code null}
+     */
+    public Value getWebMaster() {
+        return webMaster;
+    }
+    /**
+     * @return the publication date, or {@code null}
+     */
+    public Value getPubDate() {
+        return pubDate;
+    }
+    /**
+     * @return the last modification date, or {@code null}
+     */
+    public Value getLastBuildDate() {
+        return lastBuildDate;
+    }
+    /**
+     * @return the categories, or {@code null}
+     */
+    public List<Category> getCategory() {
+        return category;
+    }
+    /**
+     * @return the generating program, or {@code null}
+     */
+    public Value getGenerator() {
+        return generator;
+    }
+    /**
+     * @return the documentation url, or {@code null}
+     */
+    public Value getDocs() {
+        return docs;
+    }
+    /**
+     * @return the update notification service, or {@code null}
+     */
+    public Cloud getCloud() {
+        return cloud;
+    }
+    /**
+     * @return the cache lifetime in minutes, or {@code null}
+     */
+    public Integer getTtl() {
+        return ttl;
+    }
+    /**
+     * @return the channel image, or {@code null}
+     */
+    public Image getImage() {
+        return image;
+    }
+    /**
+     * @return the PICS rating, or {@code null}
+     */
+    public Value getRating() {
+        return rating;
+    }
+    /**
+     * @return the input box, or {@code null}
+     */
+    public TextInput getTextInput() {
+        return textInput;
+    }
+    /**
+     * @return the hours readers may skip, or {@code null}
+     */
+    public SkipHours getSkipHours() {
+        return skipHours;
+    }
+    /**
+     * @return the days readers may skip, or {@code null}
+     */
+    public SkipDays getSkipDays() {
+        return skipDays;
+    }
+    /**
+     * @return the items, or {@code null}
+     */
+    public List<Item> getItems() {
+        return items;
+    }
     /**
      * @return a new builder for {@code <channel>}
      */

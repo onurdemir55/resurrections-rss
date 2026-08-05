@@ -95,6 +95,67 @@ public final class Item {
         return extensions;
     }
 
+
+    /**
+     * @return the item title, or {@code null} when it carries a description instead
+     */
+    public Value getTitle() {
+        return title;
+    }
+    /**
+     * @return the item link, or {@code null}
+     */
+    public Value getLink() {
+        return link;
+    }
+    /**
+     * @return the item description, or {@code null} when it carries a title instead
+     */
+    public Value getDescription() {
+        return description;
+    }
+    /**
+     * @return the author's email address, or {@code null}
+     */
+    public Value getAuthor() {
+        return author;
+    }
+    /**
+     * @return the categories, or {@code null}
+     */
+    public List<Category> getCategory() {
+        return category;
+    }
+    /**
+     * @return the comments page url, or {@code null}
+     */
+    public Value getComments() {
+        return comments;
+    }
+    /**
+     * @return the attached media object, or {@code null}
+     */
+    public Enclosure getEnclosure() {
+        return enclosure;
+    }
+    /**
+     * @return the unique identifier, or {@code null}
+     */
+    public Guid getGuid() {
+        return guid;
+    }
+    /**
+     * @return the publication date, or {@code null}
+     */
+    public Value getPubDate() {
+        return pubDate;
+    }
+    /**
+     * @return the originating channel, or {@code null}
+     */
+    public Source getSource() {
+        return source;
+    }
     /**
      * @return a new builder for {@code <item>}
      */

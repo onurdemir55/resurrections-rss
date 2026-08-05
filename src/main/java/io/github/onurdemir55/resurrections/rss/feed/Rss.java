@@ -54,6 +54,19 @@ public final class Rss {
         return declarations;
     }
 
+
+    /**
+     * @return the {@code version} attribute, always {@code "2.0"}
+     */
+    public String getVersion() {
+        return version;
+    }
+    /**
+     * @return the channel
+     */
+    public Channel getChannel() {
+        return channel;
+    }
     /**
      * @return a new builder for {@code <rss>}
      */
