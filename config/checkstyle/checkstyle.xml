@@ -13,10 +13,6 @@
     <property name="severity" value="error"/>
     <property name="fileExtensions" value="java"/>
 
-    <module name="SuppressionFilter">
-        <property name="file" value="${config_loc}/suppressions.xml"/>
-    </module>
-
     <!-- Files -->
     <module name="NewlineAtEndOfFile"/>
     <module name="FileTabCharacter"/>

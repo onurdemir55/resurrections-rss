@@ -46,28 +46,4 @@ public final class DateParser {
     public static String formatRfc822(final Date date) {
         return formatRfc822(date.toInstant());
     }
-
-    /**
-     * @param date the date to format
-     * @return for example {@code Sat, 07 Sep 2002 00:00:01 GMT}
-     * @deprecated the name does not follow Java conventions. Use {@link #formatRfc822(Date)}.
-     *     Note that the output now pads a single digit day to two digits, matching the
-     *     examples in the specification.
-     */
-    @Deprecated(since = "2.0", forRemoval = true)
-    public static String format_RFC1123_RFC822(final Date date) {
-        return formatRfc822(date);
-    }
-
-    /**
-     * @param instant the instant to format
-     * @return for example {@code Sat, 07 Sep 2002 00:00:01 GMT}
-     * @deprecated the name does not follow Java conventions. Use {@link #formatRfc822(Instant)}.
-     *     Note that the output now pads a single digit day to two digits, matching the
-     *     examples in the specification.
-     */
-    @Deprecated(since = "2.0", forRemoval = true)
-    public static String format_RFC1123_RFC822(final Instant instant) {
-        return formatRfc822(instant);
-    }
 }

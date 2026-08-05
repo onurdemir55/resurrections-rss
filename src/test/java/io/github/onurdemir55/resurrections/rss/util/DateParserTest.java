@@ -88,15 +88,4 @@ class DateParserTest {
 
         assertEquals("Sat, 09 Oct 2021 20:38:50 GMT", formatted);
     }
-
-    @Test
-    @DisplayName("the deprecated names still work and delegate to the new ones")
-    @SuppressWarnings({"deprecation", "removal"})
-    void deprecatedAliasesDelegate() {
-        assertAll(
-                () -> assertEquals(SPEC_EXAMPLE_FORMATTED,
-                        DateParser.format_RFC1123_RFC822(SPEC_EXAMPLE)),
-                () -> assertEquals(SPEC_EXAMPLE_FORMATTED,
-                        DateParser.format_RFC1123_RFC822(Date.from(SPEC_EXAMPLE))));
-    }
 }
