@@ -5,6 +5,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import io.github.onurdemir55.resurrections.rss.feed.element.Category;
+import io.github.onurdemir55.resurrections.rss.feed.element.Enclosure;
+import io.github.onurdemir55.resurrections.rss.feed.element.Guid;
+import io.github.onurdemir55.resurrections.rss.feed.element.Source;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 
 import java.util.Arrays;
@@ -13,9 +17,14 @@ import java.util.List;
 /**
  * An {@code <item>} element of a {@link Channel}.
  * <p>
+ * Every element of an item is optional, but the specification requires at least one of
+ * {@code title} or {@code description} to be present. Elements are emitted in the order the
+ * specification lists them.
+ * <p>
  * Instances are immutable and created through {@link #builder()}.
  */
-@JsonPropertyOrder({"title", "link", "description", "category", "pubDate"})
+@JsonPropertyOrder({"title", "link", "description", "author", "category", "comments",
+                    "enclosure", "guid", "pubDate", "source"})
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JacksonXmlRootElement(localName = "item")
 public final class Item {
@@ -29,19 +38,39 @@ public final class Item {
     @JacksonXmlProperty(localName = "description")
     private final Value description;
 
+    @JacksonXmlProperty(localName = "author")
+    private final Value author;
+
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "category")
-    private final List<Value> category;
+    private final List<Category> category;
+
+    @JacksonXmlProperty(localName = "comments")
+    private final Value comments;
+
+    @JacksonXmlProperty(localName = "enclosure")
+    private final Enclosure enclosure;
+
+    @JacksonXmlProperty(localName = "guid")
+    private final Guid guid;
 
     @JacksonXmlProperty(localName = "pubDate")
     private final Value pubDate;
+
+    @JacksonXmlProperty(localName = "source")
+    private final Source source;
 
     private Item(final Builder builder) {
         this.title = builder.title;
         this.link = builder.link;
         this.description = builder.description;
+        this.author = builder.author;
         this.category = builder.category;
+        this.comments = builder.comments;
+        this.enclosure = builder.enclosure;
+        this.guid = builder.guid;
         this.pubDate = builder.pubDate;
+        this.source = builder.source;
     }
 
     /**
@@ -59,8 +88,13 @@ public final class Item {
         private Value title;
         private Value link;
         private Value description;
-        private List<Value> category;
+        private Value author;
+        private List<Category> category;
+        private Value comments;
+        private Enclosure enclosure;
+        private Guid guid;
         private Value pubDate;
+        private Source source;
 
         private Builder() {
         }
@@ -81,16 +115,23 @@ public final class Item {
         }
 
         /**
-         * Categories for this item, emitted as one {@code <category>} element each, in the
-         * order given.
-         * <p>
-         * This takes a {@code List} rather than a {@code Set} on purpose. A set left the
-         * output order undefined, and it silently dropped categories that share the same
-         * text, which the specification explicitly allows across different taxonomies.
+         * Email address of the author of the item. For a weblog written by one person it
+         * makes more sense to leave this out and use the channel's managing editor.
          *
-         * @param category the categories, in the order they should appear
+         * @param author the author's email address
          */
-        public Builder category(final List<Value> category) {
+        public Builder author(final Value author) {
+            this.author = author;
+            return this;
+        }
+
+        /**
+         * Categories for this item, emitted as one {@code <category>} element each, in the
+         * order given. Repeating a value under different domains is allowed.
+         *
+         * @param category the categories
+         */
+        public Builder category(final List<Category> category) {
             this.category = category;
             return this;
         }
@@ -98,15 +139,56 @@ public final class Item {
         /**
          * Convenience form of {@link #category(List)}.
          *
-         * @param category the categories, in the order they should appear
+         * @param category the categories
          */
-        public Builder category(final Value... category) {
+        public Builder category(final Category... category) {
             this.category = Arrays.asList(category);
+            return this;
+        }
+
+        /**
+         * URL of a page for comments relating to the item.
+         *
+         * @param comments the comments page url
+         */
+        public Builder comments(final Value comments) {
+            this.comments = comments;
+            return this;
+        }
+
+        /**
+         * A media object attached to the item.
+         *
+         * @param enclosure the enclosure
+         */
+        public Builder enclosure(final Enclosure enclosure) {
+            this.enclosure = enclosure;
+            return this;
+        }
+
+        /**
+         * A string that uniquely identifies the item, which readers use to tell whether they
+         * have seen it before. Providing one is recommended even when a link is present.
+         *
+         * @param guid the identifier
+         */
+        public Builder guid(final Guid guid) {
+            this.guid = guid;
             return this;
         }
 
         public Builder pubDate(final Value pubDate) {
             this.pubDate = pubDate;
+            return this;
+        }
+
+        /**
+         * The channel this item came from, used to propagate credit when forwarding an item.
+         *
+         * @param source the originating channel
+         */
+        public Builder source(final Source source) {
+            this.source = source;
             return this;
         }
 

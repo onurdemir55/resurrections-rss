@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.onurdemir55.resurrections.rss.feed.Channel;
 import io.github.onurdemir55.resurrections.rss.feed.Item;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
+import io.github.onurdemir55.resurrections.rss.feed.element.Category;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
@@ -183,7 +184,7 @@ class RssOutputTest {
                     .title(new SimpleValue("t"))
                     .link(new SimpleValue("https://example.com/"))
                     .description(new SimpleValue("d"))
-                    .category(new SimpleValue("news"))
+                    .category(Category.of("news"))
                     .pubDate(new SimpleValue("Sat, 07 Sep 2002 00:00:01 GMT"))
                     .build();
 
@@ -210,7 +211,7 @@ class RssOutputTest {
         void categoriesRepeatTheElementInOrder() throws JsonProcessingException {
             Item item = Item.builder()
                     .title(new SimpleValue("t"))
-                    .category(new SimpleValue("first"), new SimpleValue("second"))
+                    .category(Category.of("first"), Category.of("second"))
                     .build();
 
             String xml = RssOutput.outputString(feedWithItems(List.of(item)));
@@ -226,11 +227,11 @@ class RssOutputTest {
         void categoryOverloadsAgree() throws JsonProcessingException {
             Item fromVarargs = Item.builder()
                     .title(new SimpleValue("t"))
-                    .category(new SimpleValue("a"), new CDATAValue("b"))
+                    .category(Category.of("a"), Category.of("b", "urn:taxonomy"))
                     .build();
             Item fromList = Item.builder()
                     .title(new SimpleValue("t"))
-                    .category(List.of(new SimpleValue("a"), new CDATAValue("b")))
+                    .category(List.of(Category.of("a"), Category.of("b", "urn:taxonomy")))
                     .build();
 
             assertEquals(
@@ -243,7 +244,7 @@ class RssOutputTest {
         void repeatedCategoryTextIsKept() throws JsonProcessingException {
             Item item = Item.builder()
                     .title(new SimpleValue("t"))
-                    .category(new SimpleValue("same"), new SimpleValue("same"))
+                    .category(Category.of("same"), Category.of("same"))
                     .build();
 
             String xml = RssOutput.outputString(feedWithItems(List.of(item)));

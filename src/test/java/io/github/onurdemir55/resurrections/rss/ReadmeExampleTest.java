@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.onurdemir55.resurrections.rss.feed.Channel;
 import io.github.onurdemir55.resurrections.rss.feed.Item;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
+import io.github.onurdemir55.resurrections.rss.feed.element.Category;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
 import io.github.onurdemir55.resurrections.rss.io.RssOutput;
@@ -34,7 +35,7 @@ class ReadmeExampleTest {
                 .title(new SimpleValue("sample title"))
                 .link(new CDATAValue("https://www.google.com/"))
                 .description(new CDATAValue("sample description"))
-                .category(new SimpleValue("category-1"), new SimpleValue("category-2"))
+                .category(Category.of("category-1"), Category.of("category-2"))
                 .pubDate(new SimpleValue(published))
                 .build();
 
