@@ -41,6 +41,29 @@ class NamespaceTest {
         }
 
         @Test
+        @DisplayName("getNamespaces exposes what was declared")
+        void getNamespacesReflectsDeclarations() {
+            Rss rss = Rss.builder()
+                    .namespace("content", "http://purl.org/rss/1.0/modules/content/")
+                    .namespace("dc", "http://purl.org/dc/elements/1.1/")
+                    .channel(channel().build())
+                    .build();
+
+            assertEquals(
+                    java.util.Map.of("content", "http://purl.org/rss/1.0/modules/content/",
+                            "dc", "http://purl.org/dc/elements/1.1/"),
+                    rss.getNamespaces());
+        }
+
+        @Test
+        @DisplayName("getNamespaces is empty, not null, when nothing was declared")
+        void getNamespacesEmptyByDefault() {
+            Rss rss = Rss.builder().channel(channel().build()).build();
+
+            assertTrue(rss.getNamespaces().isEmpty());
+        }
+
+        @Test
         @DisplayName("declarations keep the order they were made in")
         void orderIsStable() throws JsonProcessingException {
             String xml = RssOutput.outputString(Rss.builder()

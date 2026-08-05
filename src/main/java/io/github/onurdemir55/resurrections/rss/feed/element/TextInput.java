@@ -35,6 +35,11 @@ public record TextInput(@JacksonXmlProperty(localName = "title") Value title,
     }
 
     /**
+     * A text input with all four sub-elements as plain text. Unlike {@link Category},
+     * {@link Guid} or {@link Source}, there is no {@code cdata(...)} counterpart: this
+     * element has several text sub-elements, and a single factory cannot say which of them
+     * should be CDATA and which should not. To mix forms, construct the record directly.
+     *
      * @param title the label of the submit button
      * @param description explains the input box
      * @param name the name of the text field

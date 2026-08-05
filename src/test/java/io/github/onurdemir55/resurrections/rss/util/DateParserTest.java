@@ -88,4 +88,14 @@ class DateParserTest {
 
         assertEquals("Sat, 09 Oct 2021 20:38:50 GMT", formatted);
     }
+
+    @Test
+    @DisplayName("both overloads reject a null argument")
+    void nullRejected() {
+        assertAll(
+                () -> org.junit.jupiter.api.Assertions.assertThrows(NullPointerException.class,
+                        () -> DateParser.formatRfc822((Instant) null)),
+                () -> org.junit.jupiter.api.Assertions.assertThrows(NullPointerException.class,
+                        () -> DateParser.formatRfc822((Date) null)));
+    }
 }

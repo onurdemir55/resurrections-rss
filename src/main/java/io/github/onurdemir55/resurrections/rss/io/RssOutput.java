@@ -15,6 +15,7 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 
 /**
  * Renders an {@link Rss} feed as XML.
@@ -36,9 +37,11 @@ public final class RssOutput {
      *
      * @param rss the feed to render
      * @return the XML document
+     * @throws NullPointerException if {@code rss} is {@code null}
      * @throws JsonProcessingException if the feed cannot be serialized
      */
     public static String outputString(final Rss rss) throws JsonProcessingException {
+        Objects.requireNonNull(rss, "rss");
         return MAPPER.writeValueAsString(rss);
     }
 
@@ -48,9 +51,12 @@ public final class RssOutput {
      *
      * @param rss the feed to render
      * @param out where to write
+     * @throws NullPointerException if {@code rss} or {@code out} is {@code null}
      * @throws IOException if the feed cannot be serialized or written
      */
     public static void output(final Rss rss, final OutputStream out) throws IOException {
+        Objects.requireNonNull(rss, "rss");
+        Objects.requireNonNull(out, "out");
         MAPPER.writeValue(out, rss);
     }
 
@@ -63,9 +69,12 @@ public final class RssOutput {
      *
      * @param rss the feed to render
      * @param out where to write
+     * @throws NullPointerException if {@code rss} or {@code out} is {@code null}
      * @throws IOException if the feed cannot be serialized or written
      */
     public static void output(final Rss rss, final Writer out) throws IOException {
+        Objects.requireNonNull(rss, "rss");
+        Objects.requireNonNull(out, "out");
         MAPPER.writeValue(out, rss);
     }
 
@@ -74,9 +83,12 @@ public final class RssOutput {
      *
      * @param rss the feed to render
      * @param target the file to write, created or truncated
+     * @throws NullPointerException if {@code rss} or {@code target} is {@code null}
      * @throws IOException if the feed cannot be serialized or written
      */
     public static void output(final Rss rss, final Path target) throws IOException {
+        Objects.requireNonNull(rss, "rss");
+        Objects.requireNonNull(target, "target");
         try (OutputStream out = Files.newOutputStream(target)) {
             output(rss, out);
         }
@@ -90,6 +102,13 @@ public final class RssOutput {
         XmlMapper mapper = new XmlMapper(xmlFactory);
         mapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        // Jackson closes the target stream/writer by default after writing. The javadoc on
+        // the output(...) overloads promises the caller keeps ownership of what they passed
+        // in, so that default has to go, or "flushed but not closed" would be a lie: a caller
+        // using try-with-resources around their own stream would see it double-closed, and one
+        // reusing a stream for more writes afterward would get an IOException instead.
+        mapper.disable(SerializationFeature.CLOSE_CLOSEABLE);
+        mapper.getFactory().disable(com.fasterxml.jackson.core.JsonGenerator.Feature.AUTO_CLOSE_TARGET);
         return mapper;
     }
 

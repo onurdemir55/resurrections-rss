@@ -13,7 +13,6 @@ import io.github.onurdemir55.resurrections.rss.feed.element.Source;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import io.github.onurdemir55.resurrections.rss.util.Uris;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -87,6 +86,8 @@ public final class Item {
 
     /**
      * Extension elements, written with the prefixed name they were registered under.
+     * Package-private: this is a serialization hook for Jackson, not part of the public
+     * API. Use {@link #getCategory()} and the other typed getters to inspect a built item.
      *
      * @return the extension elements
      */
@@ -183,16 +184,25 @@ public final class Item {
         private Builder() {
         }
 
+        /**
+         * @param title the item title
+         */
         public Builder title(final Value title) {
             this.title = title;
             return this;
         }
 
+        /**
+         * @param link the item link
+         */
         public Builder link(final Value link) {
             this.link = link;
             return this;
         }
 
+        /**
+         * @param description the item description
+         */
         public Builder description(final Value description) {
             this.description = description;
             return this;
@@ -216,7 +226,7 @@ public final class Item {
          * @param category the categories
          */
         public Builder category(final List<Category> category) {
-            this.category = category;
+            this.category = category == null ? null : List.copyOf(category);
             return this;
         }
 
@@ -226,7 +236,7 @@ public final class Item {
          * @param category the categories
          */
         public Builder category(final Category... category) {
-            this.category = Arrays.asList(category);
+            this.category = List.of(category);
             return this;
         }
 
@@ -261,6 +271,9 @@ public final class Item {
             return this;
         }
 
+        /**
+         * @param pubDate the publication date
+         */
         public Builder pubDate(final Value pubDate) {
             this.pubDate = pubDate;
             return this;
@@ -276,11 +289,6 @@ public final class Item {
             return this;
         }
 
-        /**
-         * @return the item
-         * @throws IllegalStateException if neither a title nor a description is set
-         * @throws IllegalArgumentException if the link has no URI scheme
-         */
         /**
          * Adds an element from another namespace, which is the only kind of element the
          * specification permits beyond the ones it describes.
@@ -299,6 +307,11 @@ public final class Item {
             return this;
         }
 
+        /**
+         * @return the item
+         * @throws IllegalStateException if neither a title nor a description is set
+         * @throws IllegalArgumentException if the link has no URI scheme
+         */
         public Item build() {
             if (title == null && description == null) {
                 throw new IllegalStateException(

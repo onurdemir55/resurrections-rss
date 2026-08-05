@@ -43,6 +43,8 @@ public final class Rss {
     /**
      * The namespace declarations, as attributes. An element carrying a prefix is not
      * well-formed unless its prefix is declared, so these belong on the root element.
+     * Package-private: this is a serialization hook for Jackson, called once per write.
+     * Use {@link #getNamespaces()} to inspect a built document.
      *
      * @return {@code xmlns:prefix} to namespace URI
      */
@@ -66,6 +68,15 @@ public final class Rss {
      */
     public Channel getChannel() {
         return channel;
+    }
+    /**
+     * The declared namespaces, prefix to URI, without the {@code xmlns:} that appears in the
+     * serialized attribute name.
+     *
+     * @return the declared namespaces, empty if none were declared
+     */
+    public Map<String, String> getNamespaces() {
+        return namespaces;
     }
     /**
      * @return a new builder for {@code <rss>}
@@ -112,11 +123,19 @@ public final class Rss {
             return this;
         }
 
+        /**
+         * @param channel the channel
+         */
         public Builder channel(final Channel channel) {
             this.channel = channel;
             return this;
         }
 
+        /**
+         * @return the document
+         * @throws IllegalStateException if the version is not {@code "2.0"} or no channel
+         *     was set
+         */
         public Rss build() {
             if (!VERSION_2_0.equals(version)) {
                 throw new IllegalStateException(

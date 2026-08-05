@@ -51,7 +51,11 @@ public record Image(@JacksonXmlProperty(localName = "url") Value url,
     }
 
     /**
-     * An image with only the three required sub-elements.
+     * An image with only the three required sub-elements, all as plain text. Unlike
+     * {@link Category}, {@link Guid} or {@link Source}, there is no {@code cdata(...)}
+     * counterpart: an image has several text sub-elements, and a single factory cannot say
+     * which of them should be CDATA and which should not. To mix forms, or to use CDATA at
+     * all, construct the record directly or use {@link #withDescription(Value)}.
      *
      * @param url the url of the image
      * @param title describes the image

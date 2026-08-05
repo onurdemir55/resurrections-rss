@@ -251,6 +251,12 @@ class ChannelElementsTest {
                     () -> assertEquals(Day.MONDAY, Day.from(java.time.DayOfWeek.MONDAY)),
                     () -> assertEquals(Day.SUNDAY, Day.from(java.time.DayOfWeek.SUNDAY)));
         }
+
+        @Test
+        @DisplayName("Day.from rejects a null DayOfWeek")
+        void fromRejectsNull() {
+            assertThrows(NullPointerException.class, () -> Day.from(null));
+        }
     }
 
     @Test

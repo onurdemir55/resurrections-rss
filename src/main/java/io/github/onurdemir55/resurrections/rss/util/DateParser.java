@@ -5,6 +5,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Formats dates the way RSS 2.0 wants them.
@@ -32,8 +33,10 @@ public final class DateParser {
      *
      * @param instant the instant to format
      * @return for example {@code Sat, 07 Sep 2002 00:00:01 GMT}
+     * @throws NullPointerException if {@code instant} is {@code null}
      */
     public static String formatRfc822(final Instant instant) {
+        Objects.requireNonNull(instant, "instant");
         return RFC_822.format(instant.atOffset(ZoneOffset.UTC));
     }
 
@@ -42,8 +45,10 @@ public final class DateParser {
      *
      * @param date the date to format
      * @return for example {@code Sat, 07 Sep 2002 00:00:01 GMT}
+     * @throws NullPointerException if {@code date} is {@code null}
      */
     public static String formatRfc822(final Date date) {
+        Objects.requireNonNull(date, "date");
         return formatRfc822(date.toInstant());
     }
 }

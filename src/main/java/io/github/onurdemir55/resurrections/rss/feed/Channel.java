@@ -16,7 +16,6 @@ import io.github.onurdemir55.resurrections.rss.feed.element.TextInput;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import io.github.onurdemir55.resurrections.rss.util.Uris;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -140,6 +139,8 @@ public final class Channel {
 
     /**
      * Extension elements, written with the prefixed name they were registered under.
+     * Package-private: this is a serialization hook for Jackson, not part of the public
+     * API. Use {@link #getCategory()} and the other typed getters to inspect a built channel.
      *
      * @return the extension elements
      */
@@ -150,7 +151,9 @@ public final class Channel {
 
     /**
      * @return whether this channel carries an Atom element, and so needs the Atom namespace
-     *     declared on the document
+     *     declared on the document. Called by {@link Rss.Builder#build()}, which declares
+     *     {@code xmlns:atom} automatically when this is {@code true} and no explicit
+     *     declaration for that prefix was already made.
      */
     boolean usesAtom() {
         return atomLink != null;
@@ -321,16 +324,25 @@ public final class Channel {
         private Builder() {
         }
 
+        /**
+         * @param title the channel title
+         */
         public Builder title(final Value title) {
             this.title = title;
             return this;
         }
 
+        /**
+         * @param link the channel link
+         */
         public Builder link(final Value link) {
             this.link = link;
             return this;
         }
 
+        /**
+         * @param description the channel description
+         */
         public Builder description(final Value description) {
             this.description = description;
             return this;
@@ -406,6 +418,9 @@ public final class Channel {
             return this;
         }
 
+        /**
+         * @param pubDate the publication date for the content in the channel
+         */
         public Builder pubDate(final Value pubDate) {
             this.pubDate = pubDate;
             return this;
@@ -427,7 +442,7 @@ public final class Channel {
          * @param category the categories
          */
         public Builder category(final List<Category> category) {
-            this.category = category;
+            this.category = category == null ? null : List.copyOf(category);
             return this;
         }
 
@@ -437,7 +452,7 @@ public final class Channel {
          * @param category the categories
          */
         public Builder category(final Category... category) {
-            this.category = Arrays.asList(category);
+            this.category = List.of(category);
             return this;
         }
 
@@ -532,8 +547,11 @@ public final class Channel {
             return this;
         }
 
+        /**
+         * @param items the items in this channel
+         */
         public Builder items(final List<Item> items) {
-            this.items = items;
+            this.items = items == null ? null : List.copyOf(items);
             return this;
         }
 
@@ -543,7 +561,7 @@ public final class Channel {
          * @param items the items
          */
         public Builder items(final Item... items) {
-            this.items = Arrays.asList(items);
+            this.items = List.of(items);
             return this;
         }
 

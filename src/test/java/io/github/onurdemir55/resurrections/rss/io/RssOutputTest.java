@@ -24,6 +24,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -316,6 +317,77 @@ class RssOutputTest {
             String xml = RssOutput.outputString(rss);
 
             assertTrue(xml.contains("<rss version=\"2.0\">"), () -> xml);
+        }
+    }
+
+    @Nested
+    @DisplayName("Null arguments")
+    class NullArguments {
+
+        @Test
+        @DisplayName("outputString rejects a null feed")
+        void outputStringRejectsNull() {
+            assertThrows(NullPointerException.class, () -> RssOutput.outputString(null));
+        }
+
+        @Test
+        @DisplayName("the OutputStream, Writer and Path overloads reject null arguments")
+        void outputOverloadsRejectNull() throws IOException {
+            Rss rss = feedWithTitle(new SimpleValue("t"));
+
+            assertAll(
+                    () -> assertThrows(NullPointerException.class,
+                            () -> RssOutput.output(null, new ByteArrayOutputStream())),
+                    () -> assertThrows(NullPointerException.class,
+                            () -> RssOutput.output(rss, (java.io.OutputStream) null)),
+                    () -> assertThrows(NullPointerException.class,
+                            () -> RssOutput.output(null, new StringWriter())),
+                    () -> assertThrows(NullPointerException.class,
+                            () -> RssOutput.output(rss, (java.io.Writer) null)),
+                    () -> assertThrows(NullPointerException.class,
+                            () -> RssOutput.output(null, Path.of("x"))),
+                    () -> assertThrows(NullPointerException.class,
+                            () -> RssOutput.output(rss, (Path) null)));
+        }
+
+        @Test
+        @DisplayName("output(Rss, OutputStream) does not close the caller's stream")
+        void outputStreamIsNotClosed() throws IOException {
+            Rss rss = feedWithTitle(new SimpleValue("t"));
+            class TrackingStream extends ByteArrayOutputStream {
+                boolean closed;
+
+                @Override
+                public void close() throws IOException {
+                    closed = true;
+                    super.close();
+                }
+            }
+            TrackingStream out = new TrackingStream();
+
+            RssOutput.output(rss, out);
+
+            assertFalse(out.closed);
+        }
+
+        @Test
+        @DisplayName("output(Rss, Writer) does not close the caller's writer")
+        void writerIsNotClosed() throws IOException {
+            Rss rss = feedWithTitle(new SimpleValue("t"));
+            class TrackingWriter extends StringWriter {
+                boolean closed;
+
+                @Override
+                public void close() throws IOException {
+                    closed = true;
+                    super.close();
+                }
+            }
+            TrackingWriter out = new TrackingWriter();
+
+            RssOutput.output(rss, out);
+
+            assertFalse(out.closed);
         }
     }
 

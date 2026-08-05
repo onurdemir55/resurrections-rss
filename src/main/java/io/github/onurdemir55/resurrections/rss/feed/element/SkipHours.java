@@ -26,7 +26,7 @@ public record SkipHours(@JacksonXmlElementWrapper(useWrapping = false)
     public static final int MAX_HOUR = 23;
 
     public SkipHours {
-        Objects.requireNonNull(hour, "skipHours needs at least one hour");
+        Objects.requireNonNull(hour, "the hour list cannot be null");
         if (hour.isEmpty()) {
             throw new IllegalArgumentException("skipHours needs at least one hour");
         }

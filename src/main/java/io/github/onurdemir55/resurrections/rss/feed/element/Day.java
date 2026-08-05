@@ -3,6 +3,7 @@ package io.github.onurdemir55.resurrections.rss.feed.element;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.time.DayOfWeek;
+import java.util.Objects;
 
 /**
  * A day name as {@code <skipDays>} spells it.
@@ -37,8 +38,10 @@ public enum Day {
     /**
      * @param dayOfWeek the day
      * @return the matching value
+     * @throws NullPointerException if {@code dayOfWeek} is {@code null}
      */
     public static Day from(final DayOfWeek dayOfWeek) {
+        Objects.requireNonNull(dayOfWeek, "dayOfWeek");
         return values()[dayOfWeek.getValue() - 1];
     }
 }

@@ -22,7 +22,7 @@ public record SkipDays(@JacksonXmlElementWrapper(useWrapping = false)
                        @JacksonXmlProperty(localName = "day") List<Day> day) {
 
     public SkipDays {
-        Objects.requireNonNull(day, "skipDays needs at least one day");
+        Objects.requireNonNull(day, "the day list cannot be null");
         if (day.isEmpty()) {
             throw new IllegalArgumentException("skipDays needs at least one day");
         }
@@ -30,7 +30,7 @@ public record SkipDays(@JacksonXmlElementWrapper(useWrapping = false)
         for (Day value : day) {
             Objects.requireNonNull(value, "a day cannot be null");
             if (!seen.add(value)) {
-                throw new IllegalArgumentException(value.label() + " is listed twice");
+                throw new IllegalArgumentException("day " + value.label() + " is listed twice");
             }
         }
         day = List.copyOf(day);
