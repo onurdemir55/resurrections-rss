@@ -11,6 +11,9 @@ Rss is an acronym for Really Simple Syndication. Resurrections-rss is a very eas
 RSS-2.0 feeds. This project code contains required mandatory and some optional rss elements. You are free to extend
 this. One more thing and biggest advantages is that Support CDATA and Plain Text.
 
+This is a producer, not a client: it builds and writes feeds, and does not parse an existing one. If you need to
+consume RSS, [Rome](http://rometools.github.io/rome/) does that well.
+
 ##### Why this project was needed ?
 
 Firstly I have to say that the best project about creating Rss feed is [Rome](http://rometools.github.io/rome/).
@@ -161,6 +164,10 @@ element name.
 `xmlns:atom` is declared without being asked for, because `atomLink` was used and a prefixed
 element without its declaration is not well-formed XML. Extension elements take a `Value`,
 so they choose plain text or CDATA like everything else.
+
+`Rss`, `Channel` and `Item` also expose a getter for every element, so a feed you built can
+be inspected afterwards. Reading an existing feed, however, is out of scope; see
+[Why this project was needed](#why-this-project-was-needed-) above.
 
 ---
 
