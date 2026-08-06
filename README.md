@@ -108,14 +108,14 @@ library exists to let you make:
         String published = DateParser.formatRfc822(Instant.parse("2026-02-19T08:30:00Z"));
 
         Item item = Item.builder()
-                        .title(new PlainValue("Aurora Foods beats forecasts & lifts its dividend"))
-                        .link(new PlainValue("https://example.com/2026/02/aurora-foods-dividend"))
+                        .title(new PlainValue("Onur Demir Holding beats forecasts & lifts its dividend"))
+                        .link(new PlainValue("https://example.com/2026/02/onur-demir-holding-dividend"))
                         .description(new CDATAValue(
                                 "<p>Full-year profit rose <b>18%</b> and the board raised the "
                                 + "dividend to <b>$1.24</b>. Read the "
-                                + "<a href=\"/2026/02/aurora-foods-dividend\">full report</a>.</p>"))
+                                + "<a href=\"/2026/02/onur-demir-holding-dividend\">full report</a>.</p>"))
                         .categories(Category.of("Earnings"), Category.of("Equities"))
-                        .guid(Guid.of("https://example.com/2026/02/aurora-foods-dividend", true))
+                        .guid(Guid.of("https://example.com/2026/02/onur-demir-holding-dividend", true))
                         .pubDate(new PlainValue(published))
                         .build();
 
@@ -146,12 +146,12 @@ library exists to let you make:
     <language>en-us</language>
     <pubDate>Thu, 19 Feb 2026 08:30:00 GMT</pubDate>
     <item>
-      <title>Aurora Foods beats forecasts &amp; lifts its dividend</title>
-      <link>https://example.com/2026/02/aurora-foods-dividend</link>
-      <description><![CDATA[<p>Full-year profit rose <b>18%</b> and the board raised the dividend to <b>$1.24</b>. Read the <a href="/2026/02/aurora-foods-dividend">full report</a>.</p>]]></description>
+      <title>Onur Demir Holding beats forecasts &amp; lifts its dividend</title>
+      <link>https://example.com/2026/02/onur-demir-holding-dividend</link>
+      <description><![CDATA[<p>Full-year profit rose <b>18%</b> and the board raised the dividend to <b>$1.24</b>. Read the <a href="/2026/02/onur-demir-holding-dividend">full report</a>.</p>]]></description>
       <category>Earnings</category>
       <category>Equities</category>
-      <guid isPermaLink="true">https://example.com/2026/02/aurora-foods-dividend</guid>
+      <guid isPermaLink="true">https://example.com/2026/02/onur-demir-holding-dividend</guid>
       <pubDate>Thu, 19 Feb 2026 08:30:00 GMT</pubDate>
     </item>
   </channel>
