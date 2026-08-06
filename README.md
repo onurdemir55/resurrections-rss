@@ -20,12 +20,16 @@ consume RSS, [Rome](http://rometools.github.io/rome/) does that well.
 
 ##### Why this project was needed ?
 
-Firstly I have to say that the best project about creating Rss feed is [Rome](http://rometools.github.io/rome/).
-Literally they did a great job. Congratulations to the whole contributors. Just one more improvement that we needed.
-Just CDATA. Sorry but Rome not support that :(
+Firstly I have to say that the best project about creating an RSS feed is [Rome](http://rometools.github.io/rome/).
+They did a great job, and for almost everyone building a feed in Java, Rome is the right answer. Just one thing
+was missing for what I needed: CDATA on the elements the specification actually points at for markup, like
+`description`. Rome writes exactly one CDATA section — `content:encoded`, hardcoded in its content module — and
+escapes everything else, `description` included. That is a fair scope for a library that size; it just was not
+the scope I needed.
 
-If your output content is HTML, CDATA output more readable. (Encoded format is not preferable). Some News Editors,
-checks the Rss News output manually, selects and decides _item_. So some customers can expect to see CDATA output.
+If your output content is HTML, a CDATA section is what a reader shows unescaped, tags and all, instead of
+entity-encoded markup a person has to decode by eye. Some news editors check the RSS output manually before an
+item goes out, so this is not only about what a parser accepts — it is about what a reader shows.
 
 ### Installation
 
