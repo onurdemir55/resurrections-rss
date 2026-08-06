@@ -95,19 +95,31 @@ public final class Rss {
          * The prefix becomes part of an {@code xmlns:} attribute name. An attribute value is
          * escaped on the way out, but a name is not, so the prefix is checked here rather
          * than allowed to break the document later.
+         * <p>
+         * The URI is checked for being blank, and only that. A binding that carries a prefix
+         * may not be empty - a parser refuses {@code xmlns:dc=""} outright - and a URI of
+         * nothing but spaces is the same mistake with a space in it. What the URI otherwise
+         * contains is not this library's business: it is written as an attribute value, so it
+         * is escaped, and a relative one is unusual rather than invalid.
          *
          * @param prefix the prefix used on element names, for example {@code content}
          * @param uri the namespace URI
          * @return this builder
          * @throws NullPointerException if either argument is {@code null}
          * @throws IllegalArgumentException if the prefix cannot be an XML name, or is one
-         *     XML reserves
+         *     XML reserves, or the URI is blank
          */
         public Builder namespace(final String prefix, final String uri) {
+            Objects.requireNonNull(uri, "a namespace needs a URI");
+            if (uri.isBlank()) {
+                throw new IllegalArgumentException(
+                        "the namespace URI for prefix \"" + prefix + "\" is blank; a namespace "
+                                + "binding that carries a prefix cannot be empty");
+            }
             this.namespaces.put(
                     XmlNames.requireNamespacePrefix(
                             Objects.requireNonNull(prefix, "a namespace needs a prefix")),
-                    Objects.requireNonNull(uri, "a namespace needs a URI"));
+                    uri);
             return this;
         }
 

@@ -62,6 +62,19 @@ no compatibility to preserve.
   document no parser would accept. A name assembled from someone else's input could have put
   arbitrary markup into the feed. Names are now checked when the feed is built, and `xml` and
   `xmlns` are refused as namespace prefixes because XML reserves them.
+
+  The first version of that check asked `Character.isLetter`, which is a Unicode category test
+  and not the production XML gives. Five characters were found that it accepted and that a
+  strict parser then refused: `U+00AA` and `U+00B5`, which no edition of XML allows in a name,
+  and `U+02B0`, `U+2113` and `U+FF10`, which the fifth edition added and the parser in the JDK
+  still rejects. Names are therefore held to ASCII letters, digits, hyphens, dots and
+  underscores. That is narrower than the specification on purpose: matching it exactly would
+  mean emitting feeds that a very widely deployed reader will not parse, and every extension
+  module in use spells its names in ASCII regardless. Element text is not restricted this way.
+- **A blank namespace URI is refused.** `namespace("dc", "")` was accepted and produced
+  `xmlns:dc=""`, which a parser rejects outright: XML lets the default namespace be undeclared
+  that way and gives a prefixed binding no equivalent. Found by auditing the builders against a
+  strict parser rather than against the tests.
 - **An extension element must now have a declared namespace prefix.** Calling
   `.extension("dc:creator", ...)` without `.namespace("dc", ...)` used to produce a feed with
   no `xmlns:dc` on it: not well-formed XML, built and written without complaint, and refused

@@ -93,6 +93,32 @@ class NamespaceDeclarationTest {
             assertThrows(IllegalArgumentException.class,
                     () -> Rss.builder().namespace("xml", "http://example.com/ns"));
         }
+
+        /**
+         * A namespace binding that carries a prefix cannot be empty. XML allows
+         * {@code xmlns=""} to undeclare the default namespace and nothing equivalent for a
+         * prefixed one, so {@code xmlns:dc=""} is refused outright by a parser. This was
+         * found by an audit: the builder accepted it and the feed was rejected on arrival.
+         */
+        @Test
+        @DisplayName("a blank namespace URI, which a parser refuses")
+        void blankUri() {
+            assertThrows(IllegalArgumentException.class,
+                    () -> Rss.builder().namespace("dc", ""));
+            assertThrows(IllegalArgumentException.class,
+                    () -> Rss.builder().namespace("dc", "   "));
+            assertThrows(NullPointerException.class,
+                    () -> Rss.builder().namespace("dc", null));
+        }
+
+        @Test
+        @DisplayName("but a URI without a scheme is allowed, being unusual rather than invalid")
+        void relativeUriIsAllowed() {
+            assertDoesNotThrow(() -> Rss.builder()
+                    .namespace("dc", "purl.org/dc")
+                    .channel(channel().extension("dc:x", new SimpleValue("v")).build())
+                    .build());
+        }
     }
 
     @Nested

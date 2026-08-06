@@ -75,8 +75,9 @@ public final class XmlNames {
     }
 
     /**
-     * A name with no colon in it. The rule is the one XML uses: a letter or underscore to
-     * begin with, then letters, digits, hyphens, dots and underscores.
+     * A name with no colon in it. The rule is the {@code NameStartChar} and {@code NameChar}
+     * productions XML gives, not a Unicode category test: the two are close enough to be
+     * mistaken for each other and different enough to matter.
      */
     private static void requireNcName(final String part, final String whole, final String what) {
         if (part.isEmpty()) {
@@ -84,23 +85,62 @@ public final class XmlNames {
                     what + " must not have an empty prefix or local name, but was \"" + whole + "\"");
         }
         if (!isNameStart(part.charAt(0))) {
-            throw new IllegalArgumentException(
-                    what + " must begin with a letter or underscore, but was \"" + whole + "\"");
+            throw new IllegalArgumentException(String.format(
+                    "%s must begin with a letter or underscore, but \"%s\" begins with U+%04X",
+                    what, whole, (int) part.charAt(0)));
         }
         for (int i = 1; i < part.length(); i++) {
             if (!isNamePart(part.charAt(i))) {
-                throw new IllegalArgumentException(
-                        what + " may only contain letters, digits, hyphens, dots and underscores, "
-                                + "but was \"" + whole + "\"");
+                throw new IllegalArgumentException(String.format(
+                        "%s may only contain letters, digits, hyphens, dots and underscores, "
+                                + "but \"%s\" contains U+%04X",
+                        what, whole, (int) part.charAt(i)));
             }
         }
     }
 
+    /**
+     * The {@code NameStartChar} production of XML, narrowed to ASCII.
+     * <p>
+     * Narrowed deliberately, and this is the interesting decision in the class. A generator is
+     * only useful if what it emits is accepted on the other side, and the two are not the same
+     * question as whether a name is legal. XML's fifth edition widened what may start a name;
+     * the parser that ships with the JDK implements the fourth, and rejects part of what the
+     * fifth added - {@code U+02B0}, {@code U+2113} and {@code U+FF10} were all measured being
+     * written happily here and then refused by {@code DocumentBuilder}. Matching the current
+     * edition exactly would mean knowingly producing feeds that a very widely deployed reader
+     * will not parse.
+     * <p>
+     * So names are held to the subset every parser agrees on. Nothing is lost in practice: an
+     * extension element name comes from a published module and every module in use spells its
+     * names in ASCII - dc, content, itunes, media, slash, sy, georss, wfw, admin. A caller who
+     * wants a name outside this gets a clear refusal rather than a feed that some readers drop.
+     * <p>
+     * This restriction is on names only. Element text may contain any character XML can
+     * represent, which is the whole point of {@link XmlText}.
+     *
+     * @see <a href="https://www.w3.org/TR/xml/#NT-NameStartChar">XML 1.0, NameStartChar</a>
+     */
     private static boolean isNameStart(final char c) {
-        return Character.isLetter(c) || c == '_';
+        return c >= 'A' && c <= 'Z'
+                || c >= 'a' && c <= 'z'
+                || c == '_';
     }
 
+    /**
+     * The {@code NameChar} production, narrowed the same way: what a name may start with, plus
+     * the hyphen, the dot and the ASCII digits.
+     * <p>
+     * Not every digit Unicode knows about. A fullwidth zero is a digit to
+     * {@link Character#isLetterOrDigit}, which is what this used to ask, and is not a character
+     * the JDK's parser will accept in a name.
+     *
+     * @see <a href="https://www.w3.org/TR/xml/#NT-NameChar">XML 1.0, NameChar</a>
+     */
     private static boolean isNamePart(final char c) {
-        return Character.isLetterOrDigit(c) || c == '-' || c == '.' || c == '_';
+        return isNameStart(c)
+                || c >= '0' && c <= '9'
+                || c == '-'
+                || c == '.';
     }
 }

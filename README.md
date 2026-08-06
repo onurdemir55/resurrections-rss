@@ -206,10 +206,15 @@ What is checked:
   a value or be empty
 * elements the specification marks required cannot be `null`, and neither can element text.
   To leave an element out of the feed, do not set it.
-* an extension or namespace name has to be a legal XML name, and `xml` and `xmlns` cannot be
-  declared as prefixes because XML reserves them. Element text is escaped on the way out, but
-  a name is written as markup, so an unchecked name would not produce an escaped oddity but a
-  broken document
+* an extension or namespace name has to be spelled in ASCII letters, digits, hyphens, dots and
+  underscores, and `xml` and `xmlns` cannot be declared as prefixes because XML reserves them.
+  This is narrower than XML allows, on purpose: the parser that ships with the JDK refuses some
+  names the current edition of XML permits, so matching the specification exactly would mean
+  emitting feeds a common reader will not parse. Every extension module in use — `dc`,
+  `content`, `itunes`, `media`, `slash`, `sy`, `georss`, `wfw`, `admin` — is ASCII anyway.
+  Element *text* is unrestricted; only names are. And a name matters more than text does:
+  text is escaped on the way out, but a name is written as markup, so an unchecked name would
+  not produce an escaped oddity but a broken document
 * an extension element has to carry a namespace prefix that was declared on the document. This
   is checked by `Rss.builder().build()`, the one place that knows both the prefixes in use and
   the declarations, and it is worth checking because the mistake is otherwise silent: the feed
