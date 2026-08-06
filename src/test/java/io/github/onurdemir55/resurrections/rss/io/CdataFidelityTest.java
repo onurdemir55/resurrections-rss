@@ -83,7 +83,7 @@ class CdataFidelityTest {
     }
 
     /**
-     * Text where the whitespace is the content: an aligned table, a {@code <pre>} block, an
+     * Text where the whitespace is the content: an aligned table, a preformatted block, an
      * indented listing. A feed of market data or release notes carries these, and if a column
      * moves by one space the value is wrong on the page even though nothing threw.
      * <p>
