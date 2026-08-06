@@ -1,6 +1,6 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import io.github.onurdemir55.resurrections.rss.util.Uris;
 
@@ -58,7 +58,7 @@ public record Image(Value url,
      * @return the image
      */
     public static Image of(final String url, final String title, final String link) {
-        return new Image(new SimpleValue(url), new SimpleValue(title), new SimpleValue(link),
+        return new Image(new PlainValue(url), new PlainValue(title), new PlainValue(link),
                 null, null, null);
     }
 

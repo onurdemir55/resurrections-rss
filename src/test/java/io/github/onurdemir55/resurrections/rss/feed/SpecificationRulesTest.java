@@ -4,7 +4,7 @@ import io.github.onurdemir55.resurrections.rss.feed.element.Enclosure;
 import io.github.onurdemir55.resurrections.rss.feed.element.Image;
 import io.github.onurdemir55.resurrections.rss.feed.element.Source;
 import io.github.onurdemir55.resurrections.rss.feed.element.TextInput;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -32,23 +32,23 @@ class SpecificationRulesTest {
         void eachIsRequired() {
             assertAll(
                     () -> assertMissing("title", Channel.builder()
-                            .link(new SimpleValue("https://example.com/"))
-                            .description(new SimpleValue("d"))),
+                            .link(new PlainValue("https://example.com/"))
+                            .description(new PlainValue("d"))),
                     () -> assertMissing("link", Channel.builder()
-                            .title(new SimpleValue("t"))
-                            .description(new SimpleValue("d"))),
+                            .title(new PlainValue("t"))
+                            .description(new PlainValue("d"))),
                     () -> assertMissing("description", Channel.builder()
-                            .title(new SimpleValue("t"))
-                            .link(new SimpleValue("https://example.com/"))));
+                            .title(new PlainValue("t"))
+                            .link(new PlainValue("https://example.com/"))));
         }
 
         @Test
         @DisplayName("a channel with all three builds")
         void allThreePresent() {
             assertDoesNotThrow(() -> Channel.builder()
-                    .title(new SimpleValue("t"))
-                    .link(new SimpleValue("https://example.com/"))
-                    .description(new SimpleValue("d"))
+                    .title(new PlainValue("t"))
+                    .link(new PlainValue("https://example.com/"))
+                    .description(new PlainValue("d"))
                     .build());
         }
 
@@ -68,8 +68,8 @@ class SpecificationRulesTest {
         void neitherIsRejected() {
             IllegalStateException thrown = assertThrows(IllegalStateException.class,
                     () -> Item.builder()
-                            .link(new SimpleValue("https://example.com/item"))
-                            .pubDate(new SimpleValue("Sat, 07 Sep 2002 00:00:01 GMT"))
+                            .link(new PlainValue("https://example.com/item"))
+                            .pubDate(new PlainValue("Sat, 07 Sep 2002 00:00:01 GMT"))
                             .build());
 
             assertTrue(thrown.getMessage().contains("title"), thrown::getMessage);
@@ -80,9 +80,9 @@ class SpecificationRulesTest {
         void eitherIsEnough() {
             assertAll(
                     () -> assertDoesNotThrow(() -> Item.builder()
-                            .title(new SimpleValue("t")).build()),
+                            .title(new PlainValue("t")).build()),
                     () -> assertDoesNotThrow(() -> Item.builder()
-                            .description(new SimpleValue("d")).build()));
+                            .description(new PlainValue("d")).build()));
         }
     }
 
@@ -122,9 +122,9 @@ class SpecificationRulesTest {
         void channelLink() {
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class,
                     () -> Channel.builder()
-                            .title(new SimpleValue("t"))
-                            .link(new SimpleValue("www.example.com"))
-                            .description(new SimpleValue("d"))
+                            .title(new PlainValue("t"))
+                            .link(new PlainValue("www.example.com"))
+                            .description(new PlainValue("d"))
                             .build());
 
             assertTrue(thrown.getMessage().contains("scheme"), thrown::getMessage);
@@ -134,8 +134,8 @@ class SpecificationRulesTest {
         @DisplayName("an item link without a scheme is rejected")
         void itemLink() {
             assertThrows(IllegalArgumentException.class, () -> Item.builder()
-                    .title(new SimpleValue("t"))
-                    .link(new SimpleValue("example.com/item"))
+                    .title(new PlainValue("t"))
+                    .link(new PlainValue("example.com/item"))
                     .build());
         }
 
@@ -175,9 +175,9 @@ class SpecificationRulesTest {
 
         private static Channel channelWithLink(final String link) {
             return Channel.builder()
-                    .title(new SimpleValue("t"))
-                    .link(new SimpleValue(link))
-                    .description(new SimpleValue("d"))
+                    .title(new PlainValue("t"))
+                    .link(new PlainValue(link))
+                    .description(new PlainValue("d"))
                     .build();
         }
     }
@@ -210,9 +210,9 @@ class SpecificationRulesTest {
 
     private static Channel channel() {
         return Channel.builder()
-                .title(new SimpleValue("t"))
-                .link(new SimpleValue("https://example.com/"))
-                .description(new SimpleValue("d"))
+                .title(new PlainValue("t"))
+                .link(new PlainValue("https://example.com/"))
+                .description(new PlainValue("d"))
                 .build();
     }
 }

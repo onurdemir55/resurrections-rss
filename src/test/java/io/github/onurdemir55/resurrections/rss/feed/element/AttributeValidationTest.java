@@ -1,6 +1,6 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -76,7 +76,7 @@ class AttributeValidationTest {
                 () -> assertDoesNotThrow(() -> Category.of("Tech", "Syndic8")),
                 () -> assertDoesNotThrow(() -> Category.of("Tech")),
                 () -> assertDoesNotThrow(() -> AtomLink.of("https://example.com/", "alternate")),
-                () -> assertDoesNotThrow(() -> new Category(new SimpleValue("Tech"), null)),
+                () -> assertDoesNotThrow(() -> new Category(new PlainValue("Tech"), null)),
                 () -> assertDoesNotThrow(
                         () -> Cloud.of("rpc.example.com", 80, "/RPC2", "notify", "xml-rpc")));
     }

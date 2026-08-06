@@ -6,7 +6,7 @@ import io.github.onurdemir55.resurrections.rss.feed.Rss;
 import io.github.onurdemir55.resurrections.rss.feed.element.AtomLink;
 import io.github.onurdemir55.resurrections.rss.feed.element.Enclosure;
 import io.github.onurdemir55.resurrections.rss.feed.element.Guid;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import io.github.onurdemir55.resurrections.rss.io.RssOutput;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -88,17 +88,17 @@ class SpecificationSampleTest {
 
     private static Rss sample() {
         Channel channel = Channel.builder()
-                .title(new SimpleValue("NASA Space Station News"))
-                .link(new SimpleValue("http://www.nasa.gov/"))
-                .description(new SimpleValue("A RSS news feed containing the latest NASA press "
+                .title(new PlainValue("NASA Space Station News"))
+                .link(new PlainValue("http://www.nasa.gov/"))
+                .description(new PlainValue("A RSS news feed containing the latest NASA press "
                         + "releases on the International Space Station."))
-                .language(new SimpleValue("en-us"))
-                .pubDate(new SimpleValue("Tue, 10 Jun 2003 04:00:00 GMT"))
-                .lastBuildDate(new SimpleValue("Fri, 21 Jul 2023 09:04 EDT"))
-                .docs(new SimpleValue("https://www.rssboard.org/rss-specification"))
-                .generator(new SimpleValue("Blosxom 2.1.2"))
-                .managingEditor(new SimpleValue("neil.armstrong@example.com (Neil Armstrong)"))
-                .webMaster(new SimpleValue("sally.ride@example.com (Sally Ride)"))
+                .language(new PlainValue("en-us"))
+                .pubDate(new PlainValue("Tue, 10 Jun 2003 04:00:00 GMT"))
+                .lastBuildDate(new PlainValue("Fri, 21 Jul 2023 09:04 EDT"))
+                .docs(new PlainValue("https://www.rssboard.org/rss-specification"))
+                .generator(new PlainValue("Blosxom 2.1.2"))
+                .managingEditor(new PlainValue("neil.armstrong@example.com (Neil Armstrong)"))
+                .webMaster(new PlainValue("sally.ride@example.com (Sally Ride)"))
                 .atomLink(AtomLink.self(FEED_URL))
                 .items(items())
                 .build();
@@ -119,61 +119,61 @@ class SpecificationSampleTest {
 
         return List.of(
                 Item.builder()
-                        .title(new SimpleValue("Louisiana Students to Hear from NASA Astronauts "
+                        .title(new PlainValue("Louisiana Students to Hear from NASA Astronauts "
                                 + "Aboard Space Station"))
-                        .link(new SimpleValue(louisiana))
-                        .description(new SimpleValue("As part of the state's first Earth-to-space "
+                        .link(new PlainValue(louisiana))
+                        .description(new PlainValue("As part of the state's first Earth-to-space "
                                 + "call, students from Louisiana will have an opportunity soon to "
                                 + "hear from NASA astronauts aboard the International Space Station."))
-                        .pubDate(new SimpleValue("Fri, 21 Jul 2023 09:04 EDT"))
+                        .pubDate(new PlainValue("Fri, 21 Jul 2023 09:04 EDT"))
                         .guid(Guid.of(louisiana))
                         .build(),
                 // No title, only a description. The specification allows either one alone.
                 Item.builder()
-                        .description(new SimpleValue("NASA has selected KBR Wyle Services, LLC, of "
+                        .description(new PlainValue("NASA has selected KBR Wyle Services, LLC, of "
                                 + "Fulton, Maryland, to provide mission and flight crew operations "
                                 + "support for the International Space Station and future human "
                                 + "space exploration."))
-                        .link(new SimpleValue(contract))
-                        .pubDate(new SimpleValue("Thu, 20 Jul 2023 15:05 EDT"))
+                        .link(new PlainValue(contract))
+                        .pubDate(new PlainValue("Thu, 20 Jul 2023 15:05 EDT"))
                         .guid(Guid.of(contract))
                         .build(),
                 Item.builder()
-                        .title(new SimpleValue("NASA Expands Options for Spacewalking, "
+                        .title(new PlainValue("NASA Expands Options for Spacewalking, "
                                 + "Moonwalking Suits"))
-                        .link(new SimpleValue(suits))
-                        .description(new SimpleValue("NASA has awarded Axiom Space and Collins "
+                        .link(new PlainValue(suits))
+                        .description(new PlainValue("NASA has awarded Axiom Space and Collins "
                                 + "Aerospace task orders under existing contracts to advance "
                                 + "spacewalking capabilities in low Earth orbit, as well as "
                                 + "moonwalking services for Artemis missions."))
                         .enclosure(Enclosure.of("http://www.nasa.gov/sites/default/files/styles/"
                                 + "1x1_cardfeed/public/thumbnails/image/iss068e027836orig.jpg"
                                 + "?itok=ucNUaaGx", 1032272L, "image/jpeg"))
-                        .pubDate(new SimpleValue("Mon, 10 Jul 2023 14:14 EDT"))
+                        .pubDate(new PlainValue("Mon, 10 Jul 2023 14:14 EDT"))
                         .guid(Guid.of(suits))
                         .build(),
                 Item.builder()
-                        .title(new SimpleValue("NASA to Provide Coverage as Dragon Departs Station"))
-                        .link(new SimpleValue(dragon))
-                        .description(new SimpleValue("NASA is set to receive scientific research "
+                        .title(new PlainValue("NASA to Provide Coverage as Dragon Departs Station"))
+                        .link(new PlainValue(dragon))
+                        .description(new PlainValue("NASA is set to receive scientific research "
                                 + "samples and hardware as a SpaceX Dragon cargo resupply "
                                 + "spacecraft departs the International Space Station on "
                                 + "Thursday, June 29."))
-                        .pubDate(new SimpleValue("Tue, 20 May 2003 08:56:02 GMT"))
+                        .pubDate(new PlainValue("Tue, 20 May 2003 08:56:02 GMT"))
                         .guid(Guid.of(dragon))
                         .build(),
                 Item.builder()
-                        .title(new SimpleValue("NASA Plans Coverage of Roscosmos Spacewalk Outside "
+                        .title(new PlainValue("NASA Plans Coverage of Roscosmos Spacewalk Outside "
                                 + "Space Station"))
-                        .link(new SimpleValue(laundry))
-                        .description(new SimpleValue("Compared to earlier spacecraft, the "
+                        .link(new PlainValue(laundry))
+                        .description(new PlainValue("Compared to earlier spacecraft, the "
                                 + "International Space Station has many luxuries, but laundry "
                                 + "facilities are not one of them.  Instead, astronauts have "
                                 + "other options."))
                         .enclosure(Enclosure.of("http://www.nasa.gov/sites/default/files/styles/"
                                 + "1x1_cardfeed/public/thumbnails/image/spacex_dragon_june_29.jpg"
                                 + "?itok=nIYlBLme", 269866L, "image/jpeg"))
-                        .pubDate(new SimpleValue("Mon, 26 Jun 2023 12:45 EDT"))
+                        .pubDate(new PlainValue("Mon, 26 Jun 2023 12:45 EDT"))
                         .guid(Guid.of("http://liftoff.msfc.nasa.gov/2003/05/20.html#item570"))
                         .build());
     }

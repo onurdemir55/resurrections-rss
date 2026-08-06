@@ -5,7 +5,7 @@ import io.github.onurdemir55.resurrections.rss.feed.Item;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
 import io.github.onurdemir55.resurrections.rss.feed.element.AtomLink;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import io.github.onurdemir55.resurrections.rss.io.RssOutput;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,15 +29,15 @@ class ReadmeExtendingExampleTest {
     @DisplayName("the documented extension example produces exactly the documented feed")
     void readmeExtendingExample() {
         Item item = Item.builder()
-                .title(new SimpleValue("An item"))
+                .title(new PlainValue("An item"))
                 .extension("content:encoded", new CDATAValue("<p>rich <b>html</b></p>"))
-                .extension("dc:creator", new SimpleValue("Onur Demir"))
+                .extension("dc:creator", new PlainValue("Onur Demir"))
                 .build();
 
         Channel channel = Channel.builder()
-                .title(new SimpleValue("Sample"))
-                .link(new SimpleValue("https://example.com/"))
-                .description(new SimpleValue("Sample feed"))
+                .title(new PlainValue("Sample"))
+                .link(new PlainValue("https://example.com/"))
+                .description(new PlainValue("Sample feed"))
                 .atomLink(AtomLink.self("https://example.com/feed.xml"))
                 .items(item)
                 .build();

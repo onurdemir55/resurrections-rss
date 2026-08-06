@@ -4,7 +4,7 @@ import io.github.onurdemir55.resurrections.rss.feed.Channel;
 import io.github.onurdemir55.resurrections.rss.feed.Item;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import io.github.onurdemir55.resurrections.rss.io.RssOutput;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -31,7 +31,7 @@ class ItemElementsTest {
         @DisplayName("without isPermaLink the attribute is omitted, so readers assume true")
         void withoutAttribute() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .guid(Guid.of("http://some.server.com/weblogItem3207"))
                     .build());
 
@@ -45,7 +45,7 @@ class ItemElementsTest {
         @DisplayName("matches the specification example for a permalink")
         void permaLink() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .guid(Guid.of("http://inessential.com/2002/09/01.php#a2", true))
                     .build());
 
@@ -58,7 +58,7 @@ class ItemElementsTest {
         @DisplayName("isPermaLink false is emitted, because it differs from the default")
         void notAPermaLink() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .guid(Guid.of("opaque-id-42", false))
                     .build());
 
@@ -80,7 +80,7 @@ class ItemElementsTest {
         @DisplayName("matches the specification example, as an empty element")
         void specificationExample() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .enclosure(Enclosure.of(
                             "http://www.scripting.com/mp3s/weatherReportSuite.mp3",
                             12216320L,
@@ -111,7 +111,7 @@ class ItemElementsTest {
         @DisplayName("matches the specification example")
         void specificationExample() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .source(Source.of("Tomalak's Realm", "http://www.tomalak.org/links2.xml"))
                     .build());
 
@@ -140,7 +140,7 @@ class ItemElementsTest {
         @DisplayName("matches both specification examples")
         void specificationExamples() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .categories(
                             Category.of("Grateful Dead"),
                             Category.of("MSFT", "http://www.fool.com/cusips"))
@@ -157,7 +157,7 @@ class ItemElementsTest {
         @DisplayName("the same value under different domains is kept twice")
         void sameValueDifferentDomains() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .categories(Category.of("X", "urn:a"), Category.of("X", "urn:b"))
                     .build());
 
@@ -181,8 +181,8 @@ class ItemElementsTest {
         @DisplayName("author matches the specification example")
         void author() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
-                    .author(new SimpleValue("lawyer@boyer.net (Lawyer Boyer)"))
+                    .title(new PlainValue("t"))
+                    .author(new PlainValue("lawyer@boyer.net (Lawyer Boyer)"))
                     .build());
 
             assertTrue(xml.contains("<author>lawyer@boyer.net (Lawyer Boyer)</author>"), () -> xml);
@@ -192,8 +192,8 @@ class ItemElementsTest {
         @DisplayName("comments matches the specification example")
         void comments() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
-                    .comments(new SimpleValue("http://ekzemplo.com/entry/4403/comments"))
+                    .title(new PlainValue("t"))
+                    .comments(new PlainValue("http://ekzemplo.com/entry/4403/comments"))
                     .build());
 
             assertTrue(xml.contains(
@@ -204,7 +204,7 @@ class ItemElementsTest {
         @DisplayName("these elements still accept CDATA, since they carry no attributes")
         void cdataStillAvailable() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .comments(new CDATAValue("http://example.com/?a=1&b=2"))
                     .build());
 
@@ -221,7 +221,7 @@ class ItemElementsTest {
         @DisplayName("a category keeps its domain attribute alongside a CDATA value")
         void categoryWithDomainAndCdata() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .categories(Category.cdata("Top/News & <b>Sports</b>", "urn:taxonomy"))
                     .build());
 
@@ -234,7 +234,7 @@ class ItemElementsTest {
         @DisplayName("a source keeps its url attribute alongside a CDATA value")
         void sourceWithUrlAndCdata() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .source(Source.cdata("Tomalak's <i>Realm</i>", "http://www.tomalak.org/links2.xml"))
                     .build());
 
@@ -246,7 +246,7 @@ class ItemElementsTest {
         @DisplayName("a guid keeps its isPermaLink attribute alongside a CDATA value")
         void guidWithAttributeAndCdata() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .guid(Guid.cdata("urn:id:a&b", false))
                     .build());
 
@@ -258,7 +258,7 @@ class ItemElementsTest {
         @DisplayName("the cdata factories work without an attribute too")
         void cdataWithoutAttribute() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .categories(Category.cdata("Top/News & <b>Sports</b>"))
                     .guid(Guid.cdata("urn:id:a&b"))
                     .build());
@@ -273,7 +273,7 @@ class ItemElementsTest {
         @DisplayName("the plain form of the same element escapes instead of wrapping")
         void plainFormStillEscapes() {
             String xml = itemXml(Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .categories(Category.of("a & b"))
                     .build());
 
@@ -287,15 +287,15 @@ class ItemElementsTest {
     @DisplayName("all item elements are emitted in the order the specification lists them")
     void specificationElementOrder() {
         String xml = itemXml(Item.builder()
-                .title(new SimpleValue("title"))
-                .link(new SimpleValue("http://example.com/item"))
+                .title(new PlainValue("title"))
+                .link(new PlainValue("http://example.com/item"))
                 .description(new CDATAValue("<p>body</p>"))
-                .author(new SimpleValue("a@example.com"))
+                .author(new PlainValue("a@example.com"))
                 .categories(Category.of("cat"))
-                .comments(new SimpleValue("http://example.com/comments"))
+                .comments(new PlainValue("http://example.com/comments"))
                 .enclosure(Enclosure.of("http://example.com/a.mp3", 1234L, "audio/mpeg"))
                 .guid(Guid.of("urn:id:1", false))
-                .pubDate(new SimpleValue("Sat, 07 Sep 2002 00:00:01 GMT"))
+                .pubDate(new PlainValue("Sat, 07 Sep 2002 00:00:01 GMT"))
                 .source(Source.of("Origin", "http://origin.example.com/feed.xml"))
                 .build());
 
@@ -314,9 +314,9 @@ class ItemElementsTest {
     private static String itemXml(final Item item) {
         return RssOutput.outputString(Rss.builder()
                 .channel(Channel.builder()
-                        .title(new SimpleValue("feed"))
-                        .link(new SimpleValue("https://example.com/"))
-                        .description(new SimpleValue("a feed"))
+                        .title(new PlainValue("feed"))
+                        .link(new PlainValue("https://example.com/"))
+                        .description(new PlainValue("a feed"))
                         .items(List.of(item))
                         .build())
                 .build());

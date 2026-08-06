@@ -1,6 +1,6 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import io.github.onurdemir55.resurrections.rss.util.Uris;
 
@@ -45,7 +45,7 @@ public record TextInput(Value title,
      */
     public static TextInput of(final String title, final String description,
                                final String name, final String link) {
-        return new TextInput(new SimpleValue(title), new SimpleValue(description),
-                new SimpleValue(name), new SimpleValue(link));
+        return new TextInput(new PlainValue(title), new PlainValue(description),
+                new PlainValue(name), new PlainValue(link));
     }
 }

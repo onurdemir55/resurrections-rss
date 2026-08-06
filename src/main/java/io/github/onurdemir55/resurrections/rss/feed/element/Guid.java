@@ -1,7 +1,7 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 
 import java.util.Objects;
@@ -33,7 +33,7 @@ public record Guid(Value value,
      * @return the guid
      */
     public static Guid of(final String value) {
-        return new Guid(new SimpleValue(value), null);
+        return new Guid(new PlainValue(value), null);
     }
 
     /**
@@ -45,7 +45,7 @@ public record Guid(Value value,
      * @return the guid
      */
     public static Guid of(final String value, final boolean isPermaLink) {
-        return new Guid(new SimpleValue(value), isPermaLink);
+        return new Guid(new PlainValue(value), isPermaLink);
     }
 
     /**

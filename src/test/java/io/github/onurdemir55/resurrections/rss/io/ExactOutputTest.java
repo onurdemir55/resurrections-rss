@@ -3,7 +3,7 @@ package io.github.onurdemir55.resurrections.rss.io;
 import io.github.onurdemir55.resurrections.rss.feed.Channel;
 import io.github.onurdemir55.resurrections.rss.feed.Item;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -122,10 +122,10 @@ class ExactOutputTest {
 
         Rss rss = Rss.builder()
                 .channel(Channel.builder()
-                        .title(new SimpleValue("A title"))
-                        .link(new SimpleValue("https://example.com/"))
-                        .description(new SimpleValue("A description"))
-                        .items(Item.builder().title(new SimpleValue("An item")).build())
+                        .title(new PlainValue("A title"))
+                        .link(new PlainValue("https://example.com/"))
+                        .description(new PlainValue("A description"))
+                        .items(Item.builder().title(new PlainValue("An item")).build())
                         .build())
                 .build();
 

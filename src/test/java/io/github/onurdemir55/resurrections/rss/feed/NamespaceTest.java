@@ -2,7 +2,7 @@ package io.github.onurdemir55.resurrections.rss.feed;
 
 import io.github.onurdemir55.resurrections.rss.feed.element.AtomLink;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import io.github.onurdemir55.resurrections.rss.io.RssOutput;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -170,7 +170,7 @@ class NamespaceTest {
         void channelExtension() {
             String xml = RssOutput.outputString(Rss.builder()
                     .namespace("dc", "http://purl.org/dc/elements/1.1/")
-                    .channel(channel().extension("dc:language", new SimpleValue("en")).build())
+                    .channel(channel().extension("dc:language", new PlainValue("en")).build())
                     .build());
 
             assertTrue(xml.contains("<dc:language>en</dc:language>"), () -> xml);
@@ -180,7 +180,7 @@ class NamespaceTest {
         @DisplayName("an item extension can carry CDATA, like any other element")
         void itemExtensionWithCdata() {
             Item item = Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .extension("content:encoded", new CDATAValue("<p>rich <b>html</b></p>"))
                     .build();
 
@@ -198,10 +198,10 @@ class NamespaceTest {
         @DisplayName("extensions keep the order they were added in")
         void orderIsStable() {
             Item item = Item.builder()
-                    .title(new SimpleValue("t"))
-                    .extension("dc:creator", new SimpleValue("first"))
-                    .extension("dc:date", new SimpleValue("second"))
-                    .extension("dc:subject", new SimpleValue("third"))
+                    .title(new PlainValue("t"))
+                    .extension("dc:creator", new PlainValue("first"))
+                    .extension("dc:date", new PlainValue("second"))
+                    .extension("dc:subject", new PlainValue("third"))
                     .build();
 
             String xml = RssOutput.outputString(Rss.builder()
@@ -218,11 +218,11 @@ class NamespaceTest {
         void bothRequired() {
             assertAll(
                     () -> assertThrows(NullPointerException.class,
-                            () -> Item.builder().extension(null, new SimpleValue("x"))),
+                            () -> Item.builder().extension(null, new PlainValue("x"))),
                     () -> assertThrows(NullPointerException.class,
                             () -> Item.builder().extension("dc:creator", null)),
                     () -> assertThrows(NullPointerException.class,
-                            () -> Channel.builder().extension(null, new SimpleValue("x"))),
+                            () -> Channel.builder().extension(null, new PlainValue("x"))),
                     () -> assertThrows(NullPointerException.class,
                             () -> Channel.builder().extension("dc:creator", null)));
         }
@@ -230,9 +230,9 @@ class NamespaceTest {
 
     private static Channel.Builder channel() {
         return Channel.builder()
-                .title(new SimpleValue("Sample"))
-                .link(new SimpleValue("https://example.com/"))
-                .description(new SimpleValue("Sample feed"));
+                .title(new PlainValue("Sample"))
+                .link(new PlainValue("https://example.com/"))
+                .description(new PlainValue("Sample feed"));
     }
 
     private static int countOccurrences(final String haystack, final String needle) {

@@ -2,7 +2,7 @@ package io.github.onurdemir55.resurrections.rss.feed;
 
 import io.github.onurdemir55.resurrections.rss.feed.element.AtomLink;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import io.github.onurdemir55.resurrections.rss.io.RssOutput;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -36,8 +36,8 @@ class NamespaceDeclarationTest {
         void undeclaredOnItem() {
             Channel channel = channel()
                     .items(Item.builder()
-                            .title(new SimpleValue("an item"))
-                            .extension("dc:creator", new SimpleValue("Onur Demir"))
+                            .title(new PlainValue("an item"))
+                            .extension("dc:creator", new PlainValue("Onur Demir"))
                             .build())
                     .build();
 
@@ -51,7 +51,7 @@ class NamespaceDeclarationTest {
         @DisplayName("a channel extension whose prefix was never declared")
         void undeclaredOnChannel() {
             Channel channel = channel()
-                    .extension("dc:language", new SimpleValue("tr"))
+                    .extension("dc:language", new PlainValue("tr"))
                     .build();
 
             IllegalStateException thrown = assertThrows(IllegalStateException.class,
@@ -64,7 +64,7 @@ class NamespaceDeclarationTest {
         @DisplayName("a declaration for a different prefix does not help")
         void wrongPrefixDeclared() {
             Channel channel = channel()
-                    .extension("dc:language", new SimpleValue("tr"))
+                    .extension("dc:language", new PlainValue("tr"))
                     .build();
 
             assertThrows(IllegalStateException.class, () -> Rss.builder()
@@ -77,7 +77,7 @@ class NamespaceDeclarationTest {
         @DisplayName("an extension with no prefix at all, which the specification disallows")
         void noPrefix() {
             Channel channel = channel()
-                    .extension("mine", new SimpleValue("v"))
+                    .extension("mine", new PlainValue("v"))
                     .build();
 
             IllegalStateException thrown = assertThrows(IllegalStateException.class,
@@ -117,7 +117,7 @@ class NamespaceDeclarationTest {
         void relativeUriIsAllowed() {
             assertDoesNotThrow(() -> Rss.builder()
                     .namespace("dc", "purl.org/dc")
-                    .channel(channel().extension("dc:x", new SimpleValue("v")).build())
+                    .channel(channel().extension("dc:x", new PlainValue("v")).build())
                     .build());
         }
 
@@ -144,7 +144,7 @@ class NamespaceDeclarationTest {
             assertThrows(IllegalArgumentException.class, () -> {
                 Rss rss = Rss.builder()
                         .namespace("dc", "http://example.com/\u0001")
-                        .channel(channel().extension("dc:x", new SimpleValue("v")).build())
+                        .channel(channel().extension("dc:x", new PlainValue("v")).build())
                         .build();
                 RssOutput.output(rss, stream);
             });
@@ -162,9 +162,9 @@ class NamespaceDeclarationTest {
         @DisplayName("a declared prefix, on the channel and on an item")
         void declared() {
             Channel channel = channel()
-                    .extension("dc:language", new SimpleValue("tr"))
+                    .extension("dc:language", new PlainValue("tr"))
                     .items(Item.builder()
-                            .title(new SimpleValue("an item"))
+                            .title(new PlainValue("an item"))
                             .extension("content:encoded", new CDATAValue("<p>html</p>"))
                             .build())
                     .build();
@@ -244,7 +244,7 @@ class NamespaceDeclarationTest {
         void repeatableBuild() {
             Rss.Builder builder = Rss.builder()
                     .namespace("dc", "http://purl.org/dc/elements/1.1/")
-                    .channel(channel().extension("dc:language", new SimpleValue("tr")).build());
+                    .channel(channel().extension("dc:language", new PlainValue("tr")).build());
 
             assertEquals(RssOutput.outputString(builder.build()),
                     RssOutput.outputString(builder.build()));
@@ -253,9 +253,9 @@ class NamespaceDeclarationTest {
 
     private static Channel.Builder channel() {
         return Channel.builder()
-                .title(new SimpleValue("a title"))
-                .link(new SimpleValue("https://example.com/"))
-                .description(new SimpleValue("a description"));
+                .title(new PlainValue("a title"))
+                .link(new PlainValue("https://example.com/"))
+                .description(new PlainValue("a description"));
     }
 
     private static void assertAllOf(final String actual, final String... expected) {

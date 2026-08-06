@@ -3,7 +3,7 @@ package io.github.onurdemir55.resurrections.rss.feed.element;
 import io.github.onurdemir55.resurrections.rss.feed.Channel;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import io.github.onurdemir55.resurrections.rss.io.RssOutput;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -28,12 +28,12 @@ class ChannelElementsTest {
         @DisplayName("the optional text elements match the specification examples")
         void specificationExamples() {
             String xml = channelXml(base()
-                    .copyright(new SimpleValue("Copyright 2002, Spartanburg Herald-Journal"))
-                    .managingEditor(new SimpleValue("geo@herald.com (George Matesky)"))
-                    .webMaster(new SimpleValue("betty@herald.com (Betty Guernsey)"))
-                    .lastBuildDate(new SimpleValue("Sat, 07 Sep 2002 09:42:31 GMT"))
-                    .generator(new SimpleValue("MightyInHouse Content System v2.3"))
-                    .docs(new SimpleValue("https://www.rssboard.org/rss-specification"))
+                    .copyright(new PlainValue("Copyright 2002, Spartanburg Herald-Journal"))
+                    .managingEditor(new PlainValue("geo@herald.com (George Matesky)"))
+                    .webMaster(new PlainValue("betty@herald.com (Betty Guernsey)"))
+                    .lastBuildDate(new PlainValue("Sat, 07 Sep 2002 09:42:31 GMT"))
+                    .generator(new PlainValue("MightyInHouse Content System v2.3"))
+                    .docs(new PlainValue("https://www.rssboard.org/rss-specification"))
                     .ttl(60));
 
             assertAll(
@@ -117,13 +117,13 @@ class ChannelElementsTest {
         void requiredParts() {
             assertAll(
                     () -> assertThrows(NullPointerException.class,
-                            () -> new Image(null, new SimpleValue("t"), new SimpleValue("l"),
+                            () -> new Image(null, new PlainValue("t"), new PlainValue("l"),
                                     null, null, null)),
                     () -> assertThrows(NullPointerException.class,
-                            () -> new Image(new SimpleValue("u"), null, new SimpleValue("l"),
+                            () -> new Image(new PlainValue("u"), null, new PlainValue("l"),
                                     null, null, null)),
                     () -> assertThrows(NullPointerException.class,
-                            () -> new Image(new SimpleValue("u"), new SimpleValue("t"), null,
+                            () -> new Image(new PlainValue("u"), new PlainValue("t"), null,
                                     null, null, null)));
         }
     }
@@ -179,7 +179,7 @@ class ChannelElementsTest {
         @Test
         @DisplayName("all four sub-elements are required")
         void everythingIsRequired() {
-            SimpleValue set = new SimpleValue("x");
+            PlainValue set = new PlainValue("x");
 
             assertAll(
                     () -> assertThrows(NullPointerException.class,
@@ -289,19 +289,19 @@ class ChannelElementsTest {
     @DisplayName("all channel elements are emitted in the order the specification lists them")
     void specificationElementOrder() {
         String xml = channelXml(base()
-                .language(new SimpleValue("en-us"))
-                .copyright(new SimpleValue("Copyright"))
-                .managingEditor(new SimpleValue("editor@example.com"))
-                .webMaster(new SimpleValue("master@example.com"))
-                .pubDate(new SimpleValue("Sat, 07 Sep 2002 00:00:01 GMT"))
-                .lastBuildDate(new SimpleValue("Sat, 07 Sep 2002 09:42:31 GMT"))
+                .language(new PlainValue("en-us"))
+                .copyright(new PlainValue("Copyright"))
+                .managingEditor(new PlainValue("editor@example.com"))
+                .webMaster(new PlainValue("master@example.com"))
+                .pubDate(new PlainValue("Sat, 07 Sep 2002 00:00:01 GMT"))
+                .lastBuildDate(new PlainValue("Sat, 07 Sep 2002 09:42:31 GMT"))
                 .categories(Category.of("Newspapers"))
-                .generator(new SimpleValue("resurrections-rss"))
-                .docs(new SimpleValue("https://www.rssboard.org/rss-specification"))
+                .generator(new PlainValue("resurrections-rss"))
+                .docs(new PlainValue("https://www.rssboard.org/rss-specification"))
                 .cloud(Cloud.of("rpc.sys.com", 80, "/RPC2", "p", "xml-rpc"))
                 .ttl(60)
                 .image(Image.of("http://example.com/logo.png", "Logo", "http://example.com/"))
-                .rating(new SimpleValue("(PICS-1.1)"))
+                .rating(new PlainValue("(PICS-1.1)"))
                 .textInput(TextInput.of("Submit", "Search", "q", "http://example.com/search"))
                 .skipHours(SkipHours.of(0))
                 .skipDays(SkipDays.of(Day.SUNDAY)));
@@ -324,7 +324,7 @@ class ChannelElementsTest {
     void builderOverloadsAgree() {
         io.github.onurdemir55.resurrections.rss.feed.Item item =
                 io.github.onurdemir55.resurrections.rss.feed.Item.builder()
-                        .title(new SimpleValue("an item"))
+                        .title(new PlainValue("an item"))
                         .build();
 
         String fromVarargs = channelXml(base()
@@ -339,9 +339,9 @@ class ChannelElementsTest {
 
     private static Channel.Builder base() {
         return Channel.builder()
-                .title(new SimpleValue("GoUpstate.com News Headlines"))
-                .link(new SimpleValue("http://www.goupstate.com/"))
-                .description(new SimpleValue("The latest news from GoUpstate.com."));
+                .title(new PlainValue("GoUpstate.com News Headlines"))
+                .link(new PlainValue("http://www.goupstate.com/"))
+                .description(new PlainValue("The latest news from GoUpstate.com."));
     }
 
     private static String channelXml(final Channel.Builder channel) {

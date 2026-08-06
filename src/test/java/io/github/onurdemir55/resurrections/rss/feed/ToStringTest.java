@@ -1,7 +1,7 @@
 package io.github.onurdemir55.resurrections.rss.feed;
 
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,8 +42,8 @@ class ToStringTest {
     @DisplayName("an item is identified by its title")
     void itemWithTitle() {
         String text = Item.builder()
-                .title(new SimpleValue("a headline"))
-                .link(new SimpleValue("https://example.com/1"))
+                .title(new PlainValue("a headline"))
+                .link(new PlainValue("https://example.com/1"))
                 .build()
                 .toString();
 
@@ -108,12 +108,12 @@ class ToStringTest {
     private static Channel channel(final int items) {
         Item[] built = new Item[items];
         for (int i = 0; i < items; i++) {
-            built[i] = Item.builder().title(new SimpleValue("item " + i)).build();
+            built[i] = Item.builder().title(new PlainValue("item " + i)).build();
         }
         return Channel.builder()
-                .title(new SimpleValue("a title"))
-                .link(new SimpleValue("https://example.com/"))
-                .description(new SimpleValue("a description"))
+                .title(new PlainValue("a title"))
+                .link(new PlainValue("https://example.com/"))
+                .description(new PlainValue("a description"))
                 .items(built)
                 .build();
     }

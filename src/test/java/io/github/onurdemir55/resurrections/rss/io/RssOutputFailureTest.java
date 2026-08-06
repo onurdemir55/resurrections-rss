@@ -4,7 +4,7 @@ import io.github.onurdemir55.resurrections.rss.feed.Channel;
 import io.github.onurdemir55.resurrections.rss.feed.Item;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
 import io.github.onurdemir55.resurrections.rss.feed.element.Source;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -90,7 +90,7 @@ class RssOutputFailureTest {
         @Test
         @DisplayName("in element text")
         void text() {
-            assertThrows(IllegalArgumentException.class, () -> new SimpleValue("a\u0000b"));
+            assertThrows(IllegalArgumentException.class, () -> new PlainValue("a\u0000b"));
         }
 
         @Test
@@ -148,10 +148,10 @@ class RssOutputFailureTest {
     private static Rss feed() {
         return Rss.builder()
                 .channel(Channel.builder()
-                        .title(new SimpleValue("a title"))
-                        .link(new SimpleValue("https://example.com/"))
-                        .description(new SimpleValue("a description"))
-                        .items(Item.builder().title(new SimpleValue("an item")).build())
+                        .title(new PlainValue("a title"))
+                        .link(new PlainValue("https://example.com/"))
+                        .description(new PlainValue("a description"))
+                        .items(Item.builder().title(new PlainValue("an item")).build())
                         .build())
                 .build();
     }

@@ -9,10 +9,10 @@ package io.github.onurdemir55.resurrections.rss.feed.holder;
  * and it can only do that exhaustively while the set stays closed — a third implementation
  * would fall through to the plain branch and quietly lose its CDATA section.
  *
- * @see SimpleValue plain text, with XML special characters escaped
+ * @see PlainValue plain text, with XML special characters escaped
  * @see CDATAValue text wrapped in a CDATA section
  */
-public sealed interface Value permits SimpleValue, CDATAValue {
+public sealed interface Value permits PlainValue, CDATAValue {
 
     /**
      * The raw text content, without any XML escaping or CDATA wrapping applied.

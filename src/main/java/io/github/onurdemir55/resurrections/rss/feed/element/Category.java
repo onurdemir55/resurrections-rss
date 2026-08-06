@@ -1,7 +1,7 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import io.github.onurdemir55.resurrections.rss.util.XmlText;
 
@@ -34,7 +34,7 @@ public record Category(Value value,
      * @return the category
      */
     public static Category of(final String value) {
-        return new Category(new SimpleValue(value), null);
+        return new Category(new PlainValue(value), null);
     }
 
     /**
@@ -45,7 +45,7 @@ public record Category(Value value,
      * @return the category
      */
     public static Category of(final String value, final String domain) {
-        return new Category(new SimpleValue(value), domain);
+        return new Category(new PlainValue(value), domain);
     }
 
     /**

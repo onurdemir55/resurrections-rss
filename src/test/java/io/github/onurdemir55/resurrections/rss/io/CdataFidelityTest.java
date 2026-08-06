@@ -3,7 +3,7 @@ package io.github.onurdemir55.resurrections.rss.io;
 import io.github.onurdemir55.resurrections.rss.feed.Channel;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -77,8 +77,8 @@ class CdataFidelityTest {
     @Test
     @DisplayName("and plain text keeps its carriage returns too, as it always did")
     void plainTextUnchanged() {
-        assertEquals("a\r\nb", readBack(new SimpleValue("a\r\nb")));
-        assertEquals("a\rb", readBack(new SimpleValue("a\rb")));
+        assertEquals("a\r\nb", readBack(new PlainValue("a\r\nb")));
+        assertEquals("a\rb", readBack(new PlainValue("a\rb")));
     }
 
     /** Text with no carriage return must still be written as one unbroken section. */
@@ -111,8 +111,8 @@ class CdataFidelityTest {
         return RssOutput.outputString(Rss.builder()
                 .channel(Channel.builder()
                         .title(title)
-                        .link(new SimpleValue("https://example.com/"))
-                        .description(new SimpleValue("a description"))
+                        .link(new PlainValue("https://example.com/"))
+                        .description(new PlainValue("a description"))
                         .build())
                 .build());
     }

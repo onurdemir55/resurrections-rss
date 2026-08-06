@@ -82,7 +82,7 @@ An element's text is either plain or a CDATA section, and that is the whole deci
 
 ```java
         // plain text: XML special characters are escaped
-        Value plainText = new SimpleValue("Profit rose 18% & the dividend went up");
+        Value plainText = new PlainValue("Profit rose 18% & the dividend went up");
 
         // CDATA: markup stays readable
         Value cdata = new CDATAValue("<p>Profit rose <b>18%</b></p>");
@@ -108,25 +108,25 @@ library exists to let you make:
         String published = DateParser.formatRfc822(Instant.parse("2026-02-19T08:30:00Z"));
 
         Item item = Item.builder()
-                        .title(new SimpleValue("Aurora Foods beats forecasts & lifts its dividend"))
-                        .link(new SimpleValue("https://example.com/2026/02/aurora-foods-dividend"))
+                        .title(new PlainValue("Aurora Foods beats forecasts & lifts its dividend"))
+                        .link(new PlainValue("https://example.com/2026/02/aurora-foods-dividend"))
                         .description(new CDATAValue(
                                 "<p>Full-year profit rose <b>18%</b> and the board raised the "
                                 + "dividend to <b>$1.24</b>. Read the "
                                 + "<a href=\"/2026/02/aurora-foods-dividend\">full report</a>.</p>"))
                         .categories(Category.of("Earnings"), Category.of("Equities"))
                         .guid(Guid.of("https://example.com/2026/02/aurora-foods-dividend", true))
-                        .pubDate(new SimpleValue(published))
+                        .pubDate(new PlainValue(published))
                         .build();
 
         Channel channel = Channel.builder()
-                                 .title(new SimpleValue("Markets & Mornings"))
-                                 .link(new SimpleValue("https://example.com/"))
+                                 .title(new PlainValue("Markets & Mornings"))
+                                 .link(new PlainValue("https://example.com/"))
                                  .description(new CDATAValue(
                                          "<p>Good news from the markets, before your "
                                          + "<i>first coffee</i>.</p>"))
-                                 .language(new SimpleValue("en-us"))
-                                 .pubDate(new SimpleValue(published))
+                                 .language(new PlainValue("en-us"))
+                                 .pubDate(new PlainValue(published))
                                  .items(item)
                                  .build();
 
@@ -189,15 +189,15 @@ element name.
 
 ```java
         Item item = Item.builder()
-                        .title(new SimpleValue("An item"))
+                        .title(new PlainValue("An item"))
                         .extension("content:encoded", new CDATAValue("<p>rich <b>html</b></p>"))
-                        .extension("dc:creator", new SimpleValue("Onur Demir"))
+                        .extension("dc:creator", new PlainValue("Onur Demir"))
                         .build();
 
         Channel channel = Channel.builder()
-                                 .title(new SimpleValue("Sample"))
-                                 .link(new SimpleValue("https://example.com/"))
-                                 .description(new SimpleValue("Sample feed"))
+                                 .title(new PlainValue("Sample"))
+                                 .link(new PlainValue("https://example.com/"))
+                                 .description(new PlainValue("Sample feed"))
                                  // the RSS Best Practices Profile asks for this one
                                  .atomLink(AtomLink.self("https://example.com/feed.xml"))
                                  .items(item)
@@ -250,17 +250,17 @@ The rules the specification states are enforced when you build, not discovered l
 reader that refuses your feed. There is no lenient mode.
 
 ```java
-        Channel.builder().title(new SimpleValue("t")).build();
+        Channel.builder().title(new PlainValue("t")).build();
         // IllegalStateException: channel requires link; the specification lists
         // title, link and description as required elements
 
-        Item.builder().link(new SimpleValue("https://example.com/a")).build();
+        Item.builder().link(new PlainValue("https://example.com/a")).build();
         // IllegalStateException: an item requires a title or a description
 
         Channel.builder()
-               .title(new SimpleValue("t"))
-               .link(new SimpleValue("www.example.com"))
-               .description(new SimpleValue("d"))
+               .title(new PlainValue("t"))
+               .link(new PlainValue("www.example.com"))
+               .description(new PlainValue("d"))
                .build();
         // IllegalArgumentException: channel link must begin with a URI scheme
 ```

@@ -1,7 +1,7 @@
 package io.github.onurdemir55.resurrections.rss.util;
 
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -96,9 +96,9 @@ class XmlTextTest {
     class EnforcedAtConstruction {
 
         @Test
-        @DisplayName("SimpleValue rejects it")
+        @DisplayName("PlainValue rejects it")
         void simpleValue() {
-            assertThrows(IllegalArgumentException.class, () -> new SimpleValue("a\u0000b"));
+            assertThrows(IllegalArgumentException.class, () -> new PlainValue("a\u0000b"));
         }
 
         @Test
@@ -111,7 +111,7 @@ class XmlTextTest {
         @DisplayName("and both still accept everything a feed legitimately carries")
         void bothAcceptRealText() {
             assertEquals("<p>iyi 📡</p>", new CDATAValue("<p>iyi 📡</p>").value());
-            assertEquals("a & b", new SimpleValue("a & b").value());
+            assertEquals("a & b", new PlainValue("a & b").value());
         }
     }
 

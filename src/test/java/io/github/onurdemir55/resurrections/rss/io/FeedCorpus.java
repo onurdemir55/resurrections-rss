@@ -15,7 +15,7 @@ import io.github.onurdemir55.resurrections.rss.feed.element.SkipHours;
 import io.github.onurdemir55.resurrections.rss.feed.element.Source;
 import io.github.onurdemir55.resurrections.rss.feed.element.TextInput;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -111,21 +111,21 @@ final class FeedCorpus {
 
     private static Channel.Builder base() {
         return Channel.builder()
-                .title(new SimpleValue("T"))
-                .link(new SimpleValue("https://example.com/"))
-                .description(new SimpleValue("D"));
+                .title(new PlainValue("T"))
+                .link(new PlainValue("https://example.com/"))
+                .description(new PlainValue("D"));
     }
 
     private static Item.Builder baseItem() {
-        return Item.builder().title(new SimpleValue("I"));
+        return Item.builder().title(new PlainValue("I"));
     }
 
     private static void texts(final Emitter emit) {
         for (int i = 0; i < TEXTS.length; i++) {
             final String text = TEXTS[i];
-            emit.channel("text_plain_" + i, c -> c.description(new SimpleValue(text)));
+            emit.channel("text_plain_" + i, c -> c.description(new PlainValue(text)));
             emit.channel("text_cdata_" + i, c -> c.description(new CDATAValue(text)));
-            emit.channel("text_title_plain_" + i, c -> c.title(new SimpleValue(text)));
+            emit.channel("text_title_plain_" + i, c -> c.title(new PlainValue(text)));
             emit.channel("text_title_cdata_" + i, c -> c.title(new CDATAValue(text)));
         }
     }
@@ -133,20 +133,20 @@ final class FeedCorpus {
     private static List<Map.Entry<String, Consumer<Channel.Builder>>> channelShapes() {
         List<Map.Entry<String, Consumer<Channel.Builder>>> all = new ArrayList<>();
         all.add(Map.entry("language",
-                (Consumer<Channel.Builder>) c -> c.language(new SimpleValue("en"))));
-        all.add(Map.entry("copyright", c -> c.copyright(new SimpleValue("(c) 2026"))));
+                (Consumer<Channel.Builder>) c -> c.language(new PlainValue("en"))));
+        all.add(Map.entry("copyright", c -> c.copyright(new PlainValue("(c) 2026"))));
         all.add(Map.entry("managingEditor",
-                c -> c.managingEditor(new SimpleValue("e@example.com"))));
-        all.add(Map.entry("webMaster", c -> c.webMaster(new SimpleValue("w@example.com"))));
+                c -> c.managingEditor(new PlainValue("e@example.com"))));
+        all.add(Map.entry("webMaster", c -> c.webMaster(new PlainValue("w@example.com"))));
         all.add(Map.entry("pubDate",
-                c -> c.pubDate(new SimpleValue("Wed, 05 Aug 2026 20:00:00 GMT"))));
+                c -> c.pubDate(new PlainValue("Wed, 05 Aug 2026 20:00:00 GMT"))));
         all.add(Map.entry("lastBuildDate",
-                c -> c.lastBuildDate(new SimpleValue("Wed, 05 Aug 2026 20:00:00 GMT"))));
-        all.add(Map.entry("generator", c -> c.generator(new SimpleValue("gen"))));
-        all.add(Map.entry("docs", c -> c.docs(new SimpleValue("https://example.com/docs"))));
+                c -> c.lastBuildDate(new PlainValue("Wed, 05 Aug 2026 20:00:00 GMT"))));
+        all.add(Map.entry("generator", c -> c.generator(new PlainValue("gen"))));
+        all.add(Map.entry("docs", c -> c.docs(new PlainValue("https://example.com/docs"))));
         all.add(Map.entry("ttl", c -> c.ttl(60)));
         all.add(Map.entry("ttlZero", c -> c.ttl(0)));
-        all.add(Map.entry("rating", c -> c.rating(new SimpleValue("(PICS-1.1)"))));
+        all.add(Map.entry("rating", c -> c.rating(new PlainValue("(PICS-1.1)"))));
         all.add(Map.entry("category", c -> c.categories(Category.of("Tech"))));
         all.add(Map.entry("categoryDomain", c -> c.categories(Category.of("Tech", "Syndic8"))));
         all.add(Map.entry("categoryCdata", c -> c.categories(Category.cdata("<b>Tech</b>"))));
@@ -190,13 +190,13 @@ final class FeedCorpus {
     private static List<Map.Entry<String, Consumer<Item.Builder>>> itemShapes() {
         List<Map.Entry<String, Consumer<Item.Builder>>> all = new ArrayList<>();
         all.add(Map.entry("link",
-                (Consumer<Item.Builder>) i -> i.link(new SimpleValue("https://example.com/a"))));
-        all.add(Map.entry("description", i -> i.description(new SimpleValue("d"))));
+                (Consumer<Item.Builder>) i -> i.link(new PlainValue("https://example.com/a"))));
+        all.add(Map.entry("description", i -> i.description(new PlainValue("d"))));
         all.add(Map.entry("descriptionCdata", i -> i.description(new CDATAValue("<p>d</p>"))));
-        all.add(Map.entry("author", i -> i.author(new SimpleValue("a@example.com"))));
-        all.add(Map.entry("comments", i -> i.comments(new SimpleValue("https://example.com/c"))));
+        all.add(Map.entry("author", i -> i.author(new PlainValue("a@example.com"))));
+        all.add(Map.entry("comments", i -> i.comments(new PlainValue("https://example.com/c"))));
         all.add(Map.entry("pubDate",
-                i -> i.pubDate(new SimpleValue("Wed, 05 Aug 2026 20:00:00 GMT"))));
+                i -> i.pubDate(new PlainValue("Wed, 05 Aug 2026 20:00:00 GMT"))));
         all.add(Map.entry("category", i -> i.categories(Category.of("Tech"))));
         all.add(Map.entry("categoryDomain", i -> i.categories(Category.of("Tech", "Syndic8"))));
         all.add(Map.entry("enclosure", i -> i.enclosure(
@@ -231,7 +231,7 @@ final class FeedCorpus {
             }
         }
         emit.feed("item_onlyDescription", Rss.builder().channel(base()
-                .items(Item.builder().description(new SimpleValue("only d")).build())
+                .items(Item.builder().description(new PlainValue("only d")).build())
                 .build()).build());
         emit.feed("item_onlyDescriptionCdata", Rss.builder().channel(base()
                 .items(Item.builder().description(new CDATAValue("<p>only d</p>")).build())
@@ -241,12 +241,12 @@ final class FeedCorpus {
     private static void mixedValueForms(final Emitter emit) {
         emit.feed("mixed_forms", Rss.builder().channel(Channel.builder()
                 .title(new CDATAValue("<b>t</b>"))
-                .link(new SimpleValue("https://example.com/"))
-                .description(new SimpleValue("d & d"))
+                .link(new PlainValue("https://example.com/"))
+                .description(new PlainValue("d & d"))
                 .language(new CDATAValue("en"))
-                .copyright(new SimpleValue("c"))
+                .copyright(new PlainValue("c"))
                 .items(Item.builder()
-                        .title(new SimpleValue("t"))
+                        .title(new PlainValue("t"))
                         .description(new CDATAValue("<p>x</p>"))
                         .categories(Category.cdata("<i>c</i>"), Category.of("plain"))
                         .guid(Guid.cdata("<id>", false))
@@ -277,7 +277,7 @@ final class FeedCorpus {
             List<Item> items = new ArrayList<>();
             for (int i = 0; i < k; i++) {
                 items.add(Item.builder()
-                        .title(new SimpleValue("i" + i))
+                        .title(new PlainValue("i" + i))
                         .description(new CDATAValue("<p>b" + i + "</p>"))
                         .build());
             }
@@ -301,7 +301,7 @@ final class FeedCorpus {
                         .withDescription(new CDATAValue("<i>d</i>"))));
         emit.channel("image_full", c -> c.image(
                 Image.of("https://example.com/i.png", "t", "https://example.com/")
-                        .withSize(88, 31).withDescription(new SimpleValue("d & d"))));
+                        .withSize(88, 31).withDescription(new PlainValue("d & d"))));
     }
 
     private static void guidShapes(final Emitter emit) {
@@ -340,7 +340,7 @@ final class FeedCorpus {
         emit.feed("ns_itemExtension", Rss.builder()
                 .namespace("dc", "http://purl.org/dc/elements/1.1/")
                 .channel(base().items(baseItem()
-                        .extension("dc:creator", new SimpleValue("O")).build()).build())
+                        .extension("dc:creator", new PlainValue("O")).build()).build())
                 .build());
         emit.feed("ns_itemExtensionCdata", Rss.builder()
                 .namespace("content", "http://purl.org/rss/1.0/modules/content/")
@@ -352,34 +352,34 @@ final class FeedCorpus {
                 .namespace("content", "http://purl.org/rss/1.0/modules/content/")
                 .namespace("itunes", "http://www.itunes.com/dtds/podcast-1.0.dtd")
                 .channel(base().items(baseItem()
-                        .extension("dc:creator", new SimpleValue("O"))
+                        .extension("dc:creator", new PlainValue("O"))
                         .extension("content:encoded", new CDATAValue("<p>h</p>"))
-                        .extension("itunes:author", new SimpleValue("A"))
+                        .extension("itunes:author", new PlainValue("A"))
                         .build()).build())
                 .build());
         emit.feed("ns_channelExtension", Rss.builder()
                 .namespace("dc", "http://purl.org/dc/elements/1.1/")
-                .channel(base().extension("dc:language", new SimpleValue("tr")).build())
+                .channel(base().extension("dc:language", new PlainValue("tr")).build())
                 .build());
         emit.feed("ns_channelExtensionWithItems", Rss.builder()
                 .namespace("dc", "http://purl.org/dc/elements/1.1/")
                 .channel(base()
-                        .extension("dc:language", new SimpleValue("tr"))
+                        .extension("dc:language", new PlainValue("tr"))
                         .items(baseItem().build())
                         .build())
                 .build());
         emit.feed("ns_bothExtensions", Rss.builder()
                 .namespace("dc", "http://purl.org/dc/elements/1.1/")
                 .channel(base()
-                        .extension("dc:language", new SimpleValue("tr"))
-                        .items(baseItem().extension("dc:creator", new SimpleValue("O")).build())
+                        .extension("dc:language", new PlainValue("tr"))
+                        .items(baseItem().extension("dc:creator", new PlainValue("O")).build())
                         .build())
                 .build());
         emit.feed("ns_withAtom", Rss.builder()
                 .namespace("dc", "http://purl.org/dc/elements/1.1/")
                 .channel(base()
                         .atomLink(AtomLink.self("https://example.com/f.xml"))
-                        .items(baseItem().extension("dc:creator", new SimpleValue("O")).build())
+                        .items(baseItem().extension("dc:creator", new PlainValue("O")).build())
                         .build())
                 .build());
     }

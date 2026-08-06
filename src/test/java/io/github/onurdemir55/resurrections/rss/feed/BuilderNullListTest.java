@@ -1,7 +1,7 @@
 package io.github.onurdemir55.resurrections.rss.feed;
 
 import io.github.onurdemir55.resurrections.rss.feed.element.Category;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import io.github.onurdemir55.resurrections.rss.io.RssOutput;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,7 +47,7 @@ class BuilderNullListTest {
     @DisplayName("a null category list leaves the element out of an item")
     void itemCategory() {
         Item item = Item.builder()
-                .title(new SimpleValue("an item"))
+                .title(new PlainValue("an item"))
                 .categories((List<Category>) null)
                 .build();
 
@@ -61,9 +61,9 @@ class BuilderNullListTest {
 
     private static Channel.Builder channelBuilder() {
         return Channel.builder()
-                .title(new SimpleValue("a title"))
-                .link(new SimpleValue("https://example.com/"))
-                .description(new SimpleValue("a description"));
+                .title(new PlainValue("a title"))
+                .link(new PlainValue("https://example.com/"))
+                .description(new PlainValue("a description"));
     }
 
     private static Rss feed(final Channel channel) {

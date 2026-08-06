@@ -15,7 +15,7 @@ import io.github.onurdemir55.resurrections.rss.feed.element.SkipHours;
 import io.github.onurdemir55.resurrections.rss.feed.element.Source;
 import io.github.onurdemir55.resurrections.rss.feed.element.TextInput;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 
 /**
  * One feed that uses every element the model can hold.
@@ -34,34 +34,34 @@ final class ExactOutputSample {
     static Rss feed() {
         Item item = Item.builder()
                 .title(new CDATAValue("An <b>item</b>"))
-                .link(new SimpleValue("https://example.com/items/1"))
+                .link(new PlainValue("https://example.com/items/1"))
                 .description(new CDATAValue("<p>Body with a terminator ]]> inside.</p>"))
-                .author(new SimpleValue("author@example.com (An Author)"))
+                .author(new PlainValue("author@example.com (An Author)"))
                 .categories(Category.of("Newspapers"),
                         Category.of("MSFT", "http://www.fool.com/cusips"))
-                .comments(new SimpleValue("https://example.com/items/1/comments"))
+                .comments(new PlainValue("https://example.com/items/1/comments"))
                 .enclosure(Enclosure.of("https://example.com/media/e.mp3", 12216320L, "audio/mpeg"))
                 .guid(Guid.of("https://example.com/items/1", true))
-                .pubDate(new SimpleValue("Wed, 05 Aug 2026 20:00:00 GMT"))
+                .pubDate(new PlainValue("Wed, 05 Aug 2026 20:00:00 GMT"))
                 .source(Source.of("Origin Feed", "https://origin.example.com/feed.xml"))
                 .extension("content:encoded", new CDATAValue("<p>rich <b>html</b></p>"))
-                .extension("dc:creator", new SimpleValue("Onur Demir"))
+                .extension("dc:creator", new PlainValue("Onur Demir"))
                 .build();
 
         Channel channel = Channel.builder()
                 .title(new CDATAValue("Every <b>element</b>"))
-                .link(new SimpleValue("https://example.com/"))
+                .link(new PlainValue("https://example.com/"))
                 .description(new CDATAValue("Exercises every element."))
                 .atomLink(AtomLink.self("https://example.com/feed.xml"))
-                .language(new SimpleValue("en-us"))
-                .copyright(new SimpleValue("Copyright 2026, Onur Demir"))
-                .managingEditor(new SimpleValue("editor@example.com (An Editor)"))
-                .webMaster(new SimpleValue("webmaster@example.com (A Webmaster)"))
-                .pubDate(new SimpleValue("Wed, 05 Aug 2026 20:00:00 GMT"))
-                .lastBuildDate(new SimpleValue("Wed, 05 Aug 2026 20:00:00 GMT"))
+                .language(new PlainValue("en-us"))
+                .copyright(new PlainValue("Copyright 2026, Onur Demir"))
+                .managingEditor(new PlainValue("editor@example.com (An Editor)"))
+                .webMaster(new PlainValue("webmaster@example.com (A Webmaster)"))
+                .pubDate(new PlainValue("Wed, 05 Aug 2026 20:00:00 GMT"))
+                .lastBuildDate(new PlainValue("Wed, 05 Aug 2026 20:00:00 GMT"))
                 .categories(Category.of("Technology"), Category.of("1765", "Syndic8"))
-                .generator(new SimpleValue("resurrections-rss"))
-                .docs(new SimpleValue("https://www.rssboard.org/rss-specification"))
+                .generator(new PlainValue("resurrections-rss"))
+                .docs(new PlainValue("https://www.rssboard.org/rss-specification"))
                 .cloud(Cloud.of("rpc.example.com", 80, "/RPC2", "myCloud.rssPleaseNotify",
                         "xml-rpc"))
                 .ttl(60)
@@ -69,12 +69,12 @@ final class ExactOutputSample {
                                 "https://example.com/")
                         .withSize(144, 400)
                         .withDescription(new CDATAValue("The <i>logo</i>")))
-                .rating(new SimpleValue("(PICS-1.1)"))
+                .rating(new PlainValue("(PICS-1.1)"))
                 .textInput(TextInput.of("Search", "Search the archive", "q",
                         "https://example.com/search"))
                 .skipHours(SkipHours.of(0, 23))
                 .skipDays(SkipDays.of(Day.SATURDAY, Day.SUNDAY))
-                .extension("dc:language", new SimpleValue("en"))
+                .extension("dc:language", new PlainValue("en"))
                 .items(item)
                 .build();
 

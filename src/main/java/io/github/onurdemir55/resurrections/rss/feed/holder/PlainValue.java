@@ -5,7 +5,7 @@ import io.github.onurdemir55.resurrections.rss.util.XmlText;
 import java.util.Objects;
 
 /**
- * Plain text element content. XML special characters are escaped by the serializer,
+ * Plain text element content. XML special characters are escaped on the way out,
  * so {@code &} becomes {@code &amp;}.
  * <p>
  * Use {@link CDATAValue} instead when the content is markup that should stay readable.
@@ -14,9 +14,9 @@ import java.util.Objects;
  *     element out of the feed, do not set it at all. It must not contain a character
  *     XML cannot represent, such as a NUL byte.
  */
-public record SimpleValue(String value) implements Value {
+public record PlainValue(String value) implements Value {
 
-    public SimpleValue {
+    public PlainValue {
         Objects.requireNonNull(value, "value is required; leave the element unset to omit it");
         XmlText.requireWritable(value);
     }

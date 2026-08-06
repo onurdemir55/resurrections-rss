@@ -9,7 +9,7 @@ no compatibility to preserve.
 ### Toolchain
 
 - Minimum Java version raised to 17.
-- Lombok removed. `Value`, `SimpleValue` and `CDATAValue` became a sealed interface and
+- Lombok removed. `Value`, `PlainValue` and `CDATAValue` became a sealed interface and
   records; `Rss`, `Channel` and `Item` gained hand-written builders. The consumer-facing API
   (`X.builder()....build()`) is unchanged.
 - Gradle 7.1 → 9.6.1, JUnit 5.7.0 → 6.1.2.

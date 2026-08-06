@@ -22,7 +22,7 @@ class ValueTest {
     @Test
     @DisplayName("both forms expose their text through the Value contract")
     void valueContract() {
-        Value plain = new SimpleValue("text");
+        Value plain = new PlainValue("text");
         Value cdata = new CDATAValue("text");
 
         assertAll(
@@ -34,24 +34,24 @@ class ValueTest {
     @DisplayName("values of the same form and content are equal")
     void equalityByContent() {
         assertAll(
-                () -> assertEquals(new SimpleValue("a"), new SimpleValue("a")),
-                () -> assertEquals(new SimpleValue("a").hashCode(), new SimpleValue("a").hashCode()),
+                () -> assertEquals(new PlainValue("a"), new PlainValue("a")),
+                () -> assertEquals(new PlainValue("a").hashCode(), new PlainValue("a").hashCode()),
                 () -> assertEquals(new CDATAValue("a"), new CDATAValue("a")),
-                () -> assertNotEquals(new SimpleValue("a"), new SimpleValue("b")));
+                () -> assertNotEquals(new PlainValue("a"), new PlainValue("b")));
     }
 
     @Test
     @DisplayName("the two forms are never equal, even with identical text")
     void formsAreDistinct() {
-        assertNotEquals(new SimpleValue("a"), new CDATAValue("a"));
+        assertNotEquals(new PlainValue("a"), new CDATAValue("a"));
     }
 
     @Test
     @DisplayName("a Set de-duplicates repeated values")
     void setDeduplicates() {
         Set<Value> values = new LinkedHashSet<>();
-        values.add(new SimpleValue("dup"));
-        values.add(new SimpleValue("dup"));
+        values.add(new PlainValue("dup"));
+        values.add(new PlainValue("dup"));
         values.add(new CDATAValue("dup"));
 
         assertEquals(2, values.size(), () -> "plain and CDATA are distinct, duplicates collapse: " + values);
@@ -71,7 +71,7 @@ class ValueTest {
         assertAll(
                 () -> assertTrue(Value.class.isSealed()),
                 () -> assertEquals(
-                        Set.of(SimpleValue.class, CDATAValue.class),
+                        Set.of(PlainValue.class, CDATAValue.class),
                         Set.of(Value.class.getPermittedSubclasses()),
                         "a new Value form must be handled in RssWriter.content, or its text "
                                 + "will be written as plain text and its CDATA section lost"));

@@ -5,7 +5,7 @@ import io.github.onurdemir55.resurrections.rss.feed.Item;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
 import io.github.onurdemir55.resurrections.rss.feed.element.Category;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
-import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
+import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -50,9 +50,9 @@ class RssOutputTest {
         }
 
         @Test
-        @DisplayName("SimpleValue is emitted as plain text, without a CDATA section")
+        @DisplayName("PlainValue is emitted as plain text, without a CDATA section")
         void simpleValueIsPlainText() {
-            String xml = RssOutput.outputString(feedWithTitle(new SimpleValue("hello")));
+            String xml = RssOutput.outputString(feedWithTitle(new PlainValue("hello")));
 
             assertAll(
                     () -> assertTrue(xml.contains("<title>hello</title>"), () -> xml),
@@ -76,7 +76,7 @@ class RssOutputTest {
         @DisplayName("XML special characters in plain text are escaped")
         void specialCharactersInPlainTextAreEscaped() {
             String xml = RssOutput.outputString(
-                    feedWithTitle(new SimpleValue("a & b < c > d")));
+                    feedWithTitle(new PlainValue("a & b < c > d")));
 
             assertAll(
                     () -> assertTrue(xml.contains("&amp;"), () -> "'&' must be escaped:\n" + xml),
@@ -152,7 +152,7 @@ class RssOutputTest {
         @Test
         @DisplayName("the document declares the XML prolog and rss version 2.0")
         void prologAndVersion() {
-            String xml = RssOutput.outputString(feedWithTitle(new SimpleValue("t")));
+            String xml = RssOutput.outputString(feedWithTitle(new PlainValue("t")));
 
             assertAll(
                     () -> assertTrue(xml.startsWith("<?xml"), () -> xml),
@@ -165,11 +165,11 @@ class RssOutputTest {
         @DisplayName("channel elements are emitted in the order the specification lists them")
         void channelElementOrder() {
             Channel channel = Channel.builder()
-                    .title(new SimpleValue("t"))
-                    .link(new SimpleValue("https://example.com/"))
-                    .description(new SimpleValue("d"))
-                    .language(new SimpleValue("en"))
-                    .pubDate(new SimpleValue("Sat, 07 Sep 2002 00:00:01 GMT"))
+                    .title(new PlainValue("t"))
+                    .link(new PlainValue("https://example.com/"))
+                    .description(new PlainValue("d"))
+                    .language(new PlainValue("en"))
+                    .pubDate(new PlainValue("Sat, 07 Sep 2002 00:00:01 GMT"))
                     .build();
 
             String xml = RssOutput.outputString(Rss.builder().version("2.0").channel(channel).build());
@@ -181,11 +181,11 @@ class RssOutputTest {
         @DisplayName("item elements are emitted in the order the specification lists them")
         void itemElementOrder() {
             Item item = Item.builder()
-                    .title(new SimpleValue("t"))
-                    .link(new SimpleValue("https://example.com/"))
-                    .description(new SimpleValue("d"))
+                    .title(new PlainValue("t"))
+                    .link(new PlainValue("https://example.com/"))
+                    .description(new PlainValue("d"))
                     .categories(Category.of("news"))
-                    .pubDate(new SimpleValue("Sat, 07 Sep 2002 00:00:01 GMT"))
+                    .pubDate(new PlainValue("Sat, 07 Sep 2002 00:00:01 GMT"))
                     .build();
 
             String xml = RssOutput.outputString(feedWithItems(List.of(item)));
@@ -196,8 +196,8 @@ class RssOutputTest {
         @Test
         @DisplayName("items are not wrapped in a container element")
         void itemsAreNotWrapped() {
-            Item first = Item.builder().title(new SimpleValue("one")).build();
-            Item second = Item.builder().title(new SimpleValue("two")).build();
+            Item first = Item.builder().title(new PlainValue("one")).build();
+            Item second = Item.builder().title(new PlainValue("two")).build();
 
             String xml = RssOutput.outputString(feedWithItems(List.of(first, second)));
 
@@ -210,7 +210,7 @@ class RssOutputTest {
         @DisplayName("categories repeat the element, in the order given")
         void categoriesRepeatTheElementInOrder() {
             Item item = Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .categories(Category.of("first"), Category.of("second"))
                     .build();
 
@@ -226,11 +226,11 @@ class RssOutputTest {
         @DisplayName("the List and varargs category forms behave identically")
         void categoryOverloadsAgree() {
             Item fromVarargs = Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .categories(Category.of("a"), Category.of("b", "urn:taxonomy"))
                     .build();
             Item fromList = Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .categories(List.of(Category.of("a"), Category.of("b", "urn:taxonomy")))
                     .build();
 
@@ -243,7 +243,7 @@ class RssOutputTest {
         @DisplayName("repeated category text is kept, since taxonomies may overlap")
         void repeatedCategoryTextIsKept() {
             Item item = Item.builder()
-                    .title(new SimpleValue("t"))
+                    .title(new PlainValue("t"))
                     .categories(Category.of("same"), Category.of("same"))
                     .build();
 
@@ -255,7 +255,7 @@ class RssOutputTest {
         @Test
         @DisplayName("unset elements are omitted rather than emitted empty")
         void unsetElementsAreOmitted() {
-            String xml = RssOutput.outputString(feedWithTitle(new SimpleValue("only a title")));
+            String xml = RssOutput.outputString(feedWithTitle(new PlainValue("only a title")));
 
             assertAll(
                     () -> assertFalse(xml.contains("<language"), () -> "language was not set:\n" + xml),
@@ -292,7 +292,7 @@ class RssOutputTest {
         @Test
         @DisplayName("the stream is written as UTF-8, matching the declared encoding")
         void streamIsUtf8() throws IOException {
-            Rss rss = feedWithTitle(new SimpleValue("ünïcödé ığşç"));
+            Rss rss = feedWithTitle(new PlainValue("ünïcödé ığşç"));
 
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             RssOutput.output(rss, bytes);
@@ -332,7 +332,7 @@ class RssOutputTest {
         @Test
         @DisplayName("the OutputStream, Writer and Path overloads reject null arguments")
         void outputOverloadsRejectNull() throws IOException {
-            Rss rss = feedWithTitle(new SimpleValue("t"));
+            Rss rss = feedWithTitle(new PlainValue("t"));
 
             assertAll(
                     () -> assertThrows(NullPointerException.class,
@@ -352,7 +352,7 @@ class RssOutputTest {
         @Test
         @DisplayName("output(Rss, OutputStream) does not close the caller's stream")
         void outputStreamIsNotClosed() throws IOException {
-            Rss rss = feedWithTitle(new SimpleValue("t"));
+            Rss rss = feedWithTitle(new PlainValue("t"));
             class TrackingStream extends ByteArrayOutputStream {
                 boolean closed;
 
@@ -372,7 +372,7 @@ class RssOutputTest {
         @Test
         @DisplayName("output(Rss, Writer) does not close the caller's writer")
         void writerIsNotClosed() throws IOException {
-            Rss rss = feedWithTitle(new SimpleValue("t"));
+            Rss rss = feedWithTitle(new PlainValue("t"));
             class TrackingWriter extends StringWriter {
                 boolean closed;
 
@@ -395,9 +395,9 @@ class RssOutputTest {
     /** The specification requires a channel to carry title, link and description. */
     private static Channel.Builder channel() {
         return Channel.builder()
-                .title(new SimpleValue("feed"))
-                .link(new SimpleValue("https://example.com/"))
-                .description(new SimpleValue("a feed"));
+                .title(new PlainValue("feed"))
+                .link(new PlainValue("https://example.com/"))
+                .description(new PlainValue("a feed"));
     }
 
     private static Rss feedWithTitle(final Value title) {
