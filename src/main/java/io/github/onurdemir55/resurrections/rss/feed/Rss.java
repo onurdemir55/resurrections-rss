@@ -80,9 +80,17 @@ public final class Rss {
 
         /**
          * Overrides the {@code version} attribute. Defaults to {@code "2.0"}, which is what
-         * the specification requires for a document that conforms to it.
+         * the specification requires for a document that conforms to it, so there is no
+         * legitimate reason to call this - it exists so that the attribute is part of the model
+         * rather than a constant buried in the writer.
+         * <p>
+         * The value is checked by {@link #build()} rather than here, which is deliberate: it is
+         * a statement about the document, and the document is what {@code build()} makes.
+         * {@code null} is treated no differently from {@code "3.0"} - both are refused there,
+         * with a message naming what was declared.
          *
          * @param version the value of the {@code version} attribute
+         * @return this builder
          */
         public Builder version(final String version) {
             this.version = version;
@@ -179,10 +187,8 @@ public final class Rss {
             Map<String, String> used = new LinkedHashMap<>();
             channel.getExtensions().keySet()
                     .forEach(name -> used.put(name, "the channel"));
-            if (channel.getItems() != null) {
-                channel.getItems().forEach(item -> item.getExtensions().keySet()
-                        .forEach(name -> used.putIfAbsent(name, "an item")));
-            }
+            channel.getItems().forEach(item -> item.getExtensions().keySet()
+                    .forEach(name -> used.putIfAbsent(name, "an item")));
 
             for (Map.Entry<String, String> entry : used.entrySet()) {
                 String name = entry.getKey();

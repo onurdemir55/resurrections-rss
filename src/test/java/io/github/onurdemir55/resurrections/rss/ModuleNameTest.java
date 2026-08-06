@@ -4,78 +4,89 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.lang.module.ModuleDescriptor;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * The published jar declares a module name.
+ * What the module descriptor says, checked against what it is meant to say.
  * <p>
- * Without one, the name is derived from the file the jar happens to be called, so renaming the
- * artifact would rename the module and break anyone who put it on the module path. The
- * derivation was checked and gave {@code resurrections.rss}, which is neither stable nor the
- * package root. Declaring it in the manifest is what a library published for others to depend
- * on is expected to do, and this test is here because the manifest is easy to lose in a build
- * file and nothing else would notice.
+ * There are two claims here worth holding onto. The module is named after the package root,
+ * because without a descriptor the name would be derived from whatever the jar file happens to
+ * be called - which resolved to {@code resurrections.rss}, neither the package root nor stable
+ * if the artifact were ever renamed. And {@code util} is not exported: it holds the checks the
+ * model runs on itself, which have already been corrected twice, and keeping them off the
+ * exported surface is what makes correcting them again possible.
+ * <p>
+ * Read from the compiled descriptor rather than from the source, so that what ships is what is
+ * asserted. An earlier version of this test read the jar and broke the moment two jars of
+ * different versions sat in the same directory; the descriptor has no such ambiguity.
  */
 class ModuleNameTest {
 
-    private static final String EXPECTED = "io.github.onurdemir55.resurrections.rss";
+    private static final String MODULE = "io.github.onurdemir55.resurrections.rss";
+
+    private static final Set<String> EXPECTED_EXPORTS = Set.of(
+            MODULE + ".feed",
+            MODULE + ".feed.element",
+            MODULE + ".feed.holder",
+            MODULE + ".io");
 
     @Test
-    @DisplayName("the jar's manifest names the module after the package root")
-    void manifestDeclaresModuleName() throws IOException {
-        Path jar = builtJar();
-
-        try (JarFile file = new JarFile(jar.toFile())) {
-            Manifest manifest = file.getManifest();
-            assertTrue(manifest != null, () -> "no manifest in " + jar);
-            assertEquals(EXPECTED,
-                    manifest.getMainAttributes().getValue("Automatic-Module-Name"),
-                    () -> "Automatic-Module-Name is missing or wrong in " + jar);
-        }
+    @DisplayName("the module is named after the package root")
+    void moduleIsNamedAfterThePackageRoot() throws IOException {
+        assertEquals(MODULE, descriptor().name());
+        assertEquals(MODULE, ModuleNameTest.class.getPackageName(),
+                "the module name should be the package the public API lives in");
     }
 
     @Test
-    @DisplayName("and it matches the package the public API lives in")
-    void moduleNameMatchesThePackage() {
-        assertTrue(EXPECTED.equals(ModuleNameTest.class.getPackageName()),
-                () -> "the module name should be the package root, but the package is "
-                        + ModuleNameTest.class.getPackageName());
+    @DisplayName("only the packages callers need are exported")
+    void exportsOnlyThePublicPackages() throws IOException {
+        Set<String> exported = descriptor().exports().stream()
+                .map(ModuleDescriptor.Exports::source)
+                .collect(java.util.stream.Collectors.toUnmodifiableSet());
+
+        assertEquals(EXPECTED_EXPORTS, exported);
     }
 
-    /**
-     * Runs against whatever the build produced rather than a fixed name, so a version bump
-     * does not break it. Skipping when there is no jar would make the test lie, so a missing
-     * jar is a failure with an explanation instead.
-     */
-    private static Path builtJar() throws IOException {
-        Path libs = Path.of("build", "libs");
-        if (!Files.isDirectory(libs)) {
-            throw new AssertionError("no build/libs directory; run the jar task before this test");
-        }
-        try (var entries = Files.list(libs)) {
-            List<Path> jars = entries
-                    .filter(path -> fileName(path).endsWith(".jar"))
-                    .filter(path -> !fileName(path).contains("-sources"))
-                    .filter(path -> !fileName(path).contains("-javadoc"))
-                    .toList();
-            if (jars.size() != 1) {
-                throw new AssertionError("expected exactly one main jar in " + libs + ", found " + jars);
-            }
-            return jars.get(0);
-        }
+    @Test
+    @DisplayName("util stays internal, so its checks can keep being corrected")
+    void utilIsNotExported() throws IOException {
+        Set<String> exported = descriptor().exports().stream()
+                .map(ModuleDescriptor.Exports::source)
+                .collect(java.util.stream.Collectors.toUnmodifiableSet());
+
+        assertFalse(exported.contains(MODULE + ".util"),
+                () -> "util must not be exported, but the exports are " + exported);
     }
 
-    /** {@link Path#getFileName()} is null for a root, which nothing here can be, but a null
-     * check costs less than an explanation. */
-    private static String fileName(final Path path) {
-        Path name = path.getFileName();
-        return name == null ? "" : name.toString();
+    @Test
+    @DisplayName("the StAX implementation is required, not optional")
+    void requiresTheStaxImplementation() throws IOException {
+        Set<String> required = descriptor().requires().stream()
+                .map(ModuleDescriptor.Requires::name)
+                .collect(java.util.stream.Collectors.toUnmodifiableSet());
+
+        assertTrue(required.contains("com.ctc.wstx"),
+                () -> "the JDK's own StAX writes a CDATA section containing ]]> as a document "
+                        + "no parser accepts, so Woodstox is not optional; requires: " + required);
+        assertTrue(required.contains("java.xml"), () -> "requires: " + required);
+    }
+
+    private static ModuleDescriptor descriptor() throws IOException {
+        Path compiled = Path.of("build", "classes", "java", "main", "module-info.class");
+        if (!Files.isRegularFile(compiled)) {
+            throw new AssertionError("no compiled module descriptor at " + compiled);
+        }
+        try (InputStream in = Files.newInputStream(compiled)) {
+            return ModuleDescriptor.read(in);
+        }
     }
 }

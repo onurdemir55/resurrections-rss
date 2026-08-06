@@ -87,7 +87,7 @@ public final class Channel {
         this.webMaster = builder.webMaster;
         this.pubDate = builder.pubDate;
         this.lastBuildDate = builder.lastBuildDate;
-        this.category = builder.category;
+        this.category = builder.category == null ? List.of() : builder.category;
         this.generator = builder.generator;
         this.docs = builder.docs;
         this.cloud = builder.cloud;
@@ -97,7 +97,7 @@ public final class Channel {
         this.textInput = builder.textInput;
         this.skipHours = builder.skipHours;
         this.skipDays = builder.skipDays;
-        this.items = builder.items;
+        this.items = builder.items == null ? List.of() : builder.items;
         // LinkedHashMap, not Map.copyOf: the output order must be the order they
         // were declared in, so the same feed serializes the same way every time.
         this.extensions = Collections.unmodifiableMap(new LinkedHashMap<>(builder.extensions));
@@ -198,7 +198,7 @@ public final class Channel {
     }
 
     /**
-     * @return the categories, or {@code null}
+     * @return the categories, never {@code null} and empty when none were set
      */
     public List<Category> getCategory() {
         return category;
@@ -268,7 +268,7 @@ public final class Channel {
     }
 
     /**
-     * @return the items, or {@code null}
+     * @return the items, never {@code null} and empty when none were set
      */
     public List<Item> getItems() {
         return items;

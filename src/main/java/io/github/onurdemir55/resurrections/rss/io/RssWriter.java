@@ -141,9 +141,6 @@ final class RssWriter {
     }
 
     private void items(final List<Item> items) throws XMLStreamException {
-        if (items == null) {
-            return;
-        }
         for (Item item : items) {
             open("item");
 
@@ -164,9 +161,6 @@ final class RssWriter {
     }
 
     private void categories(final List<Category> categories) throws XMLStreamException {
-        if (categories == null) {
-            return;
-        }
         for (Category category : categories) {
             indent();
             out.writeStartElement("category");

@@ -147,10 +147,22 @@ no compatibility to preserve.
   They do not try to separate "the disk was full" from "the document could not be produced",
   because the underlying writer reports both identically, and a guess presented as a
   diagnosis is worse than neither.
-- The published jar declares `Automatic-Module-Name: io.github.onurdemir55.resurrections.rss`.
-  Without it the module name is derived from the jar's file name, which gave
-  `resurrections.rss` - not the package root, and not stable if the artifact is ever renamed,
-  which would break anyone using it on the module path.
+- **A module descriptor**, naming the module `io.github.onurdemir55.resurrections.rss` and
+  exporting four packages. Without a descriptor the module name is derived from the jar's file
+  name, which gave `resurrections.rss` - not the package root, and not stable if the artifact
+  were ever renamed, which would break anyone using it on the module path.
+
+  `util` is deliberately not exported. It holds the checks the model runs on itself - what may
+  be an element name, what text XML can represent, what counts as a URI scheme - and two of
+  those have already been corrected once each. Keeping them off the exported surface is what
+  makes correcting them again possible without breaking a caller. A modular consumer was built
+  against the published jar to confirm the descriptor does not require Woodstox on its compile
+  path, only at runtime, which is what the POM says.
+- **The collection getters return an empty list rather than `null`.** `getCategory()` and
+  `getItems()` used to hand back `null` when nothing had been set, so every caller inspecting a
+  feed had to guard the read. Passing `null` to the setters still means "nothing to add"; it is
+  only what comes back out that changed. The output is unaffected, which the recorded corpus
+  confirms.
 - `Channel.getExtensions()` and `Item.getExtensions()` are public. They were hidden only
   because a serialization framework used to find them by reflection.
 

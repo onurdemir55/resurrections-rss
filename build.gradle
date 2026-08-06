@@ -42,14 +42,6 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-// Without this the module name is derived from the jar's file name, so renaming the artifact
-// would rename the module and break anyone using it on the module path. Declaring it fixes the
-// name to the package root, where it belongs.
-tasks.named('jar') {
-    manifest {
-        attributes('Automatic-Module-Name': 'io.github.onurdemir55.resurrections.rss')
-    }
-}
 
 tasks.withType(Javadoc).configureEach {
     options.encoding = 'UTF-8'
@@ -64,11 +56,21 @@ checkstyle {
     configFile = file('config/checkstyle/checkstyle.xml')
 }
 
+tasks.withType(Checkstyle).configureEach {
+    // Checkstyle 12.3.1 cannot parse a module declaration: "no viable alternative at input
+    // 'module'". Nothing in the rule set applies to a descriptor anyway.
+    exclude '**/module-info.java'
+}
+
+tasks.named('compileJava') {
+    // javac dislikes a module name component ending in a digit. The name has to match the
+    // package root, which contains a GitHub username that ends in one, so the advice cannot
+    // be taken and the warning is only noise.
+    options.compilerArgs << '-Xlint:-module'
+}
+
 test {
     useJUnitPlatform()
-    // ModuleNameTest inspects the manifest of the jar the build produces, so the jar has to
-    // exist before the tests run.
-    dependsOn tasks.named('jar')
     // Lets FeedCorpusRegressionTest re-record its expected output on request. Off by default,
     // because a corpus that re-records itself whenever it disagrees guards nothing.
     systemProperty 'corpus.record', System.getProperty('corpus.record', 'false')

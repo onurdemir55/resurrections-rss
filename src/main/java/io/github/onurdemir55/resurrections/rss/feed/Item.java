@@ -53,7 +53,7 @@ public final class Item {
         this.link = builder.link;
         this.description = builder.description;
         this.author = builder.author;
-        this.category = builder.category;
+        this.category = builder.category == null ? List.of() : builder.category;
         this.comments = builder.comments;
         this.enclosure = builder.enclosure;
         this.guid = builder.guid;
@@ -103,7 +103,7 @@ public final class Item {
     }
 
     /**
-     * @return the categories, or {@code null}
+     * @return the categories, never {@code null} and empty when none were set
      */
     public List<Category> getCategory() {
         return category;

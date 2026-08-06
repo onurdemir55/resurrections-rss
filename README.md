@@ -31,6 +31,8 @@ checks the Rss News output manually, selects and decides _item_. So some custome
   so what XML comes out is decided in one readable place rather than inferred from annotations.
 * [x] One dependency: [woodstox](https://github.com/FasterXML/woodstox), the StAX implementation.
   No annotation processor, no IDE plugin, no build-time magic, no reflection.
+* [x] A real module descriptor, named `io.github.onurdemir55.resurrections.rss`. Four packages
+  are exported; the validation helpers are not, so they stay out of the API you depend on.
 * [x] Immutable feed model with builders
 * [x] Easy and Peasy development
 * [x] Simple and easy to extend for optional elements if needed. Just add fields to entity classes.
@@ -166,6 +168,12 @@ element name.
 `xmlns:atom` is declared without being asked for, because `atomLink` was used and a prefixed
 element without its declaration is not well-formed XML. Extension elements take a `Value`,
 so they choose plain text or CDATA like everything else.
+
+The root element above is wrapped across two lines so it fits on the page; the library writes
+it on one. Everything else is exactly what comes out, and `ReadmeExtendingExampleTest` compares
+this block against the real output to keep it that way. `ExactOutputTest` pins two whole
+documents byte for byte, indentation included, since that is written by hand here rather than
+supplied by a library.
 
 `Rss`, `Channel` and `Item` also expose a getter for every element, so a feed you built can
 be inspected afterwards. Reading an existing feed, however, is out of scope; see

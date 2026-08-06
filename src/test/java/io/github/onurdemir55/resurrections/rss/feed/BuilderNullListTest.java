@@ -10,16 +10,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * The repeatable elements accept {@code null} to mean "not set".
+ * The repeatable elements accept {@code null} to mean "not set", and never hand one back.
  * <p>
- * This is the one place the library is deliberately lenient about {@code null}, and only for
- * lists of optional elements: passing {@code null} for a list is a way of saying the caller
- * has nothing to add, which is different from the {@code null} text this library rejects
- * outright. Worth pinning, because the alternative reading is that these setters would throw.
+ * Passing {@code null} for a list says the caller has nothing to add, which is different from
+ * the {@code null} text this library refuses outright. What comes back out, though, is an empty
+ * list rather than a {@code null}, so a caller inspecting a feed does not have to guard every
+ * read. Worth pinning at both ends: that the setter tolerates it, and that the getter does not
+ * pass it on.
  */
 class BuilderNullListTest {
 
@@ -29,7 +29,7 @@ class BuilderNullListTest {
         Channel channel = channelBuilder().category((List<Category>) null).build();
 
         assertAll(
-                () -> assertNull(channel.getCategory()),
+                () -> assertTrue(channel.getCategory().isEmpty()),
                 () -> assertFalse(RssOutput.outputString(feed(channel)).contains("<category")));
     }
 
@@ -39,7 +39,7 @@ class BuilderNullListTest {
         Channel channel = channelBuilder().items((List<Item>) null).build();
 
         assertAll(
-                () -> assertNull(channel.getItems()),
+                () -> assertTrue(channel.getItems().isEmpty()),
                 () -> assertFalse(RssOutput.outputString(feed(channel)).contains("<item")));
     }
 
@@ -54,7 +54,7 @@ class BuilderNullListTest {
         Channel channel = channelBuilder().items(item).build();
 
         assertAll(
-                () -> assertNull(item.getCategory()),
+                () -> assertTrue(item.getCategory().isEmpty()),
                 () -> assertFalse(RssOutput.outputString(feed(channel)).contains("<category")),
                 () -> assertTrue(RssOutput.outputString(feed(channel)).contains("<item>")));
     }
