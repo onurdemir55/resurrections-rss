@@ -38,12 +38,17 @@
 
     <!--
       FS: "format string should use %n rather than \n". Not here. %n is the platform line
-      separator, and this format string is compared against XML that this library always writes
-      with \n whatever the platform. Taking the advice would make the test pass on Linux and
-      fail on Windows, for no reason connected to the library being correct.
+      separator, and these format strings are expected XML documents, which this library always
+      writes with \n whatever the platform. Taking the advice would make the tests pass on Linux
+      and fail on Windows, for no reason connected to the library being correct. Both classes
+      assemble an expected document with String.formatted because one line of it is longer than
+      the style limit allows in source.
     -->
     <Match>
         <Bug pattern="VA_FORMAT_STRING_USES_NEWLINE"/>
-        <Class name="io.github.onurdemir55.resurrections.rss.io.ExactOutputTest"/>
+        <Or>
+            <Class name="io.github.onurdemir55.resurrections.rss.io.ExactOutputTest"/>
+            <Class name="io.github.onurdemir55.resurrections.rss.ReadmeExampleTest"/>
+        </Or>
     </Match>
 </FindBugsFilter>

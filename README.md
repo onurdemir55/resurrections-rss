@@ -78,36 +78,56 @@ classpath — no JSON library, no annotation processor, nothing to configure.
 
 ## Examples
 
+An element's text is either plain or a CDATA section, and that is the whole decision:
+
 ```java
         // plain text: XML special characters are escaped
-        Value plainText = new SimpleValue("simple value");
+        Value plainText = new SimpleValue("Profit rose 18% & the dividend went up");
 
         // CDATA: markup stays readable
-        Value cdata = new CDATAValue("<b>cdata value</b>");
+        Value cdata = new CDATAValue("<p>Profit rose <b>18%</b></p>");
 ```
+
+In a feed those two come out like this:
+
+```xml
+    <title>Profit rose 18% &amp; the dividend went up</title>
+    <description><![CDATA[<p>Profit rose <b>18%</b></p>]]></description>
+```
+
+Neither is more correct than the other. Plain text is right when the value *is* text, and a
+reader that renders the escaped ampersand shows the character you meant. CDATA is right when the
+value is markup you want a reader to render, which is the case this library was written for.
 
 ---
 
-Create a feed:
+Create a feed. The title is plain text and the description is markup, which is the choice this
+library exists to let you make:
 
 ```java
-        String published = DateParser.formatRfc822(Instant.now());
+        String published = DateParser.formatRfc822(Instant.parse("2026-02-19T08:30:00Z"));
 
         Item item = Item.builder()
-                        .title(new SimpleValue("sample title"))
-                        .link(new CDATAValue("https://www.google.com/"))
-                        .description(new CDATAValue("sample description"))
-                        .categories(Category.of("category-1"), Category.of("category-2"))
+                        .title(new SimpleValue("Aurora Foods beats forecasts & lifts its dividend"))
+                        .link(new SimpleValue("https://example.com/2026/02/aurora-foods-dividend"))
+                        .description(new CDATAValue(
+                                "<p>Full-year profit rose <b>18%</b> and the board raised the "
+                                + "dividend to <b>$1.24</b>. Read the "
+                                + "<a href=\"/2026/02/aurora-foods-dividend\">full report</a>.</p>"))
+                        .categories(Category.of("Earnings"), Category.of("Equities"))
+                        .guid(Guid.of("https://example.com/2026/02/aurora-foods-dividend", true))
                         .pubDate(new SimpleValue(published))
                         .build();
 
         Channel channel = Channel.builder()
-                                 .title(new CDATAValue("sample title"))
-                                 .link(new SimpleValue("https://www.google.com/"))
-                                 .description(new CDATAValue("sample description"))
-                                 .language(new SimpleValue("en"))
+                                 .title(new SimpleValue("Markets & Mornings"))
+                                 .link(new SimpleValue("https://example.com/"))
+                                 .description(new CDATAValue(
+                                         "<p>Good news from the markets, before your "
+                                         + "<i>first coffee</i>.</p>"))
+                                 .language(new SimpleValue("en-us"))
                                  .pubDate(new SimpleValue(published))
-                                 .items(List.of(item))
+                                 .items(item)
                                  .build();
 
         // version defaults to "2.0"
@@ -120,22 +140,29 @@ Create a feed:
 <?xml version='1.0' encoding='UTF-8'?>
 <rss version="2.0">
   <channel>
-    <title><![CDATA[sample title]]></title>
-    <link>https://www.google.com/</link>
-    <description><![CDATA[sample description]]></description>
-    <language>en</language>
-    <pubDate>Sat, 07 Sep 2002 00:00:01 GMT</pubDate>
+    <title>Markets &amp; Mornings</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[<p>Good news from the markets, before your <i>first coffee</i>.</p>]]></description>
+    <language>en-us</language>
+    <pubDate>Thu, 19 Feb 2026 08:30:00 GMT</pubDate>
     <item>
-      <title>sample title</title>
-      <link><![CDATA[https://www.google.com/]]></link>
-      <description><![CDATA[sample description]]></description>
-      <category>category-1</category>
-      <category>category-2</category>
-      <pubDate>Sat, 07 Sep 2002 00:00:01 GMT</pubDate>
+      <title>Aurora Foods beats forecasts &amp; lifts its dividend</title>
+      <link>https://example.com/2026/02/aurora-foods-dividend</link>
+      <description><![CDATA[<p>Full-year profit rose <b>18%</b> and the board raised the dividend to <b>$1.24</b>. Read the <a href="/2026/02/aurora-foods-dividend">full report</a>.</p>]]></description>
+      <category>Earnings</category>
+      <category>Equities</category>
+      <guid isPermaLink="true">https://example.com/2026/02/aurora-foods-dividend</guid>
+      <pubDate>Thu, 19 Feb 2026 08:30:00 GMT</pubDate>
     </item>
   </channel>
 </rss>
 ```
+
+Both forms are visible in one document. The ampersand in the plain title came out as `&amp;`,
+because that is the only way a title can carry one. The markup in the description came out as
+you wrote it, tags and all, because it is inside a CDATA section — and the `&amp;` a reader
+would otherwise have to decode is not there to decode. A feed reader shows the first as text
+and renders the second as HTML.
 
 `ReadmeExampleTest` compares this block against what the code produces, so the example cannot
 drift from the library. `ExactOutputTest` goes further and pins two whole documents byte for
