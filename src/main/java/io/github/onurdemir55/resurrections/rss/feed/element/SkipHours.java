@@ -1,8 +1,5 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
@@ -19,8 +16,7 @@ import java.util.stream.IntStream;
  *
  * @param hour the hours to skip
  */
-public record SkipHours(@JacksonXmlElementWrapper(useWrapping = false)
-                        @JacksonXmlProperty(localName = "hour") List<Integer> hour) {
+public record SkipHours(List<Integer> hour) {
 
     /** The last hour of the day, and so the largest allowed value. */
     public static final int MAX_HOUR = 23;

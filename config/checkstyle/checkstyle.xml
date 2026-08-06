@@ -88,5 +88,30 @@
             <property name="checkFirstSentence" value="false"/>
         </module>
         <module name="NonEmptyAtclauseDescription"/>
+
+        <!-- Parameters are never reassigned in this project; this keeps it that way. -->
+        <module name="FinalParameters"/>
+        <!-- An override that does not say so is a rename waiting to break silently. -->
+        <module name="MissingOverride"/>
+        <module name="ArrayTypeStyle"/>
+        <module name="UpperEll"/>
+        <module name="EqualsAvoidNull"/>
+        <module name="NoFinalizer"/>
+        <module name="PackageDeclaration"/>
+        <module name="ExplicitInitialization"/>
+        <module name="OneTopLevelClass"/>
+        <module name="OuterTypeFilename"/>
+        <module name="NestedIfDepth">
+            <property name="max" value="2"/>
+        </module>
+        <module name="ParameterNumber">
+            <property name="max" value="7"/>
+        </module>
+        <module name="BooleanExpressionComplexity">
+            <property name="max" value="6"/>
+        </module>
+        <module name="UnnecessaryParentheses"/>
+        <module name="UnnecessarySemicolonInTryWithResources"/>
+        <module name="UnusedLocalVariable"/>
     </module>
 </module>

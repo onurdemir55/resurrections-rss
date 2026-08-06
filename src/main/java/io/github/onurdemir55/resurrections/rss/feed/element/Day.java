@@ -1,7 +1,5 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-
 import java.time.DayOfWeek;
 import java.util.Objects;
 
@@ -30,7 +28,6 @@ public enum Day {
     /**
      * @return the day name as it appears in a feed, for example {@code Monday}
      */
-    @JsonValue
     public String label() {
         return label;
     }

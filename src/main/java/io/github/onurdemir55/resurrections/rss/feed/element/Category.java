@@ -1,11 +1,9 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
+import io.github.onurdemir55.resurrections.rss.util.XmlText;
 
 import java.util.Objects;
 
@@ -21,12 +19,12 @@ import java.util.Objects;
  * @param value the category, for example {@code MSFT} or {@code Top/News/Sports}
  * @param domain the taxonomy the value belongs to, or {@code null} to omit the attribute
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public record Category(@JsonUnwrapped Value value,
-                       @JacksonXmlProperty(isAttribute = true, localName = "domain") String domain) {
+public record Category(Value value,
+                       String domain) {
 
     public Category {
         Objects.requireNonNull(value, "category value is required");
+        XmlText.requireWritableOrNull(domain, "category domain");
     }
 
     /**

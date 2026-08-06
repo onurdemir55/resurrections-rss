@@ -1,17 +1,12 @@
 package io.github.onurdemir55.resurrections.rss.feed;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.github.onurdemir55.resurrections.rss.feed.element.Category;
 import io.github.onurdemir55.resurrections.rss.feed.element.Enclosure;
 import io.github.onurdemir55.resurrections.rss.feed.element.Guid;
 import io.github.onurdemir55.resurrections.rss.feed.element.Source;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import io.github.onurdemir55.resurrections.rss.util.Uris;
+import io.github.onurdemir55.resurrections.rss.util.XmlNames;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -28,41 +23,26 @@ import java.util.Objects;
  * <p>
  * Instances are immutable and created through {@link #builder()}.
  */
-@JsonPropertyOrder({"title", "link", "description", "author", "category", "comments",
-                    "enclosure", "guid", "pubDate", "source"})
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JacksonXmlRootElement(localName = "item")
 public final class Item {
 
-    @JacksonXmlProperty(localName = "title")
     private final Value title;
 
-    @JacksonXmlProperty(localName = "link")
     private final Value link;
 
-    @JacksonXmlProperty(localName = "description")
     private final Value description;
 
-    @JacksonXmlProperty(localName = "author")
     private final Value author;
 
-    @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "category")
     private final List<Category> category;
 
-    @JacksonXmlProperty(localName = "comments")
     private final Value comments;
 
-    @JacksonXmlProperty(localName = "enclosure")
     private final Enclosure enclosure;
 
-    @JacksonXmlProperty(localName = "guid")
     private final Guid guid;
 
-    @JacksonXmlProperty(localName = "pubDate")
     private final Value pubDate;
 
-    @JacksonXmlProperty(localName = "source")
     private final Source source;
 
     /** Elements from other namespaces, keyed by their prefixed name. */
@@ -85,17 +65,14 @@ public final class Item {
     }
 
     /**
-     * Extension elements, written with the prefixed name they were registered under.
-     * Package-private: this is a serialization hook for Jackson, not part of the public
-     * API. Use {@link #getCategory()} and the other typed getters to inspect a built item.
+     * Extension elements, keyed by the prefixed name they were registered under and written
+     * in the order they were added.
      *
-     * @return the extension elements
+     * @return the extension elements, never {@code null} and possibly empty
      */
-    @JsonAnyGetter
-    Map<String, Value> extensions() {
+    public Map<String, Value> getExtensions() {
         return extensions;
     }
-
 
     /**
      * @return the item title, or {@code null} when it carries a description instead
@@ -103,60 +80,70 @@ public final class Item {
     public Value getTitle() {
         return title;
     }
+
     /**
      * @return the item link, or {@code null}
      */
     public Value getLink() {
         return link;
     }
+
     /**
      * @return the item description, or {@code null} when it carries a title instead
      */
     public Value getDescription() {
         return description;
     }
+
     /**
      * @return the author's email address, or {@code null}
      */
     public Value getAuthor() {
         return author;
     }
+
     /**
      * @return the categories, or {@code null}
      */
     public List<Category> getCategory() {
         return category;
     }
+
     /**
      * @return the comments page url, or {@code null}
      */
     public Value getComments() {
         return comments;
     }
+
     /**
      * @return the attached media object, or {@code null}
      */
     public Enclosure getEnclosure() {
         return enclosure;
     }
+
     /**
      * @return the unique identifier, or {@code null}
      */
     public Guid getGuid() {
         return guid;
     }
+
     /**
      * @return the publication date, or {@code null}
      */
     public Value getPubDate() {
         return pubDate;
     }
+
     /**
      * @return the originating channel, or {@code null}
      */
     public Source getSource() {
         return source;
     }
+
     /**
      * @return a new builder for {@code <item>}
      */
@@ -302,7 +289,9 @@ public final class Item {
          */
         public Builder extension(final String prefixedName, final Value value) {
             this.extensions.put(
-                    Objects.requireNonNull(prefixedName, "an extension needs a name"),
+                    XmlNames.requireElementName(
+                            Objects.requireNonNull(prefixedName, "an extension needs a name"),
+                            "an extension name"),
                     Objects.requireNonNull(value, "an extension needs a value"));
             return this;
         }

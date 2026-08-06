@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Every exclusion here was looked at and understood before being written down. A filter that
+  grows by silencing whatever complains would leave the tool switched on and useless, so each
+  entry says which finding it drops and why that finding is wrong about this code.
+-->
+<FindBugsFilter
+    xmlns="https://github.com/spotbugs/filter/3.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://github.com/spotbugs/filter/3.0.0 https://raw.githubusercontent.com/spotbugs/spotbugs/master/spotbugs/etc/findbugsfilter.xsd">
+
+    <!--
+      UwF: "field not initialized in constructor and dereferenced". That is what a builder is:
+      fields start unset and are filled in by the setters, and build() reads them. Both flagged
+      dereferences happen after the field has been checked - Channel.Builder.build() calls
+      requirePresent for title, link and description before touching link.value(), and
+      Rss.Builder.build() rejects a null channel before requireDeclaredPrefixes runs. That the
+      checks come first is asserted by SpecificationRulesTest, which expects an
+      IllegalStateException naming the missing element rather than a NullPointerException.
+    -->
+    <Match>
+        <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"/>
+        <Or>
+            <Class name="io.github.onurdemir55.resurrections.rss.feed.Channel$Builder"/>
+            <Class name="io.github.onurdemir55.resurrections.rss.feed.Rss$Builder"/>
+        </Or>
+    </Match>
+
+    <!--
+      RV: "return value ignored". Inside assertThrows the call is made in order to fail, so
+      there is no return value to use. Rewriting these to consume a result that never exists
+      would make the tests say less, not more.
+    -->
+    <Match>
+        <Bug pattern="RV_RETURN_VALUE_IGNORED_INFERRED"/>
+        <Source name="~.*Test\.java"/>
+    </Match>
+
+    <!--
+      FS: "format string should use %n rather than \n". Not here. %n is the platform line
+      separator, and this format string is compared against XML that this library always writes
+      with \n whatever the platform. Taking the advice would make the test pass on Linux and
+      fail on Windows, for no reason connected to the library being correct.
+    -->
+    <Match>
+        <Bug pattern="VA_FORMAT_STRING_USES_NEWLINE"/>
+        <Class name="io.github.onurdemir55.resurrections.rss.io.ExactOutputTest"/>
+    </Match>
+</FindBugsFilter>

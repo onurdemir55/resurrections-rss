@@ -27,14 +27,15 @@ public final class Uris {
      * @param element the element or attribute being checked, used in the error message
      * @param value the value to check
      * @return the value, unchanged
-     * @throws IllegalArgumentException if the value has no scheme
+     * @throws IllegalArgumentException if the value has no scheme, or contains a character
+     *     XML cannot represent
      */
     public static String requireScheme(final String element, final String value) {
         if (scheme(value) == null) {
             throw new IllegalArgumentException(element
                     + " must begin with a URI scheme, such as https://, and was: " + value);
         }
-        return value;
+        return XmlText.requireWritable(value, element);
     }
 
     /**
@@ -44,7 +45,8 @@ public final class Uris {
      * @param element the element or attribute being checked, used in the error message
      * @param value the value to check
      * @return the value, unchanged
-     * @throws IllegalArgumentException if the value is not an http or https URL
+     * @throws IllegalArgumentException if the value is not an http or https URL, or contains
+     *     a character XML cannot represent
      */
     public static String requireHttpScheme(final String element, final String value) {
         String scheme = scheme(value);
@@ -52,7 +54,7 @@ public final class Uris {
             throw new IllegalArgumentException(element
                     + " must be an http or https url, and was: " + value);
         }
-        return value;
+        return XmlText.requireWritable(value, element);
     }
 
     /**

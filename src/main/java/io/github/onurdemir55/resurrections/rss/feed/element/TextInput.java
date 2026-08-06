@@ -1,7 +1,5 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import io.github.onurdemir55.resurrections.rss.util.Uris;
@@ -20,11 +18,10 @@ import java.util.Objects;
  * @param name the name of the text field
  * @param link the url of the script that processes the input
  */
-@JsonPropertyOrder({"title", "description", "name", "link"})
-public record TextInput(@JacksonXmlProperty(localName = "title") Value title,
-                        @JacksonXmlProperty(localName = "description") Value description,
-                        @JacksonXmlProperty(localName = "name") Value name,
-                        @JacksonXmlProperty(localName = "link") Value link) {
+public record TextInput(Value title,
+                        Value description,
+                        Value name,
+                        Value link) {
 
     public TextInput {
         Objects.requireNonNull(title, "textInput title is required");

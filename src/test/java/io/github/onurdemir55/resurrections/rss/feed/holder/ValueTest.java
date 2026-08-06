@@ -57,6 +57,14 @@ class ValueTest {
         assertEquals(2, values.size(), () -> "plain and CDATA are distinct, duplicates collapse: " + values);
     }
 
+    /**
+     * Adding a third form here would break the writer silently, which is why this is pinned.
+     * {@code RssWriter.content} chooses a CDATA section for a {@link CDATAValue} and plain
+     * text for anything else, so a new form would take the plain branch and lose its CDATA
+     * without any error — the one failure this library must never have. Java 17 cannot make
+     * that branch exhaustive at compile time, so it is caught here instead: if this test
+     * fails, update {@code RssWriter.content} before doing anything else.
+     */
     @Test
     @DisplayName("the hierarchy is closed to the two known forms")
     void hierarchyIsSealed() {
@@ -64,6 +72,8 @@ class ValueTest {
                 () -> assertTrue(Value.class.isSealed()),
                 () -> assertEquals(
                         Set.of(SimpleValue.class, CDATAValue.class),
-                        Set.of(Value.class.getPermittedSubclasses())));
+                        Set.of(Value.class.getPermittedSubclasses()),
+                        "a new Value form must be handled in RssWriter.content, or its text "
+                                + "will be written as plain text and its CDATA section lost"));
     }
 }

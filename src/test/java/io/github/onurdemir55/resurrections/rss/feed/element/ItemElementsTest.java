@@ -1,6 +1,5 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.onurdemir55.resurrections.rss.feed.Channel;
 import io.github.onurdemir55.resurrections.rss.feed.Item;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
@@ -30,7 +29,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("without isPermaLink the attribute is omitted, so readers assume true")
-        void withoutAttribute() throws JsonProcessingException {
+        void withoutAttribute() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .guid(Guid.of("http://some.server.com/weblogItem3207"))
@@ -44,7 +43,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("matches the specification example for a permalink")
-        void permaLink() throws JsonProcessingException {
+        void permaLink() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .guid(Guid.of("http://inessential.com/2002/09/01.php#a2", true))
@@ -57,7 +56,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("isPermaLink false is emitted, because it differs from the default")
-        void notAPermaLink() throws JsonProcessingException {
+        void notAPermaLink() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .guid(Guid.of("opaque-id-42", false))
@@ -79,7 +78,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("matches the specification example, as an empty element")
-        void specificationExample() throws JsonProcessingException {
+        void specificationExample() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .enclosure(Enclosure.of(
@@ -110,7 +109,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("matches the specification example")
-        void specificationExample() throws JsonProcessingException {
+        void specificationExample() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .source(Source.of("Tomalak's Realm", "http://www.tomalak.org/links2.xml"))
@@ -139,7 +138,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("matches both specification examples")
-        void specificationExamples() throws JsonProcessingException {
+        void specificationExamples() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .category(
@@ -156,7 +155,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("the same value under different domains is kept twice")
-        void sameValueDifferentDomains() throws JsonProcessingException {
+        void sameValueDifferentDomains() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .category(Category.of("X", "urn:a"), Category.of("X", "urn:b"))
@@ -180,7 +179,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("author matches the specification example")
-        void author() throws JsonProcessingException {
+        void author() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .author(new SimpleValue("lawyer@boyer.net (Lawyer Boyer)"))
@@ -191,7 +190,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("comments matches the specification example")
-        void comments() throws JsonProcessingException {
+        void comments() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .comments(new SimpleValue("http://ekzemplo.com/entry/4403/comments"))
@@ -203,7 +202,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("these elements still accept CDATA, since they carry no attributes")
-        void cdataStillAvailable() throws JsonProcessingException {
+        void cdataStillAvailable() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .comments(new CDATAValue("http://example.com/?a=1&b=2"))
@@ -220,7 +219,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("a category keeps its domain attribute alongside a CDATA value")
-        void categoryWithDomainAndCdata() throws JsonProcessingException {
+        void categoryWithDomainAndCdata() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .category(Category.cdata("Top/News & <b>Sports</b>", "urn:taxonomy"))
@@ -233,7 +232,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("a source keeps its url attribute alongside a CDATA value")
-        void sourceWithUrlAndCdata() throws JsonProcessingException {
+        void sourceWithUrlAndCdata() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .source(Source.cdata("Tomalak's <i>Realm</i>", "http://www.tomalak.org/links2.xml"))
@@ -245,7 +244,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("a guid keeps its isPermaLink attribute alongside a CDATA value")
-        void guidWithAttributeAndCdata() throws JsonProcessingException {
+        void guidWithAttributeAndCdata() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .guid(Guid.cdata("urn:id:a&b", false))
@@ -257,7 +256,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("the cdata factories work without an attribute too")
-        void cdataWithoutAttribute() throws JsonProcessingException {
+        void cdataWithoutAttribute() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .category(Category.cdata("Top/News & <b>Sports</b>"))
@@ -272,7 +271,7 @@ class ItemElementsTest {
 
         @Test
         @DisplayName("the plain form of the same element escapes instead of wrapping")
-        void plainFormStillEscapes() throws JsonProcessingException {
+        void plainFormStillEscapes() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
                     .category(Category.of("a & b"))
@@ -286,7 +285,7 @@ class ItemElementsTest {
 
     @Test
     @DisplayName("all item elements are emitted in the order the specification lists them")
-    void specificationElementOrder() throws JsonProcessingException {
+    void specificationElementOrder() {
         String xml = itemXml(Item.builder()
                 .title(new SimpleValue("title"))
                 .link(new SimpleValue("http://example.com/item"))
@@ -312,7 +311,7 @@ class ItemElementsTest {
         }
     }
 
-    private static String itemXml(final Item item) throws JsonProcessingException {
+    private static String itemXml(final Item item) {
         return RssOutput.outputString(Rss.builder()
                 .channel(Channel.builder()
                         .title(new SimpleValue("feed"))

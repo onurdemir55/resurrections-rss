@@ -1,6 +1,5 @@
 package io.github.onurdemir55.resurrections.rss.io;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.onurdemir55.resurrections.rss.feed.Channel;
 import io.github.onurdemir55.resurrections.rss.feed.Item;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
@@ -43,7 +42,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("CDATAValue is emitted inside a CDATA section")
-        void cdataValueIsWrappedInCdataSection() throws JsonProcessingException {
+        void cdataValueIsWrappedInCdataSection() {
             String xml = RssOutput.outputString(feedWithTitle(new CDATAValue("hello")));
 
             assertTrue(xml.contains("<title><![CDATA[hello]]></title>"),
@@ -52,7 +51,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("SimpleValue is emitted as plain text, without a CDATA section")
-        void simpleValueIsPlainText() throws JsonProcessingException {
+        void simpleValueIsPlainText() {
             String xml = RssOutput.outputString(feedWithTitle(new SimpleValue("hello")));
 
             assertAll(
@@ -62,7 +61,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("markup inside a CDATA section stays readable and is not entity-encoded")
-        void markupInsideCdataIsNotEscaped() throws JsonProcessingException {
+        void markupInsideCdataIsNotEscaped() {
             String html = "<p class=\"lead\">Ampersand & <b>bold</b></p>";
 
             String xml = RssOutput.outputString(feedWithTitle(new CDATAValue(html)));
@@ -75,7 +74,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("XML special characters in plain text are escaped")
-        void specialCharactersInPlainTextAreEscaped() throws JsonProcessingException {
+        void specialCharactersInPlainTextAreEscaped() {
             String xml = RssOutput.outputString(
                     feedWithTitle(new SimpleValue("a & b < c > d")));
 
@@ -87,7 +86,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("an empty CDATA value still produces a CDATA section")
-        void emptyCdataValue() throws JsonProcessingException {
+        void emptyCdataValue() {
             String xml = RssOutput.outputString(feedWithTitle(new CDATAValue("")));
 
             assertTrue(xml.contains("<title><![CDATA[]]></title>"), () -> xml);
@@ -106,7 +105,7 @@ class RssOutputTest {
          */
         @Test
         @DisplayName("content containing ']]>' is split across two CDATA sections")
-        void contentWithCdataTerminatorIsSplit() throws JsonProcessingException {
+        void contentWithCdataTerminatorIsSplit() {
             String xml = RssOutput.outputString(feedWithTitle(new CDATAValue("danger ]]> after")));
 
             assertAll(
@@ -119,7 +118,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("several ']]>' occurrences are all handled")
-        void severalTerminators() throws JsonProcessingException {
+        void severalTerminators() {
             String text = "a ]]> b ]]> c";
 
             String xml = RssOutput.outputString(feedWithTitle(new CDATAValue(text)));
@@ -129,7 +128,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("real HTML containing ']]>' serializes and reassembles")
-        void htmlWithTerminator() throws JsonProcessingException {
+        void htmlWithTerminator() {
             String html = "<script>if (a[b[c]]> 0) x();</script>";
 
             String xml = RssOutput.outputString(feedWithTitle(new CDATAValue(html)));
@@ -139,7 +138,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("a lone ']]' without '>' is safe")
-        void loneDoubleBracketIsFine() throws JsonProcessingException {
+        void loneDoubleBracketIsFine() {
             String xml = RssOutput.outputString(feedWithTitle(new CDATAValue("array]] end")));
 
             assertTrue(xml.contains("<![CDATA[array]] end]]>"), () -> xml);
@@ -152,7 +151,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("the document declares the XML prolog and rss version 2.0")
-        void prologAndVersion() throws JsonProcessingException {
+        void prologAndVersion() {
             String xml = RssOutput.outputString(feedWithTitle(new SimpleValue("t")));
 
             assertAll(
@@ -163,8 +162,8 @@ class RssOutputTest {
         }
 
         @Test
-        @DisplayName("channel elements are emitted in the order declared by @JsonPropertyOrder")
-        void channelElementOrder() throws JsonProcessingException {
+        @DisplayName("channel elements are emitted in the order the specification lists them")
+        void channelElementOrder() {
             Channel channel = Channel.builder()
                     .title(new SimpleValue("t"))
                     .link(new SimpleValue("https://example.com/"))
@@ -179,8 +178,8 @@ class RssOutputTest {
         }
 
         @Test
-        @DisplayName("item elements are emitted in the order declared by @JsonPropertyOrder")
-        void itemElementOrder() throws JsonProcessingException {
+        @DisplayName("item elements are emitted in the order the specification lists them")
+        void itemElementOrder() {
             Item item = Item.builder()
                     .title(new SimpleValue("t"))
                     .link(new SimpleValue("https://example.com/"))
@@ -196,7 +195,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("items are not wrapped in a container element")
-        void itemsAreNotWrapped() throws JsonProcessingException {
+        void itemsAreNotWrapped() {
             Item first = Item.builder().title(new SimpleValue("one")).build();
             Item second = Item.builder().title(new SimpleValue("two")).build();
 
@@ -209,7 +208,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("categories repeat the element, in the order given")
-        void categoriesRepeatTheElementInOrder() throws JsonProcessingException {
+        void categoriesRepeatTheElementInOrder() {
             Item item = Item.builder()
                     .title(new SimpleValue("t"))
                     .category(Category.of("first"), Category.of("second"))
@@ -225,7 +224,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("the List and varargs category forms behave identically")
-        void categoryOverloadsAgree() throws JsonProcessingException {
+        void categoryOverloadsAgree() {
             Item fromVarargs = Item.builder()
                     .title(new SimpleValue("t"))
                     .category(Category.of("a"), Category.of("b", "urn:taxonomy"))
@@ -242,7 +241,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("repeated category text is kept, since taxonomies may overlap")
-        void repeatedCategoryTextIsKept() throws JsonProcessingException {
+        void repeatedCategoryTextIsKept() {
             Item item = Item.builder()
                     .title(new SimpleValue("t"))
                     .category(Category.of("same"), Category.of("same"))
@@ -255,7 +254,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("unset elements are omitted rather than emitted empty")
-        void unsetElementsAreOmitted() throws JsonProcessingException {
+        void unsetElementsAreOmitted() {
             String xml = RssOutput.outputString(feedWithTitle(new SimpleValue("only a title")));
 
             assertAll(
@@ -311,7 +310,7 @@ class RssOutputTest {
 
         @Test
         @DisplayName("version defaults to 2.0 without being set")
-        void versionDefaultsToTwoPointZero() throws JsonProcessingException {
+        void versionDefaultsToTwoPointZero() {
             Rss rss = Rss.builder().channel(channel().build()).build();
 
             String xml = RssOutput.outputString(rss);

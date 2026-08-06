@@ -1,11 +1,5 @@
 package io.github.onurdemir55.resurrections.rss.feed;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.github.onurdemir55.resurrections.rss.feed.element.AtomLink;
 import io.github.onurdemir55.resurrections.rss.feed.element.Category;
 import io.github.onurdemir55.resurrections.rss.feed.element.Cloud;
@@ -15,6 +9,7 @@ import io.github.onurdemir55.resurrections.rss.feed.element.SkipHours;
 import io.github.onurdemir55.resurrections.rss.feed.element.TextInput;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import io.github.onurdemir55.resurrections.rss.util.Uris;
+import io.github.onurdemir55.resurrections.rss.util.XmlNames;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -31,77 +26,48 @@ import java.util.Objects;
  * <p>
  * Instances are immutable and created through {@link #builder()}.
  */
-@JsonPropertyOrder({"title", "link", "description", "atom:link", "language", "copyright", "managingEditor",
-                    "webMaster", "pubDate", "lastBuildDate", "category", "generator", "docs",
-                    "cloud", "ttl", "image", "rating", "textInput", "skipHours", "skipDays",
-                    "item"})
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JacksonXmlRootElement(localName = "channel")
 public final class Channel {
 
-    @JacksonXmlProperty(localName = "title")
     private final Value title;
 
-    @JacksonXmlProperty(localName = "link")
     private final Value link;
 
-    @JacksonXmlProperty(localName = "description")
     private final Value description;
 
-    @JacksonXmlProperty(localName = "atom:link")
     private final AtomLink atomLink;
 
-    @JacksonXmlProperty(localName = "language")
     private final Value language;
 
-    @JacksonXmlProperty(localName = "copyright")
     private final Value copyright;
 
-    @JacksonXmlProperty(localName = "managingEditor")
     private final Value managingEditor;
 
-    @JacksonXmlProperty(localName = "webMaster")
     private final Value webMaster;
 
-    @JacksonXmlProperty(localName = "pubDate")
     private final Value pubDate;
 
-    @JacksonXmlProperty(localName = "lastBuildDate")
     private final Value lastBuildDate;
 
-    @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "category")
     private final List<Category> category;
 
-    @JacksonXmlProperty(localName = "generator")
     private final Value generator;
 
-    @JacksonXmlProperty(localName = "docs")
     private final Value docs;
 
-    @JacksonXmlProperty(localName = "cloud")
     private final Cloud cloud;
 
-    @JacksonXmlProperty(localName = "ttl")
     private final Integer ttl;
 
-    @JacksonXmlProperty(localName = "image")
     private final Image image;
 
-    @JacksonXmlProperty(localName = "rating")
     private final Value rating;
 
-    @JacksonXmlProperty(localName = "textInput")
     private final TextInput textInput;
 
-    @JacksonXmlProperty(localName = "skipHours")
     private final SkipHours skipHours;
 
-    @JacksonXmlProperty(localName = "skipDays")
     private final SkipDays skipDays;
 
-    @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "item")
     private final List<Item> items;
 
     /**
@@ -138,14 +104,16 @@ public final class Channel {
     }
 
     /**
-     * Extension elements, written with the prefixed name they were registered under.
-     * Package-private: this is a serialization hook for Jackson, not part of the public
-     * API. Use {@link #getCategory()} and the other typed getters to inspect a built channel.
+     * Extension elements, keyed by the prefixed name they were registered under and written
+     * in the order they were added.
+     * <p>
+     * These used to be hidden because they existed for a serialization framework to find.
+     * Nothing reads them by reflection any more, so they are a normal part of the model like
+     * every other element.
      *
-     * @return the extension elements
+     * @return the extension elements, never {@code null} and possibly empty
      */
-    @JsonAnyGetter
-    Map<String, Value> extensions() {
+    public Map<String, Value> getExtensions() {
         return extensions;
     }
 
@@ -159,133 +127,153 @@ public final class Channel {
         return atomLink != null;
     }
 
-
     /**
      * @return the channel title, never {@code null}
      */
     public Value getTitle() {
         return title;
     }
+
     /**
      * @return the channel link, never {@code null}
      */
     public Value getLink() {
         return link;
     }
+
     /**
      * @return the channel description, never {@code null}
      */
     public Value getDescription() {
         return description;
     }
+
     /**
      * @return the Atom self link, or {@code null}
      */
     public AtomLink getAtomLink() {
         return atomLink;
     }
+
     /**
      * @return the language code, or {@code null}
      */
     public Value getLanguage() {
         return language;
     }
+
     /**
      * @return the copyright notice, or {@code null}
      */
     public Value getCopyright() {
         return copyright;
     }
+
     /**
      * @return the editor's email address, or {@code null}
      */
     public Value getManagingEditor() {
         return managingEditor;
     }
+
     /**
      * @return the webmaster's email address, or {@code null}
      */
     public Value getWebMaster() {
         return webMaster;
     }
+
     /**
      * @return the publication date, or {@code null}
      */
     public Value getPubDate() {
         return pubDate;
     }
+
     /**
      * @return the last modification date, or {@code null}
      */
     public Value getLastBuildDate() {
         return lastBuildDate;
     }
+
     /**
      * @return the categories, or {@code null}
      */
     public List<Category> getCategory() {
         return category;
     }
+
     /**
      * @return the generating program, or {@code null}
      */
     public Value getGenerator() {
         return generator;
     }
+
     /**
      * @return the documentation url, or {@code null}
      */
     public Value getDocs() {
         return docs;
     }
+
     /**
      * @return the update notification service, or {@code null}
      */
     public Cloud getCloud() {
         return cloud;
     }
+
     /**
      * @return the cache lifetime in minutes, or {@code null}
      */
     public Integer getTtl() {
         return ttl;
     }
+
     /**
      * @return the channel image, or {@code null}
      */
     public Image getImage() {
         return image;
     }
+
     /**
      * @return the PICS rating, or {@code null}
      */
     public Value getRating() {
         return rating;
     }
+
     /**
      * @return the input box, or {@code null}
      */
     public TextInput getTextInput() {
         return textInput;
     }
+
     /**
      * @return the hours readers may skip, or {@code null}
      */
     public SkipHours getSkipHours() {
         return skipHours;
     }
+
     /**
      * @return the days readers may skip, or {@code null}
      */
     public SkipDays getSkipDays() {
         return skipDays;
     }
+
     /**
      * @return the items, or {@code null}
      */
     public List<Item> getItems() {
         return items;
     }
+
     /**
      * @return a new builder for {@code <channel>}
      */
@@ -373,7 +361,9 @@ public final class Channel {
          */
         public Builder extension(final String prefixedName, final Value value) {
             this.extensions.put(
-                    Objects.requireNonNull(prefixedName, "an extension needs a name"),
+                    XmlNames.requireElementName(
+                            Objects.requireNonNull(prefixedName, "an extension needs a name"),
+                            "an extension name"),
                     Objects.requireNonNull(value, "an extension needs a value"));
             return this;
         }

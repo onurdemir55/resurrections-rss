@@ -1,8 +1,7 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import io.github.onurdemir55.resurrections.rss.util.Uris;
+import io.github.onurdemir55.resurrections.rss.util.XmlText;
 
 import java.util.Objects;
 
@@ -20,10 +19,9 @@ import java.util.Objects;
  * @param rel the relationship, {@code self} for the feed's own address
  * @param type the media type of the target, or {@code null} to omit it
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public record AtomLink(@JacksonXmlProperty(isAttribute = true, localName = "href") String href,
-                       @JacksonXmlProperty(isAttribute = true, localName = "rel") String rel,
-                       @JacksonXmlProperty(isAttribute = true, localName = "type") String type) {
+public record AtomLink(String href,
+                       String rel,
+                       String type) {
 
     /** The prefix this library uses for the Atom namespace. */
     public static final String PREFIX = "atom";
@@ -38,6 +36,8 @@ public record AtomLink(@JacksonXmlProperty(isAttribute = true, localName = "href
         Objects.requireNonNull(href, "atom:link href is required");
         Objects.requireNonNull(rel, "atom:link rel is required");
         Uris.requireScheme("atom:link href", href);
+        XmlText.requireWritable(rel, "atom:link rel");
+        XmlText.requireWritableOrNull(type, "atom:link type");
     }
 
     /**

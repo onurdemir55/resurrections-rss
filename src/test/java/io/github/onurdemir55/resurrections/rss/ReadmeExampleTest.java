@@ -1,6 +1,5 @@
 package io.github.onurdemir55.resurrections.rss;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.onurdemir55.resurrections.rss.feed.Channel;
 import io.github.onurdemir55.resurrections.rss.feed.Item;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
@@ -28,7 +27,7 @@ class ReadmeExampleTest {
 
     @Test
     @DisplayName("the documented example produces the documented feed")
-    void readmeExample() throws JsonProcessingException {
+    void readmeExample() {
         String published = DateParser.formatRfc822(PUBLISHED);
 
         Item item = Item.builder()

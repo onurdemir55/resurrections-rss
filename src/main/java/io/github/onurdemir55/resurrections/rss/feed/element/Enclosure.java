@@ -1,7 +1,7 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import io.github.onurdemir55.resurrections.rss.util.Uris;
+import io.github.onurdemir55.resurrections.rss.util.XmlText;
 
 import java.util.Objects;
 
@@ -16,14 +16,15 @@ import java.util.Objects;
  * @param length its size in bytes
  * @param type its MIME type, for example {@code audio/mpeg}
  */
-public record Enclosure(@JacksonXmlProperty(isAttribute = true, localName = "url") String url,
-                        @JacksonXmlProperty(isAttribute = true, localName = "length") long length,
-                        @JacksonXmlProperty(isAttribute = true, localName = "type") String type) {
+public record Enclosure(String url,
+                        long length,
+                        String type) {
 
     public Enclosure {
         Objects.requireNonNull(url, "enclosure url is required");
         Objects.requireNonNull(type, "enclosure type is required");
         Uris.requireHttpScheme("enclosure url", url);
+        XmlText.requireWritable(type, "enclosure type");
         if (length < 0) {
             throw new IllegalArgumentException("enclosure length cannot be negative, was " + length);
         }

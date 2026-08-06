@@ -1,6 +1,5 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.onurdemir55.resurrections.rss.feed.Channel;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
@@ -26,7 +25,7 @@ class ChannelElementsTest {
 
         @Test
         @DisplayName("the optional text elements match the specification examples")
-        void specificationExamples() throws JsonProcessingException {
+        void specificationExamples() {
             String xml = channelXml(base()
                     .copyright(new SimpleValue("Copyright 2002, Spartanburg Herald-Journal"))
                     .managingEditor(new SimpleValue("geo@herald.com (George Matesky)"))
@@ -54,7 +53,7 @@ class ChannelElementsTest {
 
         @Test
         @DisplayName("a channel category can link the feed to a cataloguing system")
-        void categoryWithDomain() throws JsonProcessingException {
+        void categoryWithDomain() {
             String xml = channelXml(base()
                     .category(Category.of("Newspapers"), Category.of("1765", "Syndic8")));
 
@@ -71,7 +70,7 @@ class ChannelElementsTest {
 
         @Test
         @DisplayName("only the three required sub-elements are emitted when nothing else is set")
-        void requiredOnly() throws JsonProcessingException {
+        void requiredOnly() {
             String xml = channelXml(base().image(
                     Image.of("http://example.com/logo.png", "Logo", "http://example.com/")));
 
@@ -85,7 +84,7 @@ class ChannelElementsTest {
 
         @Test
         @DisplayName("dimensions and description are emitted when set")
-        void allSubElements() throws JsonProcessingException {
+        void allSubElements() {
             String xml = channelXml(base().image(
                     Image.of("http://example.com/logo.png", "Logo", "http://example.com/")
                             .withSize(144, 400)
@@ -134,7 +133,7 @@ class ChannelElementsTest {
 
         @Test
         @DisplayName("matches the specification example, as an empty element")
-        void specificationExample() throws JsonProcessingException {
+        void specificationExample() {
             String xml = channelXml(base().cloud(
                     Cloud.of("rpc.sys.com", 80, "/RPC2", "myCloud.rssPleaseNotify", "xml-rpc")));
 
@@ -163,7 +162,7 @@ class ChannelElementsTest {
 
         @Test
         @DisplayName("all four sub-elements are emitted, in specification order")
-        void allSubElements() throws JsonProcessingException {
+        void allSubElements() {
             String xml = channelXml(base().textInput(
                     TextInput.of("Submit", "Search the archive", "q", "http://example.com/search")));
 
@@ -199,7 +198,7 @@ class ChannelElementsTest {
 
         @Test
         @DisplayName("hours are emitted as repeated child elements")
-        void hours() throws JsonProcessingException {
+        void hours() {
             String xml = channelXml(base().skipHours(SkipHours.of(0, 1, 23)));
 
             assertTrue(xml.contains("<skipHours>")
@@ -209,7 +208,7 @@ class ChannelElementsTest {
 
         @Test
         @DisplayName("days use the spelling from the specification, not the enum name")
-        void days() throws JsonProcessingException {
+        void days() {
             String xml = channelXml(base().skipDays(SkipDays.of(Day.SATURDAY, Day.SUNDAY)));
 
             assertAll(
@@ -261,7 +260,7 @@ class ChannelElementsTest {
 
     @Test
     @DisplayName("all channel elements are emitted in the order the specification lists them")
-    void specificationElementOrder() throws JsonProcessingException {
+    void specificationElementOrder() {
         String xml = channelXml(base()
                 .language(new SimpleValue("en-us"))
                 .copyright(new SimpleValue("Copyright"))
@@ -295,7 +294,7 @@ class ChannelElementsTest {
 
     @Test
     @DisplayName("the List and varargs builder forms behave identically")
-    void builderOverloadsAgree() throws JsonProcessingException {
+    void builderOverloadsAgree() {
         io.github.onurdemir55.resurrections.rss.feed.Item item =
                 io.github.onurdemir55.resurrections.rss.feed.Item.builder()
                         .title(new SimpleValue("an item"))
@@ -318,7 +317,7 @@ class ChannelElementsTest {
                 .description(new SimpleValue("The latest news from GoUpstate.com."));
     }
 
-    private static String channelXml(final Channel.Builder channel) throws JsonProcessingException {
+    private static String channelXml(final Channel.Builder channel) {
         return RssOutput.outputString(Rss.builder().channel(channel.build()).build());
     }
 }

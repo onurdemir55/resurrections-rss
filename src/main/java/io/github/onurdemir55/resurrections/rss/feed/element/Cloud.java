@@ -1,6 +1,6 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import io.github.onurdemir55.resurrections.rss.util.XmlText;
 
 import java.util.Objects;
 
@@ -16,12 +16,10 @@ import java.util.Objects;
  * @param registerProcedure the procedure to call to register
  * @param protocol the protocol, one of {@code xml-rpc}, {@code soap} or {@code http-post}
  */
-public record Cloud(@JacksonXmlProperty(isAttribute = true, localName = "domain") String domain,
-                    @JacksonXmlProperty(isAttribute = true, localName = "port") int port,
-                    @JacksonXmlProperty(isAttribute = true, localName = "path") String path,
-                    @JacksonXmlProperty(isAttribute = true, localName = "registerProcedure")
+public record Cloud(String domain,
+                    int port,
+                    String path,
                     String registerProcedure,
-                    @JacksonXmlProperty(isAttribute = true, localName = "protocol")
                     String protocol) {
 
     public Cloud {
@@ -29,6 +27,10 @@ public record Cloud(@JacksonXmlProperty(isAttribute = true, localName = "domain"
         Objects.requireNonNull(path, "cloud path is required");
         Objects.requireNonNull(registerProcedure, "cloud registerProcedure is required");
         Objects.requireNonNull(protocol, "cloud protocol is required");
+        XmlText.requireWritable(domain, "cloud domain");
+        XmlText.requireWritable(path, "cloud path");
+        XmlText.requireWritable(registerProcedure, "cloud registerProcedure");
+        XmlText.requireWritable(protocol, "cloud protocol");
     }
 
     /**

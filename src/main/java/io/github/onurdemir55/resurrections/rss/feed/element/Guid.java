@@ -1,8 +1,5 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
@@ -21,9 +18,7 @@ import java.util.Objects;
  * @param isPermaLink whether the identifier is a URL pointing at the item, or {@code null}
  *     to omit the attribute and let readers assume the default of {@code true}
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public record Guid(@JsonUnwrapped Value value,
-                   @JacksonXmlProperty(isAttribute = true, localName = "isPermaLink")
+public record Guid(Value value,
                    Boolean isPermaLink) {
 
     public Guid {

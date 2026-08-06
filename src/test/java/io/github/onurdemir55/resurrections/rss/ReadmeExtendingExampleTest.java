@@ -1,6 +1,5 @@
 package io.github.onurdemir55.resurrections.rss;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.onurdemir55.resurrections.rss.feed.Channel;
 import io.github.onurdemir55.resurrections.rss.feed.Item;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
@@ -28,7 +27,7 @@ class ReadmeExtendingExampleTest {
 
     @Test
     @DisplayName("the documented extension example produces exactly the documented feed")
-    void readmeExtendingExample() throws JsonProcessingException {
+    void readmeExtendingExample() {
         Item item = Item.builder()
                 .title(new SimpleValue("An item"))
                 .extension("content:encoded", new CDATAValue("<p>rich <b>html</b></p>"))

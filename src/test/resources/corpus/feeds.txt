@@ -1,0 +1,3320 @@
+=== 000_text_plain_0
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description></description>
+  </channel>
+</rss>
+=== 001_text_cdata_0
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[]]></description>
+  </channel>
+</rss>
+=== 002_text_title_plain_0
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 003_text_title_cdata_0
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 004_text_plain_1
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description> </description>
+  </channel>
+</rss>
+=== 005_text_cdata_1
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[ ]]></description>
+  </channel>
+</rss>
+=== 006_text_title_plain_1
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title> </title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 007_text_title_cdata_1
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[ ]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 008_text_plain_2
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>  spaced  </description>
+  </channel>
+</rss>
+=== 009_text_cdata_2
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[  spaced  ]]></description>
+  </channel>
+</rss>
+=== 010_text_title_plain_2
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>  spaced  </title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 011_text_title_cdata_2
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[  spaced  ]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 012_text_plain_3
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>plain</description>
+  </channel>
+</rss>
+=== 013_text_cdata_3
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[plain]]></description>
+  </channel>
+</rss>
+=== 014_text_title_plain_3
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>plain</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 015_text_title_cdata_3
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[plain]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 016_text_plain_4
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>a &amp; b</description>
+  </channel>
+</rss>
+=== 017_text_cdata_4
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[a & b]]></description>
+  </channel>
+</rss>
+=== 018_text_title_plain_4
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>a &amp; b</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 019_text_title_cdata_4
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[a & b]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 020_text_plain_5
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>a &lt; b</description>
+  </channel>
+</rss>
+=== 021_text_cdata_5
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[a < b]]></description>
+  </channel>
+</rss>
+=== 022_text_title_plain_5
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>a &lt; b</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 023_text_title_cdata_5
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[a < b]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 024_text_plain_6
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>a > b</description>
+  </channel>
+</rss>
+=== 025_text_cdata_6
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[a > b]]></description>
+  </channel>
+</rss>
+=== 026_text_title_plain_6
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>a > b</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 027_text_title_cdata_6
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[a > b]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 028_text_plain_7
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>a " b</description>
+  </channel>
+</rss>
+=== 029_text_cdata_7
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[a " b]]></description>
+  </channel>
+</rss>
+=== 030_text_title_plain_7
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>a " b</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 031_text_title_cdata_7
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[a " b]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 032_text_plain_8
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>a ' b</description>
+  </channel>
+</rss>
+=== 033_text_cdata_8
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[a ' b]]></description>
+  </channel>
+</rss>
+=== 034_text_title_plain_8
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>a ' b</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 035_text_title_cdata_8
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[a ' b]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 036_text_plain_9
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>&amp;amp; already escaped</description>
+  </channel>
+</rss>
+=== 037_text_cdata_9
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[&amp; already escaped]]></description>
+  </channel>
+</rss>
+=== 038_text_title_plain_9
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>&amp;amp; already escaped</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 039_text_title_cdata_9
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[&amp; already escaped]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 040_text_plain_10
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>&lt;b>markup&lt;/b></description>
+  </channel>
+</rss>
+=== 041_text_cdata_10
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[<b>markup</b>]]></description>
+  </channel>
+</rss>
+=== 042_text_title_plain_10
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>&lt;b>markup&lt;/b></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 043_text_title_cdata_10
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[<b>markup</b>]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 044_text_plain_11
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>line1
+line2</description>
+  </channel>
+</rss>
+=== 045_text_cdata_11
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[line1
+line2]]></description>
+  </channel>
+</rss>
+=== 046_text_title_plain_11
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>line1
+line2</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 047_text_title_cdata_11
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[line1
+line2]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 048_text_plain_12
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>tab	here</description>
+  </channel>
+</rss>
+=== 049_text_cdata_12
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[tab	here]]></description>
+  </channel>
+</rss>
+=== 050_text_title_plain_12
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>tab	here</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 051_text_title_cdata_12
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[tab	here]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 052_text_plain_13
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>cr&#xd;here</description>
+  </channel>
+</rss>
+=== 053_text_cdata_13
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[crhere]]></description>
+  </channel>
+</rss>
+=== 054_text_title_plain_13
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>cr&#xd;here</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 055_text_title_cdata_13
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[crhere]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 056_text_plain_14
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>crlf&#xd;
+here</description>
+  </channel>
+</rss>
+=== 057_text_cdata_14
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[crlf
+here]]></description>
+  </channel>
+</rss>
+=== 058_text_title_plain_14
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>crlf&#xd;
+here</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 059_text_title_cdata_14
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[crlf
+here]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 060_text_plain_15
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>trailing newline
+</description>
+  </channel>
+</rss>
+=== 061_text_cdata_15
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[trailing newline
+]]></description>
+  </channel>
+</rss>
+=== 062_text_title_plain_15
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>trailing newline
+</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 063_text_title_cdata_15
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[trailing newline
+]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 064_text_plain_16
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>
+leading newline</description>
+  </channel>
+</rss>
+=== 065_text_cdata_16
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[
+leading newline]]></description>
+  </channel>
+</rss>
+=== 066_text_title_plain_16
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>
+leading newline</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 067_text_title_cdata_16
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[
+leading newline]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 068_text_plain_17
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>]]&gt;</description>
+  </channel>
+</rss>
+=== 069_text_cdata_17
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[]]]]><![CDATA[>]]></description>
+  </channel>
+</rss>
+=== 070_text_title_plain_17
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>]]&gt;</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 071_text_title_cdata_17
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[]]]]><![CDATA[>]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 072_text_plain_18
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>]]&gt;]]&gt;</description>
+  </channel>
+</rss>
+=== 073_text_cdata_18
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[]]]]><![CDATA[>]]]]><![CDATA[>]]></description>
+  </channel>
+</rss>
+=== 074_text_title_plain_18
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>]]&gt;]]&gt;</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 075_text_title_cdata_18
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[]]]]><![CDATA[>]]]]><![CDATA[>]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 076_text_plain_19
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>a]]&gt;b</description>
+  </channel>
+</rss>
+=== 077_text_cdata_19
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[a]]]]><![CDATA[>b]]></description>
+  </channel>
+</rss>
+=== 078_text_title_plain_19
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>a]]&gt;b</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 079_text_title_cdata_19
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[a]]]]><![CDATA[>b]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 080_text_plain_20
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>]]</description>
+  </channel>
+</rss>
+=== 081_text_cdata_20
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[]]]]></description>
+  </channel>
+</rss>
+=== 082_text_title_plain_20
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>]]</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 083_text_title_cdata_20
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[]]]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 084_text_plain_21
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>&gt;</description>
+  </channel>
+</rss>
+=== 085_text_cdata_21
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[>]]></description>
+  </channel>
+</rss>
+=== 086_text_title_plain_21
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>&gt;</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 087_text_title_cdata_21
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[>]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 088_text_plain_22
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>]]]&gt;</description>
+  </channel>
+</rss>
+=== 089_text_cdata_22
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[]]]]]><![CDATA[>]]></description>
+  </channel>
+</rss>
+=== 090_text_title_plain_22
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>]]]&gt;</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 091_text_title_cdata_22
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[]]]]]><![CDATA[>]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 092_text_plain_23
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>&lt;![CDATA[nested]]&gt;</description>
+  </channel>
+</rss>
+=== 093_text_cdata_23
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[<![CDATA[nested]]]]><![CDATA[>]]></description>
+  </channel>
+</rss>
+=== 094_text_title_plain_23
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>&lt;![CDATA[nested]]&gt;</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 095_text_title_cdata_23
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[<![CDATA[nested]]]]><![CDATA[>]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 096_text_plain_24
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>ünïcödé ığşç</description>
+  </channel>
+</rss>
+=== 097_text_cdata_24
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[ünïcödé ığşç]]></description>
+  </channel>
+</rss>
+=== 098_text_title_plain_24
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>ünïcödé ığşç</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 099_text_title_cdata_24
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[ünïcödé ığşç]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 100_text_plain_25
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>日本語</description>
+  </channel>
+</rss>
+=== 101_text_cdata_25
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[日本語]]></description>
+  </channel>
+</rss>
+=== 102_text_title_plain_25
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>日本語</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 103_text_title_cdata_25
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[日本語]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 104_text_plain_26
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>عربى</description>
+  </channel>
+</rss>
+=== 105_text_cdata_26
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[عربى]]></description>
+  </channel>
+</rss>
+=== 106_text_title_plain_26
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>عربى</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 107_text_title_cdata_26
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[عربى]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 108_text_plain_27
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>emoji 📡 pair</description>
+  </channel>
+</rss>
+=== 109_text_cdata_27
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[emoji 📡 pair]]></description>
+  </channel>
+</rss>
+=== 110_text_title_plain_27
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>emoji 📡 pair</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 111_text_title_cdata_27
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[emoji 📡 pair]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 112_text_plain_28
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>very long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long text</description>
+  </channel>
+</rss>
+=== 113_text_cdata_28
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[very long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long text]]></description>
+  </channel>
+</rss>
+=== 114_text_title_plain_28
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>very long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long text</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 115_text_title_cdata_28
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[very long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long text]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 116_text_plain_29
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>-- comment --</description>
+  </channel>
+</rss>
+=== 117_text_cdata_29
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[-- comment --]]></description>
+  </channel>
+</rss>
+=== 118_text_title_plain_29
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>-- comment --</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 119_text_title_cdata_29
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[-- comment --]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 120_text_plain_30
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>&lt;!-- comment --></description>
+  </channel>
+</rss>
+=== 121_text_cdata_30
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[<!-- comment -->]]></description>
+  </channel>
+</rss>
+=== 122_text_title_plain_30
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>&lt;!-- comment --></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 123_text_title_cdata_30
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[<!-- comment -->]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 124_text_plain_31
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>&lt;?pi?></description>
+  </channel>
+</rss>
+=== 125_text_cdata_31
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[<?pi?>]]></description>
+  </channel>
+</rss>
+=== 126_text_title_plain_31
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>&lt;?pi?></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 127_text_title_cdata_31
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[<?pi?>]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 128_text_plain_32
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>	
+&#xd;</description>
+  </channel>
+</rss>
+=== 129_text_cdata_32
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[	
+]]></description>
+  </channel>
+</rss>
+=== 130_text_title_plain_32
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>	
+&#xd;</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 131_text_title_cdata_32
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[	
+]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 132_text_plain_33
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>0</description>
+  </channel>
+</rss>
+=== 133_text_cdata_33
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[0]]></description>
+  </channel>
+</rss>
+=== 134_text_title_plain_33
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>0</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 135_text_title_cdata_33
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[0]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 136_text_plain_34
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>00</description>
+  </channel>
+</rss>
+=== 137_text_cdata_34
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[00]]></description>
+  </channel>
+</rss>
+=== 138_text_title_plain_34
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>00</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 139_text_title_cdata_34
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[00]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 140_text_plain_35
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>null</description>
+  </channel>
+</rss>
+=== 141_text_cdata_35
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description><![CDATA[null]]></description>
+  </channel>
+</rss>
+=== 142_text_title_plain_35
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>null</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 143_text_title_cdata_35
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[null]]></title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 144_chan_language
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <language>en</language>
+  </channel>
+</rss>
+=== 145_chan_copyright
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <copyright>(c) 2026</copyright>
+  </channel>
+</rss>
+=== 146_chan_managingEditor
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <managingEditor>e@example.com</managingEditor>
+  </channel>
+</rss>
+=== 147_chan_webMaster
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <webMaster>w@example.com</webMaster>
+  </channel>
+</rss>
+=== 148_chan_pubDate
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <pubDate>Wed, 05 Aug 2026 20:00:00 GMT</pubDate>
+  </channel>
+</rss>
+=== 149_chan_lastBuildDate
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <lastBuildDate>Wed, 05 Aug 2026 20:00:00 GMT</lastBuildDate>
+  </channel>
+</rss>
+=== 150_chan_generator
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <generator>gen</generator>
+  </channel>
+</rss>
+=== 151_chan_docs
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <docs>https://example.com/docs</docs>
+  </channel>
+</rss>
+=== 152_chan_ttl
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <ttl>60</ttl>
+  </channel>
+</rss>
+=== 153_chan_ttlZero
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <ttl>0</ttl>
+  </channel>
+</rss>
+=== 154_chan_rating
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <rating>(PICS-1.1)</rating>
+  </channel>
+</rss>
+=== 155_chan_category
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category>Tech</category>
+  </channel>
+</rss>
+=== 156_chan_categoryDomain
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category domain="Syndic8">Tech</category>
+  </channel>
+</rss>
+=== 157_chan_categoryCdata
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category><![CDATA[<b>Tech</b>]]></category>
+  </channel>
+</rss>
+=== 158_chan_cloud
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <cloud domain="rpc.example.com" port="80" path="/RPC2" registerProcedure="p" protocol="xml-rpc"/>
+  </channel>
+</rss>
+=== 159_chan_cloudPortZero
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <cloud domain="rpc.example.com" port="0" path="/" registerProcedure="p" protocol="soap"/>
+  </channel>
+</rss>
+=== 160_chan_textInput
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <textInput>
+      <title>t</title>
+      <description>d</description>
+      <name>n</name>
+      <link>https://example.com/s</link>
+    </textInput>
+  </channel>
+</rss>
+=== 161_chan_image
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <image>
+      <url>https://example.com/i.png</url>
+      <title>t</title>
+      <link>https://example.com/</link>
+    </image>
+  </channel>
+</rss>
+=== 162_chan_skipHours
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <skipHours>
+      <hour>1</hour>
+    </skipHours>
+  </channel>
+</rss>
+=== 163_chan_skipDays
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <skipDays>
+      <day>Monday</day>
+    </skipDays>
+  </channel>
+</rss>
+=== 164_chan_atomLink
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <atom:link href="https://example.com/f.xml" rel="self" type="application/rss+xml"/>
+  </channel>
+</rss>
+=== 165_chanpair_language_copyright
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <language>en</language>
+    <copyright>(c) 2026</copyright>
+  </channel>
+</rss>
+=== 166_chanpair_language_generator
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <language>en</language>
+    <generator>gen</generator>
+  </channel>
+</rss>
+=== 167_chanpair_language_category
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <language>en</language>
+    <category>Tech</category>
+  </channel>
+</rss>
+=== 168_chanpair_language_textInput
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <language>en</language>
+    <textInput>
+      <title>t</title>
+      <description>d</description>
+      <name>n</name>
+      <link>https://example.com/s</link>
+    </textInput>
+  </channel>
+</rss>
+=== 169_chanpair_copyright_managingEditor
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <copyright>(c) 2026</copyright>
+    <managingEditor>e@example.com</managingEditor>
+  </channel>
+</rss>
+=== 170_chanpair_copyright_docs
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <copyright>(c) 2026</copyright>
+    <docs>https://example.com/docs</docs>
+  </channel>
+</rss>
+=== 171_chanpair_copyright_categoryDomain
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <copyright>(c) 2026</copyright>
+    <category domain="Syndic8">Tech</category>
+  </channel>
+</rss>
+=== 172_chanpair_copyright_image
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <copyright>(c) 2026</copyright>
+    <image>
+      <url>https://example.com/i.png</url>
+      <title>t</title>
+      <link>https://example.com/</link>
+    </image>
+  </channel>
+</rss>
+=== 173_chanpair_managingEditor_webMaster
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <managingEditor>e@example.com</managingEditor>
+    <webMaster>w@example.com</webMaster>
+  </channel>
+</rss>
+=== 174_chanpair_managingEditor_ttl
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <managingEditor>e@example.com</managingEditor>
+    <ttl>60</ttl>
+  </channel>
+</rss>
+=== 175_chanpair_managingEditor_categoryCdata
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <managingEditor>e@example.com</managingEditor>
+    <category><![CDATA[<b>Tech</b>]]></category>
+  </channel>
+</rss>
+=== 176_chanpair_managingEditor_skipHours
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <managingEditor>e@example.com</managingEditor>
+    <skipHours>
+      <hour>1</hour>
+    </skipHours>
+  </channel>
+</rss>
+=== 177_chanpair_webMaster_pubDate
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <webMaster>w@example.com</webMaster>
+    <pubDate>Wed, 05 Aug 2026 20:00:00 GMT</pubDate>
+  </channel>
+</rss>
+=== 178_chanpair_webMaster_ttlZero
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <webMaster>w@example.com</webMaster>
+    <ttl>0</ttl>
+  </channel>
+</rss>
+=== 179_chanpair_webMaster_cloud
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <webMaster>w@example.com</webMaster>
+    <cloud domain="rpc.example.com" port="80" path="/RPC2" registerProcedure="p" protocol="xml-rpc"/>
+  </channel>
+</rss>
+=== 180_chanpair_webMaster_skipDays
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <webMaster>w@example.com</webMaster>
+    <skipDays>
+      <day>Monday</day>
+    </skipDays>
+  </channel>
+</rss>
+=== 181_chanpair_pubDate_lastBuildDate
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <pubDate>Wed, 05 Aug 2026 20:00:00 GMT</pubDate>
+    <lastBuildDate>Wed, 05 Aug 2026 20:00:00 GMT</lastBuildDate>
+  </channel>
+</rss>
+=== 182_chanpair_pubDate_rating
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <pubDate>Wed, 05 Aug 2026 20:00:00 GMT</pubDate>
+    <rating>(PICS-1.1)</rating>
+  </channel>
+</rss>
+=== 183_chanpair_pubDate_cloudPortZero
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <pubDate>Wed, 05 Aug 2026 20:00:00 GMT</pubDate>
+    <cloud domain="rpc.example.com" port="0" path="/" registerProcedure="p" protocol="soap"/>
+  </channel>
+</rss>
+=== 184_chanpair_pubDate_atomLink
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <atom:link href="https://example.com/f.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 05 Aug 2026 20:00:00 GMT</pubDate>
+  </channel>
+</rss>
+=== 185_chanpair_lastBuildDate_generator
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <lastBuildDate>Wed, 05 Aug 2026 20:00:00 GMT</lastBuildDate>
+    <generator>gen</generator>
+  </channel>
+</rss>
+=== 186_chanpair_lastBuildDate_category
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <lastBuildDate>Wed, 05 Aug 2026 20:00:00 GMT</lastBuildDate>
+    <category>Tech</category>
+  </channel>
+</rss>
+=== 187_chanpair_lastBuildDate_textInput
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <lastBuildDate>Wed, 05 Aug 2026 20:00:00 GMT</lastBuildDate>
+    <textInput>
+      <title>t</title>
+      <description>d</description>
+      <name>n</name>
+      <link>https://example.com/s</link>
+    </textInput>
+  </channel>
+</rss>
+=== 188_chanpair_generator_docs
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <generator>gen</generator>
+    <docs>https://example.com/docs</docs>
+  </channel>
+</rss>
+=== 189_chanpair_generator_categoryDomain
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category domain="Syndic8">Tech</category>
+    <generator>gen</generator>
+  </channel>
+</rss>
+=== 190_chanpair_generator_image
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <generator>gen</generator>
+    <image>
+      <url>https://example.com/i.png</url>
+      <title>t</title>
+      <link>https://example.com/</link>
+    </image>
+  </channel>
+</rss>
+=== 191_chanpair_docs_ttl
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <docs>https://example.com/docs</docs>
+    <ttl>60</ttl>
+  </channel>
+</rss>
+=== 192_chanpair_docs_categoryCdata
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category><![CDATA[<b>Tech</b>]]></category>
+    <docs>https://example.com/docs</docs>
+  </channel>
+</rss>
+=== 193_chanpair_docs_skipHours
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <docs>https://example.com/docs</docs>
+    <skipHours>
+      <hour>1</hour>
+    </skipHours>
+  </channel>
+</rss>
+=== 194_chanpair_ttl_ttlZero
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <ttl>0</ttl>
+  </channel>
+</rss>
+=== 195_chanpair_ttl_cloud
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <cloud domain="rpc.example.com" port="80" path="/RPC2" registerProcedure="p" protocol="xml-rpc"/>
+    <ttl>60</ttl>
+  </channel>
+</rss>
+=== 196_chanpair_ttl_skipDays
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <ttl>60</ttl>
+    <skipDays>
+      <day>Monday</day>
+    </skipDays>
+  </channel>
+</rss>
+=== 197_chanpair_ttlZero_rating
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <ttl>0</ttl>
+    <rating>(PICS-1.1)</rating>
+  </channel>
+</rss>
+=== 198_chanpair_ttlZero_cloudPortZero
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <cloud domain="rpc.example.com" port="0" path="/" registerProcedure="p" protocol="soap"/>
+    <ttl>0</ttl>
+  </channel>
+</rss>
+=== 199_chanpair_ttlZero_atomLink
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <atom:link href="https://example.com/f.xml" rel="self" type="application/rss+xml"/>
+    <ttl>0</ttl>
+  </channel>
+</rss>
+=== 200_chanpair_rating_category
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category>Tech</category>
+    <rating>(PICS-1.1)</rating>
+  </channel>
+</rss>
+=== 201_chanpair_rating_textInput
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <rating>(PICS-1.1)</rating>
+    <textInput>
+      <title>t</title>
+      <description>d</description>
+      <name>n</name>
+      <link>https://example.com/s</link>
+    </textInput>
+  </channel>
+</rss>
+=== 202_chanpair_category_categoryDomain
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category domain="Syndic8">Tech</category>
+  </channel>
+</rss>
+=== 203_chanpair_category_image
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category>Tech</category>
+    <image>
+      <url>https://example.com/i.png</url>
+      <title>t</title>
+      <link>https://example.com/</link>
+    </image>
+  </channel>
+</rss>
+=== 204_chanpair_categoryDomain_categoryCdata
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category><![CDATA[<b>Tech</b>]]></category>
+  </channel>
+</rss>
+=== 205_chanpair_categoryDomain_skipHours
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category domain="Syndic8">Tech</category>
+    <skipHours>
+      <hour>1</hour>
+    </skipHours>
+  </channel>
+</rss>
+=== 206_chanpair_categoryCdata_cloud
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category><![CDATA[<b>Tech</b>]]></category>
+    <cloud domain="rpc.example.com" port="80" path="/RPC2" registerProcedure="p" protocol="xml-rpc"/>
+  </channel>
+</rss>
+=== 207_chanpair_categoryCdata_skipDays
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category><![CDATA[<b>Tech</b>]]></category>
+    <skipDays>
+      <day>Monday</day>
+    </skipDays>
+  </channel>
+</rss>
+=== 208_chanpair_cloud_cloudPortZero
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <cloud domain="rpc.example.com" port="0" path="/" registerProcedure="p" protocol="soap"/>
+  </channel>
+</rss>
+=== 209_chanpair_cloud_atomLink
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <atom:link href="https://example.com/f.xml" rel="self" type="application/rss+xml"/>
+    <cloud domain="rpc.example.com" port="80" path="/RPC2" registerProcedure="p" protocol="xml-rpc"/>
+  </channel>
+</rss>
+=== 210_chanpair_cloudPortZero_textInput
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <cloud domain="rpc.example.com" port="0" path="/" registerProcedure="p" protocol="soap"/>
+    <textInput>
+      <title>t</title>
+      <description>d</description>
+      <name>n</name>
+      <link>https://example.com/s</link>
+    </textInput>
+  </channel>
+</rss>
+=== 211_chanpair_textInput_image
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <image>
+      <url>https://example.com/i.png</url>
+      <title>t</title>
+      <link>https://example.com/</link>
+    </image>
+    <textInput>
+      <title>t</title>
+      <description>d</description>
+      <name>n</name>
+      <link>https://example.com/s</link>
+    </textInput>
+  </channel>
+</rss>
+=== 212_chanpair_image_skipHours
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <image>
+      <url>https://example.com/i.png</url>
+      <title>t</title>
+      <link>https://example.com/</link>
+    </image>
+    <skipHours>
+      <hour>1</hour>
+    </skipHours>
+  </channel>
+</rss>
+=== 213_chanpair_skipHours_skipDays
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <skipHours>
+      <hour>1</hour>
+    </skipHours>
+    <skipDays>
+      <day>Monday</day>
+    </skipDays>
+  </channel>
+</rss>
+=== 214_chanpair_skipDays_atomLink
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <atom:link href="https://example.com/f.xml" rel="self" type="application/rss+xml"/>
+    <skipDays>
+      <day>Monday</day>
+    </skipDays>
+  </channel>
+</rss>
+=== 215_item_link
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <link>https://example.com/a</link>
+    </item>
+  </channel>
+</rss>
+=== 216_item_description
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <description>d</description>
+    </item>
+  </channel>
+</rss>
+=== 217_item_descriptionCdata
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <description><![CDATA[<p>d</p>]]></description>
+    </item>
+  </channel>
+</rss>
+=== 218_item_author
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <author>a@example.com</author>
+    </item>
+  </channel>
+</rss>
+=== 219_item_comments
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <comments>https://example.com/c</comments>
+    </item>
+  </channel>
+</rss>
+=== 220_item_pubDate
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <pubDate>Wed, 05 Aug 2026 20:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
+=== 221_item_category
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <category>Tech</category>
+    </item>
+  </channel>
+</rss>
+=== 222_item_categoryDomain
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <category domain="Syndic8">Tech</category>
+    </item>
+  </channel>
+</rss>
+=== 223_item_enclosure
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <enclosure url="https://example.com/a.mp3" length="1" type="audio/mpeg"/>
+    </item>
+  </channel>
+</rss>
+=== 224_item_enclosureZero
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <enclosure url="http://example.com/a.mp3" length="0" type="x/y"/>
+    </item>
+  </channel>
+</rss>
+=== 225_item_guid
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <guid>https://example.com/g</guid>
+    </item>
+  </channel>
+</rss>
+=== 226_item_guidTrue
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <guid isPermaLink="true">https://example.com/g</guid>
+    </item>
+  </channel>
+</rss>
+=== 227_item_guidFalse
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <guid isPermaLink="false">id-1</guid>
+    </item>
+  </channel>
+</rss>
+=== 228_item_source
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <source url="https://example.com/f.xml">Origin</source>
+    </item>
+  </channel>
+</rss>
+=== 229_itempair_link_description
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <link>https://example.com/a</link>
+      <description>d</description>
+    </item>
+  </channel>
+</rss>
+=== 230_itempair_link_pubDate
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <link>https://example.com/a</link>
+      <pubDate>Wed, 05 Aug 2026 20:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
+=== 231_itempair_link_enclosureZero
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <link>https://example.com/a</link>
+      <enclosure url="http://example.com/a.mp3" length="0" type="x/y"/>
+    </item>
+  </channel>
+</rss>
+=== 232_itempair_link_source
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <link>https://example.com/a</link>
+      <source url="https://example.com/f.xml">Origin</source>
+    </item>
+  </channel>
+</rss>
+=== 233_itempair_description_descriptionCdata
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <description><![CDATA[<p>d</p>]]></description>
+    </item>
+  </channel>
+</rss>
+=== 234_itempair_description_category
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <description>d</description>
+      <category>Tech</category>
+    </item>
+  </channel>
+</rss>
+=== 235_itempair_description_guid
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <description>d</description>
+      <guid>https://example.com/g</guid>
+    </item>
+  </channel>
+</rss>
+=== 236_itempair_descriptionCdata_author
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <description><![CDATA[<p>d</p>]]></description>
+      <author>a@example.com</author>
+    </item>
+  </channel>
+</rss>
+=== 237_itempair_descriptionCdata_categoryDomain
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <description><![CDATA[<p>d</p>]]></description>
+      <category domain="Syndic8">Tech</category>
+    </item>
+  </channel>
+</rss>
+=== 238_itempair_descriptionCdata_guidTrue
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <description><![CDATA[<p>d</p>]]></description>
+      <guid isPermaLink="true">https://example.com/g</guid>
+    </item>
+  </channel>
+</rss>
+=== 239_itempair_author_comments
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <author>a@example.com</author>
+      <comments>https://example.com/c</comments>
+    </item>
+  </channel>
+</rss>
+=== 240_itempair_author_enclosure
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <author>a@example.com</author>
+      <enclosure url="https://example.com/a.mp3" length="1" type="audio/mpeg"/>
+    </item>
+  </channel>
+</rss>
+=== 241_itempair_author_guidFalse
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <author>a@example.com</author>
+      <guid isPermaLink="false">id-1</guid>
+    </item>
+  </channel>
+</rss>
+=== 242_itempair_comments_pubDate
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <comments>https://example.com/c</comments>
+      <pubDate>Wed, 05 Aug 2026 20:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
+=== 243_itempair_comments_enclosureZero
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <comments>https://example.com/c</comments>
+      <enclosure url="http://example.com/a.mp3" length="0" type="x/y"/>
+    </item>
+  </channel>
+</rss>
+=== 244_itempair_comments_source
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <comments>https://example.com/c</comments>
+      <source url="https://example.com/f.xml">Origin</source>
+    </item>
+  </channel>
+</rss>
+=== 245_itempair_pubDate_category
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <category>Tech</category>
+      <pubDate>Wed, 05 Aug 2026 20:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
+=== 246_itempair_pubDate_guid
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <guid>https://example.com/g</guid>
+      <pubDate>Wed, 05 Aug 2026 20:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
+=== 247_itempair_category_categoryDomain
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <category domain="Syndic8">Tech</category>
+    </item>
+  </channel>
+</rss>
+=== 248_itempair_category_guidTrue
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <category>Tech</category>
+      <guid isPermaLink="true">https://example.com/g</guid>
+    </item>
+  </channel>
+</rss>
+=== 249_itempair_categoryDomain_enclosure
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <category domain="Syndic8">Tech</category>
+      <enclosure url="https://example.com/a.mp3" length="1" type="audio/mpeg"/>
+    </item>
+  </channel>
+</rss>
+=== 250_itempair_categoryDomain_guidFalse
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <category domain="Syndic8">Tech</category>
+      <guid isPermaLink="false">id-1</guid>
+    </item>
+  </channel>
+</rss>
+=== 251_itempair_enclosure_enclosureZero
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <enclosure url="http://example.com/a.mp3" length="0" type="x/y"/>
+    </item>
+  </channel>
+</rss>
+=== 252_itempair_enclosure_source
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <enclosure url="https://example.com/a.mp3" length="1" type="audio/mpeg"/>
+      <source url="https://example.com/f.xml">Origin</source>
+    </item>
+  </channel>
+</rss>
+=== 253_itempair_enclosureZero_guid
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <enclosure url="http://example.com/a.mp3" length="0" type="x/y"/>
+      <guid>https://example.com/g</guid>
+    </item>
+  </channel>
+</rss>
+=== 254_itempair_guid_guidTrue
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <guid isPermaLink="true">https://example.com/g</guid>
+    </item>
+  </channel>
+</rss>
+=== 255_itempair_guidTrue_guidFalse
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <guid isPermaLink="false">id-1</guid>
+    </item>
+  </channel>
+</rss>
+=== 256_itempair_guidFalse_source
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <guid isPermaLink="false">id-1</guid>
+      <source url="https://example.com/f.xml">Origin</source>
+    </item>
+  </channel>
+</rss>
+=== 257_item_onlyDescription
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <description>only d</description>
+    </item>
+  </channel>
+</rss>
+=== 258_item_onlyDescriptionCdata
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <description><![CDATA[<p>only d</p>]]></description>
+    </item>
+  </channel>
+</rss>
+=== 259_mixed_forms
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title><![CDATA[<b>t</b>]]></title>
+    <link>https://example.com/</link>
+    <description>d &amp; d</description>
+    <language><![CDATA[en]]></language>
+    <copyright>c</copyright>
+    <item>
+      <title>t</title>
+      <description><![CDATA[<p>x</p>]]></description>
+      <category><![CDATA[<i>c</i>]]></category>
+      <category>plain</category>
+      <guid isPermaLink="false"><![CDATA[<id>]]></guid>
+      <source url="https://example.com/f.xml"><![CDATA[<origin>]]></source>
+    </item>
+  </channel>
+</rss>
+=== 260_chan_categories_1
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category>c0</category>
+  </channel>
+</rss>
+=== 261_chan_categories_2
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category>c0</category>
+    <category>c1</category>
+  </channel>
+</rss>
+=== 262_chan_categories_3
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category>c0</category>
+    <category>c1</category>
+    <category>c2</category>
+  </channel>
+</rss>
+=== 263_chan_categories_4
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category>c0</category>
+    <category>c1</category>
+    <category>c2</category>
+    <category>c3</category>
+  </channel>
+</rss>
+=== 264_chan_categories_sameText
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <category domain="d1">dup</category>
+    <category domain="d2">dup</category>
+  </channel>
+</rss>
+=== 265_item_categories_many
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <category>a</category>
+      <category domain="d">b</category>
+      <category><![CDATA[<c>]]></category>
+    </item>
+  </channel>
+</rss>
+=== 266_items_0
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 267_items_1
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>i0</title>
+      <description><![CDATA[<p>b0</p>]]></description>
+    </item>
+  </channel>
+</rss>
+=== 268_items_2
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>i0</title>
+      <description><![CDATA[<p>b0</p>]]></description>
+    </item>
+    <item>
+      <title>i1</title>
+      <description><![CDATA[<p>b1</p>]]></description>
+    </item>
+  </channel>
+</rss>
+=== 269_items_3
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>i0</title>
+      <description><![CDATA[<p>b0</p>]]></description>
+    </item>
+    <item>
+      <title>i1</title>
+      <description><![CDATA[<p>b1</p>]]></description>
+    </item>
+    <item>
+      <title>i2</title>
+      <description><![CDATA[<p>b2</p>]]></description>
+    </item>
+  </channel>
+</rss>
+=== 270_items_emptyList
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+  </channel>
+</rss>
+=== 271_image_minimal
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <image>
+      <url>https://example.com/i.png</url>
+      <title>t</title>
+      <link>https://example.com/</link>
+    </image>
+  </channel>
+</rss>
+=== 272_image_size
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <image>
+      <url>https://example.com/i.png</url>
+      <title>t</title>
+      <link>https://example.com/</link>
+      <width>1</width>
+      <height>1</height>
+    </image>
+  </channel>
+</rss>
+=== 273_image_maxSize
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <image>
+      <url>https://example.com/i.png</url>
+      <title>t</title>
+      <link>https://example.com/</link>
+      <width>144</width>
+      <height>400</height>
+    </image>
+  </channel>
+</rss>
+=== 274_image_description
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <image>
+      <url>https://example.com/i.png</url>
+      <title>t</title>
+      <link>https://example.com/</link>
+      <description><![CDATA[<i>d</i>]]></description>
+    </image>
+  </channel>
+</rss>
+=== 275_image_full
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <image>
+      <url>https://example.com/i.png</url>
+      <title>t</title>
+      <link>https://example.com/</link>
+      <width>88</width>
+      <height>31</height>
+      <description>d &amp; d</description>
+    </image>
+  </channel>
+</rss>
+=== 276_guid_plain
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <guid>g</guid>
+    </item>
+  </channel>
+</rss>
+=== 277_guid_urlTrue
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <guid isPermaLink="true">https://example.com/g</guid>
+    </item>
+  </channel>
+</rss>
+=== 278_guid_false
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <guid isPermaLink="false">g</guid>
+    </item>
+  </channel>
+</rss>
+=== 279_guid_cdata
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <guid><![CDATA[<g>]]></guid>
+    </item>
+  </channel>
+</rss>
+=== 280_guid_cdataFalse
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <guid isPermaLink="false"><![CDATA[<g>]]></guid>
+    </item>
+  </channel>
+</rss>
+=== 281_atom_self
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <atom:link href="https://example.com/f.xml" rel="self" type="application/rss+xml"/>
+  </channel>
+</rss>
+=== 282_atom_of
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <atom:link href="https://example.com/x" rel="alternate"/>
+  </channel>
+</rss>
+=== 283_atom_explicitNamespace
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <atom:link href="https://example.com/f.xml" rel="self" type="application/rss+xml"/>
+  </channel>
+</rss>
+=== 284_skip_hoursOne
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <skipHours>
+      <hour>0</hour>
+    </skipHours>
+  </channel>
+</rss>
+=== 285_skip_hoursAll
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <skipHours>
+      <hour>0</hour>
+      <hour>1</hour>
+      <hour>2</hour>
+      <hour>3</hour>
+      <hour>4</hour>
+      <hour>5</hour>
+      <hour>6</hour>
+      <hour>7</hour>
+      <hour>8</hour>
+      <hour>9</hour>
+      <hour>10</hour>
+      <hour>11</hour>
+      <hour>12</hour>
+      <hour>13</hour>
+      <hour>14</hour>
+      <hour>15</hour>
+      <hour>16</hour>
+      <hour>17</hour>
+      <hour>18</hour>
+      <hour>19</hour>
+      <hour>20</hour>
+      <hour>21</hour>
+      <hour>22</hour>
+      <hour>23</hour>
+    </skipHours>
+  </channel>
+</rss>
+=== 286_skip_hoursDescending
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <skipHours>
+      <hour>23</hour>
+      <hour>5</hour>
+      <hour>0</hour>
+    </skipHours>
+  </channel>
+</rss>
+=== 287_skip_daysOne
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <skipDays>
+      <day>Sunday</day>
+    </skipDays>
+  </channel>
+</rss>
+=== 288_skip_daysAll
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <skipDays>
+      <day>Monday</day>
+      <day>Tuesday</day>
+      <day>Wednesday</day>
+      <day>Thursday</day>
+      <day>Friday</day>
+      <day>Saturday</day>
+      <day>Sunday</day>
+    </skipDays>
+  </channel>
+</rss>
+=== 289_ns_itemExtension
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <dc:creator>O</dc:creator>
+    </item>
+  </channel>
+</rss>
+=== 290_ns_itemExtensionCdata
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <content:encoded><![CDATA[<p>h</p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>
+=== 291_ns_many
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <item>
+      <title>I</title>
+      <dc:creator>O</dc:creator>
+      <content:encoded><![CDATA[<p>h</p>]]></content:encoded>
+      <itunes:author>A</itunes:author>
+    </item>
+  </channel>
+</rss>
+=== 292_ns_channelExtension
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <dc:language>tr</dc:language>
+  </channel>
+</rss>
+=== 293_ns_channelExtensionWithItems
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <dc:language>tr</dc:language>
+    <item>
+      <title>I</title>
+    </item>
+  </channel>
+</rss>
+=== 294_ns_bothExtensions
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <dc:language>tr</dc:language>
+    <item>
+      <title>I</title>
+      <dc:creator>O</dc:creator>
+    </item>
+  </channel>
+</rss>
+=== 295_ns_withAtom
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>T</title>
+    <link>https://example.com/</link>
+    <description>D</description>
+    <atom:link href="https://example.com/f.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>I</title>
+      <dc:creator>O</dc:creator>
+    </item>
+  </channel>
+</rss>
+=== 296_everything
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title><![CDATA[Every <b>element</b>]]></title>
+    <link>https://example.com/</link>
+    <description><![CDATA[Exercises every element.]]></description>
+    <atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <language>en-us</language>
+    <copyright>Copyright 2026, Onur Demir</copyright>
+    <managingEditor>editor@example.com (An Editor)</managingEditor>
+    <webMaster>webmaster@example.com (A Webmaster)</webMaster>
+    <pubDate>Wed, 05 Aug 2026 20:00:00 GMT</pubDate>
+    <lastBuildDate>Wed, 05 Aug 2026 20:00:00 GMT</lastBuildDate>
+    <category>Technology</category>
+    <category domain="Syndic8">1765</category>
+    <generator>resurrections-rss</generator>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    <cloud domain="rpc.example.com" port="80" path="/RPC2" registerProcedure="myCloud.rssPleaseNotify" protocol="xml-rpc"/>
+    <ttl>60</ttl>
+    <image>
+      <url>https://example.com/logo.png</url>
+      <title>Every element</title>
+      <link>https://example.com/</link>
+      <width>144</width>
+      <height>400</height>
+      <description><![CDATA[The <i>logo</i>]]></description>
+    </image>
+    <rating>(PICS-1.1)</rating>
+    <textInput>
+      <title>Search</title>
+      <description>Search the archive</description>
+      <name>q</name>
+      <link>https://example.com/search</link>
+    </textInput>
+    <skipHours>
+      <hour>0</hour>
+      <hour>23</hour>
+    </skipHours>
+    <skipDays>
+      <day>Saturday</day>
+      <day>Sunday</day>
+    </skipDays>
+    <dc:language>en</dc:language>
+    <item>
+      <title><![CDATA[An <b>item</b>]]></title>
+      <link>https://example.com/items/1</link>
+      <description><![CDATA[<p>Body with a terminator ]]]]><![CDATA[> inside.</p>]]></description>
+      <author>author@example.com (An Author)</author>
+      <category>Newspapers</category>
+      <category domain="http://www.fool.com/cusips">MSFT</category>
+      <comments>https://example.com/items/1/comments</comments>
+      <enclosure url="https://example.com/media/e.mp3" length="12216320" type="audio/mpeg"/>
+      <guid isPermaLink="true">https://example.com/items/1</guid>
+      <pubDate>Wed, 05 Aug 2026 20:00:00 GMT</pubDate>
+      <source url="https://origin.example.com/feed.xml">Origin Feed</source>
+      <content:encoded><![CDATA[<p>rich <b>html</b></p>]]></content:encoded>
+      <dc:creator>Onur Demir</dc:creator>
+    </item>
+  </channel>
+</rss>

@@ -1,6 +1,5 @@
 package io.github.onurdemir55.resurrections.rss;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.onurdemir55.resurrections.rss.feed.Channel;
 import io.github.onurdemir55.resurrections.rss.feed.Item;
 import io.github.onurdemir55.resurrections.rss.feed.Rss;
@@ -35,7 +34,7 @@ class SpecificationSampleTest {
 
     @Test
     @DisplayName("every element and value of the published sample can be expressed")
-    void reproducesTheSample() throws JsonProcessingException {
+    void reproducesTheSample() {
         String xml = RssOutput.outputString(sample());
 
         assertAll(
@@ -61,7 +60,7 @@ class SpecificationSampleTest {
 
     @Test
     @DisplayName("the sample has five items, one of which has no title")
-    void itemsMatch() throws JsonProcessingException {
+    void itemsMatch() {
         String xml = RssOutput.outputString(sample());
 
         assertAll(
@@ -75,7 +74,7 @@ class SpecificationSampleTest {
 
     @Test
     @DisplayName("the titleless item is accepted, since it has a description")
-    void titlelessItemIsAllowed() throws JsonProcessingException {
+    void titlelessItemIsAllowed() {
         String xml = RssOutput.outputString(sample());
 
         int second = xml.indexOf("<item>", xml.indexOf("<item>") + 1);

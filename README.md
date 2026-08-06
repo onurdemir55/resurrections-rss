@@ -27,8 +27,10 @@ checks the Rss News output manually, selects and decides _item_. So some custome
 
 * [x] Requires Java 17 or later.
 * [x] Elements support Plain Text and CDATA format. You can set your encoded data or you can set them as CDATA.
-* [x] [jackson](https://github.com/FasterXML/jackson-dataformat-xml)  XML data format
-* [x] No annotation processor, no IDE plugin, no build-time magic. Jackson is the only dependency.
+* [x] The feed is written element by element through [StAX](https://docs.oracle.com/javase/tutorial/jaxp/stax/index.html),
+  so what XML comes out is decided in one readable place rather than inferred from annotations.
+* [x] One dependency: [woodstox](https://github.com/FasterXML/woodstox), the StAX implementation.
+  No annotation processor, no IDE plugin, no build-time magic, no reflection.
 * [x] Immutable feed model with builders
 * [x] Easy and Peasy development
 * [x] Simple and easy to extend for optional elements if needed. Just add fields to entity classes.
@@ -204,6 +206,18 @@ What is checked:
   a value or be empty
 * elements the specification marks required cannot be `null`, and neither can element text.
   To leave an element out of the feed, do not set it.
+* an extension or namespace name has to be a legal XML name, and `xml` and `xmlns` cannot be
+  declared as prefixes because XML reserves them. Element text is escaped on the way out, but
+  a name is written as markup, so an unchecked name would not produce an escaped oddity but a
+  broken document
+* an extension element has to carry a namespace prefix that was declared on the document. This
+  is checked by `Rss.builder().build()`, the one place that knows both the prefixes in use and
+  the declarations, and it is worth checking because the mistake is otherwise silent: the feed
+  is produced, looks correct, and is rejected by the first reader that receives it
+* element text and attribute values cannot contain a character XML has no spelling for, such as
+  a NUL byte. No amount of escaping and no CDATA section can encode one, so this is caught when
+  the value is created rather than part-way through writing the feed, which on a stream would
+  leave half a document already sent
 
 
 

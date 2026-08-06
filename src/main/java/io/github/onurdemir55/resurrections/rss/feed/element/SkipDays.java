@@ -1,8 +1,5 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -18,8 +15,7 @@ import java.util.Set;
  *
  * @param day the days to skip
  */
-public record SkipDays(@JacksonXmlElementWrapper(useWrapping = false)
-                       @JacksonXmlProperty(localName = "day") List<Day> day) {
+public record SkipDays(List<Day> day) {
 
     public SkipDays {
         Objects.requireNonNull(day, "the day list cannot be null");

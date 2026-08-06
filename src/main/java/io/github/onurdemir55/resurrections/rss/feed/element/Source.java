@@ -1,7 +1,5 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
@@ -18,8 +16,8 @@ import java.util.Objects;
  * @param value the title of the originating channel, plain or CDATA
  * @param url the url of the originating feed, required by the specification
  */
-public record Source(@JsonUnwrapped Value value,
-                     @JacksonXmlProperty(isAttribute = true, localName = "url") String url) {
+public record Source(Value value,
+                     String url) {
 
     public Source {
         Objects.requireNonNull(value, "source value is required");

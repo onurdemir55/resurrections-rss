@@ -4,6 +4,7 @@ plugins {
     id 'signing'
     id 'checkstyle'
     id 'jacoco'
+    id 'com.github.spotbugs' version '6.4.2'
 }
 
 group = 'io.github.onurdemir55'
@@ -26,10 +27,10 @@ repositories {
 }
 
 dependencies {
-    api 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.22.1'
-
-    // Already a transitive dependency of jackson-dataformat-xml, but declared here
-    // because RssOutput configures Woodstox directly to keep CDATA sections valid.
+    // The only dependency. The feed is written through StAX, whose API ships with the JDK;
+    // Woodstox is the implementation, chosen because it can split a CDATA section that
+    // contains "]]>" instead of refusing to write it. No Woodstox or StAX type appears in
+    // this library's public API, so consumers need it at runtime only.
     implementation 'com.fasterxml.woodstox:woodstox-core:7.2.0'
 
     testImplementation platform('org.junit:junit-bom:6.1.2')
@@ -56,6 +57,9 @@ checkstyle {
 
 test {
     useJUnitPlatform()
+    // Lets FeedCorpusRegressionTest re-record its expected output on request. Off by default,
+    // because a corpus that re-records itself whenever it disagrees guards nothing.
+    systemProperty 'corpus.record', System.getProperty('corpus.record', 'false')
     finalizedBy jacocoTestReport
 }
 
@@ -125,5 +129,23 @@ signing {
         sign publishing.publications.maven
     } else {
         logger.lifecycle('Signing is disabled: SIGNING_KEY / SIGNING_PASSWORD not set.')
+    }
+}
+
+// Bytecode-level bug patterns, which are a different question from whether the tests pass.
+// It gates the build: a finding is either a bug worth fixing or an exclusion worth justifying
+// in config/spotbugs/exclude.xml, and both are better than a report nobody reads.
+spotbugs {
+    toolVersion = '4.9.8'
+    effort = com.github.spotbugs.snom.Effort.valueOf('MAX')
+    reportLevel = com.github.spotbugs.snom.Confidence.valueOf('LOW')
+    excludeFilter = file('config/spotbugs/exclude.xml')
+}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask).configureEach {
+    reports {
+        xml.required = false
+        html.required = true
+        text.required = true
     }
 }

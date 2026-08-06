@@ -1,8 +1,5 @@
 package io.github.onurdemir55.resurrections.rss.feed.element;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import io.github.onurdemir55.resurrections.rss.util.Uris;
@@ -25,14 +22,12 @@ import java.util.Objects;
  * @param height the height in pixels, at most {@value #MAX_HEIGHT}, or {@code null}
  * @param description text used as the tooltip of the rendered link, or {@code null}
  */
-@JsonPropertyOrder({"url", "title", "link", "width", "height", "description"})
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public record Image(@JacksonXmlProperty(localName = "url") Value url,
-                    @JacksonXmlProperty(localName = "title") Value title,
-                    @JacksonXmlProperty(localName = "link") Value link,
-                    @JacksonXmlProperty(localName = "width") Integer width,
-                    @JacksonXmlProperty(localName = "height") Integer height,
-                    @JacksonXmlProperty(localName = "description") Value description) {
+public record Image(Value url,
+                    Value title,
+                    Value link,
+                    Integer width,
+                    Integer height,
+                    Value description) {
 
     /** The largest width the specification allows. */
     public static final int MAX_WIDTH = 144;

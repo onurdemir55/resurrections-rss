@@ -1,6 +1,5 @@
 package io.github.onurdemir55.resurrections.rss.feed;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.onurdemir55.resurrections.rss.feed.element.AtomLink;
 import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.SimpleValue;
@@ -30,7 +29,7 @@ class NamespaceTest {
 
         @Test
         @DisplayName("a declared namespace becomes an xmlns attribute on rss")
-        void declared() throws JsonProcessingException {
+        void declared() {
             String xml = RssOutput.outputString(Rss.builder()
                     .namespace("content", "http://purl.org/rss/1.0/modules/content/")
                     .channel(channel().build())
@@ -65,7 +64,7 @@ class NamespaceTest {
 
         @Test
         @DisplayName("declarations keep the order they were made in")
-        void orderIsStable() throws JsonProcessingException {
+        void orderIsStable() {
             String xml = RssOutput.outputString(Rss.builder()
                     .namespace("content", "urn:content")
                     .namespace("dc", "urn:dc")
@@ -79,7 +78,7 @@ class NamespaceTest {
 
         @Test
         @DisplayName("a feed with no extensions declares no namespaces")
-        void noneByDefault() throws JsonProcessingException {
+        void noneByDefault() {
             String xml = RssOutput.outputString(Rss.builder().channel(channel().build()).build());
 
             assertAll(
@@ -104,7 +103,7 @@ class NamespaceTest {
 
         @Test
         @DisplayName("the self link the Best Practices Profile recommends")
-        void selfLink() throws JsonProcessingException {
+        void selfLink() {
             String xml = feedWithAtomLink(AtomLink.self("https://example.com/feed.xml"));
 
             assertTrue(xml.contains("<atom:link href=\"https://example.com/feed.xml\" "
@@ -113,7 +112,7 @@ class NamespaceTest {
 
         @Test
         @DisplayName("using it declares the Atom namespace without being asked")
-        void namespaceIsAutomatic() throws JsonProcessingException {
+        void namespaceIsAutomatic() {
             String xml = feedWithAtomLink(AtomLink.self("https://example.com/feed.xml"));
 
             assertTrue(xml.contains("xmlns:atom=\"" + AtomLink.NAMESPACE + "\""),
@@ -122,7 +121,7 @@ class NamespaceTest {
 
         @Test
         @DisplayName("an explicit declaration is not duplicated")
-        void notDuplicated() throws JsonProcessingException {
+        void notDuplicated() {
             String xml = RssOutput.outputString(Rss.builder()
                     .namespace(AtomLink.PREFIX, AtomLink.NAMESPACE)
                     .channel(channel()
@@ -135,7 +134,7 @@ class NamespaceTest {
 
         @Test
         @DisplayName("a link without a media type omits the attribute")
-        void withoutType() throws JsonProcessingException {
+        void withoutType() {
             String xml = feedWithAtomLink(AtomLink.of("https://example.com/next", "next"));
 
             assertAll(
@@ -155,7 +154,7 @@ class NamespaceTest {
                             () -> AtomLink.self("example.com/feed.xml")));
         }
 
-        private String feedWithAtomLink(final AtomLink link) throws JsonProcessingException {
+        private String feedWithAtomLink(final AtomLink link) {
             return RssOutput.outputString(Rss.builder()
                     .channel(channel().atomLink(link).build())
                     .build());
@@ -168,7 +167,7 @@ class NamespaceTest {
 
         @Test
         @DisplayName("a channel extension is written with its prefixed name")
-        void channelExtension() throws JsonProcessingException {
+        void channelExtension() {
             String xml = RssOutput.outputString(Rss.builder()
                     .namespace("dc", "http://purl.org/dc/elements/1.1/")
                     .channel(channel().extension("dc:language", new SimpleValue("en")).build())
@@ -179,7 +178,7 @@ class NamespaceTest {
 
         @Test
         @DisplayName("an item extension can carry CDATA, like any other element")
-        void itemExtensionWithCdata() throws JsonProcessingException {
+        void itemExtensionWithCdata() {
             Item item = Item.builder()
                     .title(new SimpleValue("t"))
                     .extension("content:encoded", new CDATAValue("<p>rich <b>html</b></p>"))
@@ -197,7 +196,7 @@ class NamespaceTest {
 
         @Test
         @DisplayName("extensions keep the order they were added in")
-        void orderIsStable() throws JsonProcessingException {
+        void orderIsStable() {
             Item item = Item.builder()
                     .title(new SimpleValue("t"))
                     .extension("dc:creator", new SimpleValue("first"))
