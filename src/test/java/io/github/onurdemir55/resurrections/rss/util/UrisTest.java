@@ -1,6 +1,7 @@
 package io.github.onurdemir55.resurrections.rss.util;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -78,5 +79,35 @@ class UrisTest {
         assertAll(
                 () -> assertEquals(true, thrown.getMessage().contains("channel link")),
                 () -> assertEquals(true, thrown.getMessage().contains("example.com")));
+    }
+
+    /**
+     * RFC 3986 spells a scheme with ASCII letters. The check used to ask
+     * {@link Character#isLetter}, which is a Unicode category test, and so accepted
+     * {@code ürl://} and {@code ℓink://} - the same confusion that let five characters into
+     * element names.
+     */
+    @Nested
+    @DisplayName("A scheme is spelled in ASCII")
+    class SchemeIsAscii {
+
+        @Test
+        @DisplayName("a scheme with a letter from another script is refused")
+        void nonAsciiScheme() {
+            assertThrows(IllegalArgumentException.class,
+                    () -> Uris.requireScheme("test", "\u00FCrl://example.com/"));
+            assertThrows(IllegalArgumentException.class,
+                    () -> Uris.requireScheme("test", "\u2113ink://example.com/"));
+        }
+
+        @Test
+        @DisplayName("and the shapes RFC 3986 allows still pass")
+        void permittedSchemes() {
+            for (String uri : new String[] {
+                "http://example.com/", "https://example.com/", "mailto:a@example.com",
+                "urn:isbn:0451450523", "x+y-1.2://example.com/", "HTTP://example.com/"}) {
+                assertEquals(uri, Uris.requireScheme("test", uri));
+            }
+        }
     }
 }

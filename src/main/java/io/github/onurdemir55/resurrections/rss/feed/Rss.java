@@ -2,6 +2,7 @@ package io.github.onurdemir55.resurrections.rss.feed;
 
 import io.github.onurdemir55.resurrections.rss.feed.element.AtomLink;
 import io.github.onurdemir55.resurrections.rss.util.XmlNames;
+import io.github.onurdemir55.resurrections.rss.util.XmlText;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -96,9 +97,12 @@ public final class Rss {
          * escaped on the way out, but a name is not, so the prefix is checked here rather
          * than allowed to break the document later.
          * <p>
-         * The URI is checked for being blank, and only that. A binding that carries a prefix
-         * may not be empty - a parser refuses {@code xmlns:dc=""} outright - and a URI of
-         * nothing but spaces is the same mistake with a space in it. What the URI otherwise
+         * The URI is checked for two things. A binding that carries a prefix may not be empty -
+         * a parser refuses {@code xmlns:dc=""} outright - and a URI of nothing but spaces is the
+         * same mistake with a space in it. It must also contain only characters XML can
+         * represent, for the reason every other value here is checked: the document is
+         * streamed, so a character the writer cannot encode would otherwise be discovered
+         * part-way through and leave half a feed on the caller's stream. What the URI otherwise
          * contains is not this library's business: it is written as an attribute value, so it
          * is escaped, and a relative one is unusual rather than invalid.
          *
@@ -107,7 +111,7 @@ public final class Rss {
          * @return this builder
          * @throws NullPointerException if either argument is {@code null}
          * @throws IllegalArgumentException if the prefix cannot be an XML name, or is one
-         *     XML reserves, or the URI is blank
+         *     XML reserves, or the URI is blank or contains a character XML cannot represent
          */
         public Builder namespace(final String prefix, final String uri) {
             Objects.requireNonNull(uri, "a namespace needs a URI");
@@ -119,7 +123,7 @@ public final class Rss {
             this.namespaces.put(
                     XmlNames.requireNamespacePrefix(
                             Objects.requireNonNull(prefix, "a namespace needs a prefix")),
-                    uri);
+                    XmlText.requireWritable(uri, "a namespace URI"));
             return this;
         }
 

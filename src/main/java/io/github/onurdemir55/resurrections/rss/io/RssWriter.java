@@ -48,6 +48,9 @@ final class RssWriter {
 
     private static final String INDENT = "  ";
 
+    /** Broken out of a CDATA section, because XML normalizes it away otherwise. */
+    private static final char CARRIAGE_RETURN = '\r';
+
     private final XMLStreamWriter out;
     private int depth;
 
@@ -309,9 +312,44 @@ final class RssWriter {
      */
     private void content(final Value value) throws XMLStreamException {
         if (value instanceof CDATAValue cdata) {
-            out.writeCData(cdata.value());
+            cdata(cdata.value());
         } else {
             out.writeCharacters(value.value());
+        }
+    }
+
+    /**
+     * Writes text as a CDATA section, carrying a carriage return out of it and back in.
+     * <p>
+     * XML normalizes line endings on the way in: a parser turns {@code \r\n} and a lone
+     * {@code \r} into {@code \n} before anything else sees them. Escaped text survives that,
+     * because the writer spells a carriage return {@code &#xd;} and a character reference is
+     * resolved after normalization. Inside a CDATA section nothing can be escaped, so
+     * {@code a\r\nb} came back out as {@code a\nb} - silently, and for the commonest input
+     * there is, HTML written on Windows.
+     * <p>
+     * So the section is broken around each carriage return, which is then written as ordinary
+     * escaped text between two sections. The same trick the CDATA terminator needs, for the
+     * same reason: what the caller passed in is what a reader gets back. Text with no carriage
+     * return takes the plain path and is written exactly as before.
+     */
+    private void cdata(final String text) throws XMLStreamException {
+        if (text.indexOf(CARRIAGE_RETURN) < 0) {
+            out.writeCData(text);
+            return;
+        }
+        int start = 0;
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) == CARRIAGE_RETURN) {
+                if (i > start) {
+                    out.writeCData(text.substring(start, i));
+                }
+                out.writeCharacters(String.valueOf(CARRIAGE_RETURN));
+                start = i + 1;
+            }
+        }
+        if (start < text.length()) {
+            out.writeCData(text.substring(start));
         }
     }
 

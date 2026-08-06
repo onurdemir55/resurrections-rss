@@ -42,6 +42,15 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
+// Without this the module name is derived from the jar's file name, so renaming the artifact
+// would rename the module and break anyone using it on the module path. Declaring it fixes the
+// name to the package root, where it belongs.
+tasks.named('jar') {
+    manifest {
+        attributes('Automatic-Module-Name': 'io.github.onurdemir55.resurrections.rss')
+    }
+}
+
 tasks.withType(Javadoc).configureEach {
     options.encoding = 'UTF-8'
     // Report real javadoc errors (broken syntax and links) but do not demand
@@ -57,6 +66,9 @@ checkstyle {
 
 test {
     useJUnitPlatform()
+    // ModuleNameTest inspects the manifest of the jar the build produces, so the jar has to
+    // exist before the tests run.
+    dependsOn tasks.named('jar')
     // Lets FeedCorpusRegressionTest re-record its expected output on request. Off by default,
     // because a corpus that re-records itself whenever it disagrees guards nothing.
     systemProperty 'corpus.record', System.getProperty('corpus.record', 'false')

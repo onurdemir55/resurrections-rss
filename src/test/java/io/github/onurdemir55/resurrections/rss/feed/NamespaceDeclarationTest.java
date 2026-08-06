@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -118,6 +119,38 @@ class NamespaceDeclarationTest {
                     .namespace("dc", "purl.org/dc")
                     .channel(channel().extension("dc:x", new SimpleValue("v")).build())
                     .build());
+        }
+
+        /**
+         * Found by an audit. Every other value that reaches the document was checked for this
+         * and the namespace URI was not, so a control character in it was discovered while
+         * writing - and because the document is streamed, an 81-byte fragment of a feed was
+         * already on the caller's stream by then.
+         */
+        @Test
+        @DisplayName("a URI with a character XML cannot represent, refused before any writing")
+        void uriWithUnrepresentableCharacter() {
+            IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class,
+                    () -> Rss.builder().namespace("dc", "http://example.com/\u0000"));
+
+            assertTrue(thrown.getMessage().contains("namespace URI"), thrown::getMessage);
+        }
+
+        @Test
+        @DisplayName("and nothing is written to a stream when the feed cannot be built")
+        void nothingIsWrittenWhenTheBuildFails() {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+            assertThrows(IllegalArgumentException.class, () -> {
+                Rss rss = Rss.builder()
+                        .namespace("dc", "http://example.com/\u0001")
+                        .channel(channel().extension("dc:x", new SimpleValue("v")).build())
+                        .build();
+                RssOutput.output(rss, stream);
+            });
+
+            assertEquals(0, stream.size(),
+                    () -> "a rejected feed left bytes behind: " + stream);
         }
     }
 

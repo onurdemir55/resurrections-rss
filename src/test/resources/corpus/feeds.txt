@@ -485,7 +485,7 @@ line2]]></title>
   <channel>
     <title>T</title>
     <link>https://example.com/</link>
-    <description><![CDATA[crhere]]></description>
+    <description><![CDATA[cr]]>&#xd;<![CDATA[here]]></description>
   </channel>
 </rss>
 === 054_text_title_plain_13
@@ -501,7 +501,7 @@ line2]]></title>
 <?xml version='1.0' encoding='UTF-8'?>
 <rss version="2.0">
   <channel>
-    <title><![CDATA[crhere]]></title>
+    <title><![CDATA[cr]]>&#xd;<![CDATA[here]]></title>
     <link>https://example.com/</link>
     <description>D</description>
   </channel>
@@ -522,7 +522,7 @@ here</description>
   <channel>
     <title>T</title>
     <link>https://example.com/</link>
-    <description><![CDATA[crlf
+    <description><![CDATA[crlf]]>&#xd;<![CDATA[
 here]]></description>
   </channel>
 </rss>
@@ -540,7 +540,7 @@ here</title>
 <?xml version='1.0' encoding='UTF-8'?>
 <rss version="2.0">
   <channel>
-    <title><![CDATA[crlf
+    <title><![CDATA[crlf]]>&#xd;<![CDATA[
 here]]></title>
     <link>https://example.com/</link>
     <description>D</description>
@@ -1183,7 +1183,7 @@ leading newline]]></title>
     <title>T</title>
     <link>https://example.com/</link>
     <description><![CDATA[	
-]]></description>
+]]>&#xd;</description>
   </channel>
 </rss>
 === 130_text_title_plain_32
@@ -1201,7 +1201,7 @@ leading newline]]></title>
 <rss version="2.0">
   <channel>
     <title><![CDATA[	
-]]></title>
+]]>&#xd;</title>
     <link>https://example.com/</link>
     <description>D</description>
   </channel>

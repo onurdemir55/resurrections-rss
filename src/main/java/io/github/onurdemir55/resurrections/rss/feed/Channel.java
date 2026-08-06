@@ -479,10 +479,21 @@ public final class Channel {
 
         /**
          * How many minutes a reader may cache the channel before refreshing it.
+         * <p>
+         * A negative lifetime is refused. The specification calls this a number of minutes and
+         * a reader has nothing to do with a negative one, so it is the same kind of nonsense as
+         * an hour of 25 in {@code skipHours} or an image 200 pixels wide, both of which this
+         * library already refuses. Zero is allowed: it says do not cache.
          *
-         * @param ttl the cache lifetime in minutes
+         * @param ttl the cache lifetime in minutes, or {@code null} to omit the element
+         * @return this builder
+         * @throws IllegalArgumentException if {@code ttl} is negative
          */
         public Builder ttl(final Integer ttl) {
+            if (ttl != null && ttl < 0) {
+                throw new IllegalArgumentException(
+                        "ttl is a number of minutes and cannot be negative, was " + ttl);
+            }
             this.ttl = ttl;
             return this;
         }

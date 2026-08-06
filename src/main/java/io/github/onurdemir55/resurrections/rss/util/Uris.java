@@ -69,17 +69,23 @@ public final class Uris {
         if (colon < 1) {
             return null;
         }
-        // A scheme is a letter followed by letters, digits, '+', '-' or '.'
-        if (!Character.isLetter(value.charAt(0))) {
+        // RFC 3986: scheme = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." ), and its ALPHA is
+        // ASCII. Character.isLetter is not the same set, and accepted "ürl://" and "ℓink://".
+        if (!isSchemeLetter(value.charAt(0))) {
             return null;
         }
         for (int i = 1; i < colon; i++) {
             char c = value.charAt(i);
-            boolean allowed = Character.isLetterOrDigit(c) || c == '+' || c == '-' || c == '.';
+            boolean allowed = isSchemeLetter(c) || c >= '0' && c <= '9'
+                    || c == '+' || c == '-' || c == '.';
             if (!allowed) {
                 return null;
             }
         }
         return value.substring(0, colon).toLowerCase(Locale.ROOT);
+    }
+
+    private static boolean isSchemeLetter(final char c) {
+        return c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z';
     }
 }

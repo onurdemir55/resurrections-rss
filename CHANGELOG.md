@@ -71,6 +71,24 @@ no compatibility to preserve.
   underscores. That is narrower than the specification on purpose: matching it exactly would
   mean emitting feeds that a very widely deployed reader will not parse, and every extension
   module in use spells its names in ASCII regardless. Element text is not restricted this way.
+- **A carriage return survives a CDATA section.** XML normalizes line endings before anything
+  else sees them, turning `\r\n` and a lone `\r` into `\n`. Escaped text was unaffected, because
+  a carriage return is written `&#xd;` and a character reference is resolved after
+  normalization, but a CDATA section cannot escape its way out: `a\r\nb` came back out of a
+  parser as `a\nb`, silently, for the commonest input there is - markup written on Windows. The
+  section is now broken around each carriage return, which is written as escaped text between
+  two sections, the same technique the CDATA terminator already needed. Text with no carriage
+  return is written exactly as before. Found by an audit; a round-trip test now pins it, which
+  is what was missing - nothing had compared what a reader gets back against what was set.
+- **A namespace URI is checked for characters XML cannot represent.** Every other value that
+  reaches the document was, and this one was not, so a control character in it was discovered
+  while writing - and because the document is streamed, 81 bytes of a feed were already on the
+  caller's stream when it failed. Measured, then closed.
+- **A negative `ttl` is refused.** The specification calls it a number of minutes. An hour of 25
+  in `skipHours` and an image 200 pixels wide were already refused; this was the inconsistency.
+- **A URI scheme must be spelled in ASCII.** `Uris` asked `Character.isLetter`, which is a
+  Unicode category test rather than the ALPHA of RFC 3986, and accepted `ürl://` and `ℓink://`.
+  The same confusion that let five characters into element names.
 - **A blank namespace URI is refused.** `namespace("dc", "")` was accepted and produced
   `xmlns:dc=""`, which a parser rejects outright: XML lets the default namespace be undeclared
   that way and gives a prefixed binding no equivalent. Found by auditing the builders against a
@@ -129,6 +147,10 @@ no compatibility to preserve.
   They do not try to separate "the disk was full" from "the document could not be produced",
   because the underlying writer reports both identically, and a guess presented as a
   diagnosis is worse than neither.
+- The published jar declares `Automatic-Module-Name: io.github.onurdemir55.resurrections.rss`.
+  Without it the module name is derived from the jar's file name, which gave
+  `resurrections.rss` - not the package root, and not stable if the artifact is ever renamed,
+  which would break anyone using it on the module path.
 - `Channel.getExtensions()` and `Item.getExtensions()` are public. They were hidden only
   because a serialization framework used to find them by reflection.
 

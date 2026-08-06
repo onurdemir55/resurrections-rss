@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -255,6 +256,32 @@ class ChannelElementsTest {
         @DisplayName("Day.from rejects a null DayOfWeek")
         void fromRejectsNull() {
             assertThrows(NullPointerException.class, () -> Day.from(null));
+        }
+    }
+
+    @Nested
+    @DisplayName("ttl")
+    class Ttl {
+
+        @Test
+        @DisplayName("a negative lifetime is refused, as other out-of-range numbers are")
+        void negativeIsRefused() {
+            IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class,
+                    () -> Channel.builder().ttl(-1));
+
+            assertTrue(thrown.getMessage().contains("cannot be negative"), thrown::getMessage);
+        }
+
+        @Test
+        @DisplayName("zero is allowed, since it means do not cache")
+        void zeroIsAllowed() {
+            assertTrue(channelXml(base().ttl(0)).contains("<ttl>0</ttl>"));
+        }
+
+        @Test
+        @DisplayName("and null omits the element")
+        void nullOmits() {
+            assertFalse(channelXml(base().ttl(null)).contains("<ttl"));
         }
     }
 
