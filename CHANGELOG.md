@@ -134,11 +134,24 @@ no compatibility to preserve.
 
 ### Not added
 
-- Reading or parsing an existing feed. This library produces feeds; it does not consume
-  them. A prototype was measured: a CDATA section and escaped text are indistinguishable
-  once parsed, so reading and re-writing a feed would silently turn every CDATA element into
-  plain text, which defeats the reason this library exists. [Rome](http://rometools.github.io/rome/)
-  reads RSS well; this library is not trying to replace it there.
+- Reading or parsing an existing feed. This library produces feeds; it does not consume them.
+
+  The reason recorded here previously was that a CDATA section and escaped text cannot be told
+  apart once parsed, so reading and re-writing a feed would silently turn every CDATA element
+  into plain text. That reason no longer holds and the correction belongs on the record: it was
+  true of the annotation-driven implementation, whose databind layer sat on top of StAX and
+  collapsed the two into one kind of text. Reading through StAX directly, with coalescing
+  turned off, Woodstox reports a CDATA section as a distinct event from character data — the
+  same text, a different event type — which was measured. The JDK's own StAX implementation
+  does not, so the capability comes from Woodstox rather than from StAX itself.
+
+  So the obstacle is gone and the decision now rests on scope alone. A reader is not the mirror
+  image of a writer: this one is strict on purpose and refuses anything the specification does
+  not allow, while a reader has no control over its input and must be forgiving of feeds with a
+  misdeclared encoding, an undeclared entity, a date in one of a dozen shapes, or elements from
+  an older version of RSS. Those are opposite dispositions to hold in one library.
+  [Rome](http://rometools.github.io/rome/) reads RSS well and this release is not trying to
+  replace it there.
 
 ## 1.1 and earlier
 
