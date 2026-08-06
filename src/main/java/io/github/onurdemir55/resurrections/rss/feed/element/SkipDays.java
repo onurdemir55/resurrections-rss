@@ -13,23 +13,24 @@ import java.util.Set;
  * There can be at most seven, and repeating one says nothing extra, so duplicates are
  * rejected rather than silently emitted twice.
  *
- * @param day the days to skip
+ * @param days the days to skip
+ * @see SkipHours for why these checks are not shared with the hours
  */
-public record SkipDays(List<Day> day) {
+public record SkipDays(List<Day> days) {
 
     public SkipDays {
-        Objects.requireNonNull(day, "the day list cannot be null");
-        if (day.isEmpty()) {
+        Objects.requireNonNull(days, "the day list cannot be null");
+        if (days.isEmpty()) {
             throw new IllegalArgumentException("skipDays needs at least one day");
         }
         Set<Day> seen = new LinkedHashSet<>();
-        for (Day value : day) {
-            Objects.requireNonNull(value, "a day cannot be null");
-            if (!seen.add(value)) {
-                throw new IllegalArgumentException("day " + value.label() + " is listed twice");
+        for (Day day : days) {
+            Objects.requireNonNull(day, "a day cannot be null");
+            if (!seen.add(day)) {
+                throw new IllegalArgumentException("day " + day.label() + " is listed twice");
             }
         }
-        day = List.copyOf(day);
+        days = List.copyOf(days);
     }
 
     /**
@@ -37,6 +38,6 @@ public record SkipDays(List<Day> day) {
      * @return the element
      */
     public static SkipDays of(final Day... days) {
-        return new SkipDays(Arrays.asList(days));
+        return new SkipDays(Arrays.stream(days).toList());
     }
 }

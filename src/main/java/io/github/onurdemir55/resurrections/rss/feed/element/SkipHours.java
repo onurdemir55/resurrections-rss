@@ -13,31 +13,37 @@ import java.util.stream.IntStream;
  * Each hour is a number from 0 to 23 in GMT, where 0 is the hour beginning at midnight.
  * There can be at most 24 of them, and repeating one says nothing extra, so duplicates are
  * rejected rather than silently emitted twice.
+ * <p>
+ * The checks look much like the ones in {@link SkipDays} and were once shared with them. They
+ * were put back: the extracted version needed a function parameter to build one message, and it
+ * hid the {@code List.copyOf} far enough away that static analysis could no longer prove the
+ * list handed out is immutable. Ten lines of plain validation, read in the place they apply, are
+ * worth more than one abstraction over two callers.
  *
- * @param hour the hours to skip
+ * @param hours the hours to skip
  */
-public record SkipHours(List<Integer> hour) {
+public record SkipHours(List<Integer> hours) {
 
     /** The last hour of the day, and so the largest allowed value. */
     public static final int MAX_HOUR = 23;
 
     public SkipHours {
-        Objects.requireNonNull(hour, "the hour list cannot be null");
-        if (hour.isEmpty()) {
+        Objects.requireNonNull(hours, "the hour list cannot be null");
+        if (hours.isEmpty()) {
             throw new IllegalArgumentException("skipHours needs at least one hour");
         }
         Set<Integer> seen = new LinkedHashSet<>();
-        for (Integer value : hour) {
-            Objects.requireNonNull(value, "an hour cannot be null");
-            if (value < 0 || value > MAX_HOUR) {
+        for (Integer hour : hours) {
+            Objects.requireNonNull(hour, "an hour cannot be null");
+            if (hour < 0 || hour > MAX_HOUR) {
                 throw new IllegalArgumentException(
-                        "an hour must be between 0 and " + MAX_HOUR + ", was " + value);
+                        "an hour must be between 0 and " + MAX_HOUR + ", was " + hour);
             }
-            if (!seen.add(value)) {
-                throw new IllegalArgumentException("hour " + value + " is listed twice");
+            if (!seen.add(hour)) {
+                throw new IllegalArgumentException("hour " + hour + " is listed twice");
             }
         }
-        hour = List.copyOf(hour);
+        hours = List.copyOf(hours);
     }
 
     /**

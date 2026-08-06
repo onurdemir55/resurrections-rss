@@ -147,9 +147,9 @@ final class FeedCorpus {
         all.add(Map.entry("ttl", c -> c.ttl(60)));
         all.add(Map.entry("ttlZero", c -> c.ttl(0)));
         all.add(Map.entry("rating", c -> c.rating(new SimpleValue("(PICS-1.1)"))));
-        all.add(Map.entry("category", c -> c.category(Category.of("Tech"))));
-        all.add(Map.entry("categoryDomain", c -> c.category(Category.of("Tech", "Syndic8"))));
-        all.add(Map.entry("categoryCdata", c -> c.category(Category.cdata("<b>Tech</b>"))));
+        all.add(Map.entry("category", c -> c.categories(Category.of("Tech"))));
+        all.add(Map.entry("categoryDomain", c -> c.categories(Category.of("Tech", "Syndic8"))));
+        all.add(Map.entry("categoryCdata", c -> c.categories(Category.cdata("<b>Tech</b>"))));
         all.add(Map.entry("cloud",
                 c -> c.cloud(Cloud.of("rpc.example.com", 80, "/RPC2", "p", "xml-rpc"))));
         all.add(Map.entry("cloudPortZero",
@@ -197,8 +197,8 @@ final class FeedCorpus {
         all.add(Map.entry("comments", i -> i.comments(new SimpleValue("https://example.com/c"))));
         all.add(Map.entry("pubDate",
                 i -> i.pubDate(new SimpleValue("Wed, 05 Aug 2026 20:00:00 GMT"))));
-        all.add(Map.entry("category", i -> i.category(Category.of("Tech"))));
-        all.add(Map.entry("categoryDomain", i -> i.category(Category.of("Tech", "Syndic8"))));
+        all.add(Map.entry("category", i -> i.categories(Category.of("Tech"))));
+        all.add(Map.entry("categoryDomain", i -> i.categories(Category.of("Tech", "Syndic8"))));
         all.add(Map.entry("enclosure", i -> i.enclosure(
                 Enclosure.of("https://example.com/a.mp3", 1L, "audio/mpeg"))));
         all.add(Map.entry("enclosureZero", i -> i.enclosure(
@@ -248,7 +248,7 @@ final class FeedCorpus {
                 .items(Item.builder()
                         .title(new SimpleValue("t"))
                         .description(new CDATAValue("<p>x</p>"))
-                        .category(Category.cdata("<i>c</i>"), Category.of("plain"))
+                        .categories(Category.cdata("<i>c</i>"), Category.of("plain"))
                         .guid(Guid.cdata("<id>", false))
                         .source(Source.cdata("<origin>", "https://example.com/f.xml"))
                         .build())
@@ -263,12 +263,12 @@ final class FeedCorpus {
                 for (int i = 0; i < count; i++) {
                     categories[i] = Category.of("c" + i);
                 }
-                return c.category(categories);
+                return c.categories(categories);
             });
         }
-        emit.channel("chan_categories_sameText", c -> c.category(
+        emit.channel("chan_categories_sameText", c -> c.categories(
                 Category.of("dup", "d1"), Category.of("dup", "d2")));
-        emit.item("item_categories_many", i -> i.category(
+        emit.item("item_categories_many", i -> i.categories(
                 Category.of("a"), Category.of("b", "d"), Category.cdata("<c>")));
     }
 

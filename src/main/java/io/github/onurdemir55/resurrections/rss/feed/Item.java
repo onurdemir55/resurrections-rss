@@ -105,7 +105,7 @@ public final class Item {
     /**
      * @return the categories, never {@code null} and empty when none were set
      */
-    public List<Category> getCategory() {
+    public List<Category> getCategories() {
         return category;
     }
 
@@ -142,6 +142,21 @@ public final class Item {
      */
     public Source getSource() {
         return source;
+    }
+
+    /**
+     * A short description for a log line or a debugger, not the feed.
+     * <p>
+     * An item is identified by its title, or by its description when it has no title, since the
+     * specification allows either and requires one of them.
+     *
+     * @return whichever of the title and the description is present, and the link
+     */
+    @Override
+    public String toString() {
+        return "Item[" + (title != null ? "title=" + title : "description=" + description)
+                + ", link=" + link
+                + "]";
     }
 
     /**
@@ -210,20 +225,20 @@ public final class Item {
          * Categories for this item, emitted as one {@code <category>} element each, in the
          * order given. Repeating a value under different domains is allowed.
          *
-         * @param category the categories
+         * @param categories the categories
          */
-        public Builder category(final List<Category> category) {
-            this.category = category == null ? null : List.copyOf(category);
+        public Builder categories(final List<Category> categories) {
+            this.category = categories == null ? null : List.copyOf(categories);
             return this;
         }
 
         /**
-         * Convenience form of {@link #category(List)}.
+         * Convenience form of {@link #categories(List)}.
          *
-         * @param category the categories
+         * @param categories the categories
          */
-        public Builder category(final Category... category) {
-            this.category = List.of(category);
+        public Builder categories(final Category... categories) {
+            this.category = List.of(categories);
             return this;
         }
 

@@ -26,10 +26,10 @@ class BuilderNullListTest {
     @Test
     @DisplayName("a null category list leaves the element out of a channel")
     void channelCategory() {
-        Channel channel = channelBuilder().category((List<Category>) null).build();
+        Channel channel = channelBuilder().categories((List<Category>) null).build();
 
         assertAll(
-                () -> assertTrue(channel.getCategory().isEmpty()),
+                () -> assertTrue(channel.getCategories().isEmpty()),
                 () -> assertFalse(RssOutput.outputString(feed(channel)).contains("<category")));
     }
 
@@ -48,13 +48,13 @@ class BuilderNullListTest {
     void itemCategory() {
         Item item = Item.builder()
                 .title(new SimpleValue("an item"))
-                .category((List<Category>) null)
+                .categories((List<Category>) null)
                 .build();
 
         Channel channel = channelBuilder().items(item).build();
 
         assertAll(
-                () -> assertTrue(item.getCategory().isEmpty()),
+                () -> assertTrue(item.getCategories().isEmpty()),
                 () -> assertFalse(RssOutput.outputString(feed(channel)).contains("<category")),
                 () -> assertTrue(RssOutput.outputString(feed(channel)).contains("<item>")));
     }

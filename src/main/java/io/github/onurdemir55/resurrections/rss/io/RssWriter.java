@@ -124,7 +124,7 @@ final class RssWriter {
         value("webMaster", channel.getWebMaster());
         value("pubDate", channel.getPubDate());
         value("lastBuildDate", channel.getLastBuildDate());
-        categories(channel.getCategory());
+        categories(channel.getCategories());
         value("generator", channel.getGenerator());
         value("docs", channel.getDocs());
         cloud(channel.getCloud());
@@ -148,7 +148,7 @@ final class RssWriter {
             value("link", item.getLink());
             value("description", item.getDescription());
             value("author", item.getAuthor());
-            categories(item.getCategory());
+            categories(item.getCategories());
             value("comments", item.getComments());
             enclosure(item.getEnclosure());
             guid(item.getGuid());
@@ -262,7 +262,7 @@ final class RssWriter {
             return;
         }
         open("skipHours");
-        for (Integer hour : skipHours.hour()) {
+        for (Integer hour : skipHours.hours()) {
             number("hour", hour);
         }
         close();
@@ -273,7 +273,7 @@ final class RssWriter {
             return;
         }
         open("skipDays");
-        for (Day day : skipDays.day()) {
+        for (Day day : skipDays.days()) {
             text("day", day.label());
         }
         close();

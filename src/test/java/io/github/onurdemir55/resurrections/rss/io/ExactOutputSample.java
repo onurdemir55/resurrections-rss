@@ -37,7 +37,7 @@ final class ExactOutputSample {
                 .link(new SimpleValue("https://example.com/items/1"))
                 .description(new CDATAValue("<p>Body with a terminator ]]> inside.</p>"))
                 .author(new SimpleValue("author@example.com (An Author)"))
-                .category(Category.of("Newspapers"),
+                .categories(Category.of("Newspapers"),
                         Category.of("MSFT", "http://www.fool.com/cusips"))
                 .comments(new SimpleValue("https://example.com/items/1/comments"))
                 .enclosure(Enclosure.of("https://example.com/media/e.mp3", 12216320L, "audio/mpeg"))
@@ -59,7 +59,7 @@ final class ExactOutputSample {
                 .webMaster(new SimpleValue("webmaster@example.com (A Webmaster)"))
                 .pubDate(new SimpleValue("Wed, 05 Aug 2026 20:00:00 GMT"))
                 .lastBuildDate(new SimpleValue("Wed, 05 Aug 2026 20:00:00 GMT"))
-                .category(Category.of("Technology"), Category.of("1765", "Syndic8"))
+                .categories(Category.of("Technology"), Category.of("1765", "Syndic8"))
                 .generator(new SimpleValue("resurrections-rss"))
                 .docs(new SimpleValue("https://www.rssboard.org/rss-specification"))
                 .cloud(Cloud.of("rpc.example.com", 80, "/RPC2", "myCloud.rssPleaseNotify",

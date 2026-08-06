@@ -33,12 +33,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class WriterCoversModelTest {
 
     /**
-     * Getters whose element is not simply the property name: a list repeats one element, and
-     * some elements are named differently from the accessor that returns them.
+     * Getters whose element is not simply the property name. A repeatable element is plural in
+     * Java and singular in the feed - a {@code List<Category>} is written as several
+     * {@code <category>} elements, which the specification names in the singular - and
+     * {@code atom:link} is named differently from the accessor that returns it.
      */
     private static final Map<String, String> ELEMENT_NAMES = Map.of(
             "getItems", "<item",
-            "getCategory", "<category",
+            "getCategories", "<category",
             "getAtomLink", "<atom:link");
 
     /** Not an element in its own right; checked through the names it was registered under. */

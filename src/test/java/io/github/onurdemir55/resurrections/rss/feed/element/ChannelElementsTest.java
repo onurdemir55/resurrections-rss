@@ -56,7 +56,7 @@ class ChannelElementsTest {
         @DisplayName("a channel category can link the feed to a cataloguing system")
         void categoryWithDomain() {
             String xml = channelXml(base()
-                    .category(Category.of("Newspapers"), Category.of("1765", "Syndic8")));
+                    .categories(Category.of("Newspapers"), Category.of("1765", "Syndic8")));
 
             assertAll(
                     () -> assertTrue(xml.contains("<category>Newspapers</category>"), () -> xml),
@@ -295,7 +295,7 @@ class ChannelElementsTest {
                 .webMaster(new SimpleValue("master@example.com"))
                 .pubDate(new SimpleValue("Sat, 07 Sep 2002 00:00:01 GMT"))
                 .lastBuildDate(new SimpleValue("Sat, 07 Sep 2002 09:42:31 GMT"))
-                .category(Category.of("Newspapers"))
+                .categories(Category.of("Newspapers"))
                 .generator(new SimpleValue("resurrections-rss"))
                 .docs(new SimpleValue("https://www.rssboard.org/rss-specification"))
                 .cloud(Cloud.of("rpc.sys.com", 80, "/RPC2", "p", "xml-rpc"))
@@ -328,10 +328,10 @@ class ChannelElementsTest {
                         .build();
 
         String fromVarargs = channelXml(base()
-                .category(Category.of("a"), Category.of("b"))
+                .categories(Category.of("a"), Category.of("b"))
                 .items(item));
         String fromList = channelXml(base()
-                .category(java.util.List.of(Category.of("a"), Category.of("b")))
+                .categories(java.util.List.of(Category.of("a"), Category.of("b")))
                 .items(java.util.List.of(item)));
 
         assertEquals(fromVarargs, fromList);

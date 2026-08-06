@@ -158,6 +158,17 @@ no compatibility to preserve.
   makes correcting them again possible without breaking a caller. A modular consumer was built
   against the published jar to confirm the descriptor does not require Woodstox on its compile
   path, only at runtime, which is what the POM says.
+- **The repeatable elements are named in the plural.** `getCategory()` returned a
+  `List<Category>`, and the builder setter was `category(...)` while its neighbour was already
+  `items(...)`. Both are now `categories`, and the record components of `skipHours` and
+  `skipDays` are `hours` and `days`. The XML stays as the specification names it, singular and
+  repeated; only the Java side changed, and this was the last moment it could.
+- **`Rss`, `Channel` and `Item` have a `toString`.** The fourteen element records get one from
+  being records; these three had none, so printing a channel gave `Channel@1b6d3586`. Each now
+  gives a line that identifies it - a channel by its required elements and its item count, an
+  item by whichever of its title and description is present. Not the feed: that is what
+  `RssOutput` is for, and a `toString` that returned a document would be both expensive and
+  easy to misuse.
 - **The collection getters return an empty list rather than `null`.** `getCategory()` and
   `getItems()` used to hand back `null` when nothing had been set, so every caller inspecting a
   feed had to guard the read. Passing `null` to the setters still means "nothing to add"; it is

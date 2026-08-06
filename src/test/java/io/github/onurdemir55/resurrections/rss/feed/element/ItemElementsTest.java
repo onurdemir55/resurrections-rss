@@ -141,7 +141,7 @@ class ItemElementsTest {
         void specificationExamples() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
-                    .category(
+                    .categories(
                             Category.of("Grateful Dead"),
                             Category.of("MSFT", "http://www.fool.com/cusips"))
                     .build());
@@ -158,7 +158,7 @@ class ItemElementsTest {
         void sameValueDifferentDomains() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
-                    .category(Category.of("X", "urn:a"), Category.of("X", "urn:b"))
+                    .categories(Category.of("X", "urn:a"), Category.of("X", "urn:b"))
                     .build());
 
             assertAll(
@@ -222,7 +222,7 @@ class ItemElementsTest {
         void categoryWithDomainAndCdata() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
-                    .category(Category.cdata("Top/News & <b>Sports</b>", "urn:taxonomy"))
+                    .categories(Category.cdata("Top/News & <b>Sports</b>", "urn:taxonomy"))
                     .build());
 
             assertTrue(xml.contains(
@@ -259,7 +259,7 @@ class ItemElementsTest {
         void cdataWithoutAttribute() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
-                    .category(Category.cdata("Top/News & <b>Sports</b>"))
+                    .categories(Category.cdata("Top/News & <b>Sports</b>"))
                     .guid(Guid.cdata("urn:id:a&b"))
                     .build());
 
@@ -274,7 +274,7 @@ class ItemElementsTest {
         void plainFormStillEscapes() {
             String xml = itemXml(Item.builder()
                     .title(new SimpleValue("t"))
-                    .category(Category.of("a & b"))
+                    .categories(Category.of("a & b"))
                     .build());
 
             assertAll(
@@ -291,7 +291,7 @@ class ItemElementsTest {
                 .link(new SimpleValue("http://example.com/item"))
                 .description(new CDATAValue("<p>body</p>"))
                 .author(new SimpleValue("a@example.com"))
-                .category(Category.of("cat"))
+                .categories(Category.of("cat"))
                 .comments(new SimpleValue("http://example.com/comments"))
                 .enclosure(Enclosure.of("http://example.com/a.mp3", 1234L, "audio/mpeg"))
                 .guid(Guid.of("urn:id:1", false))

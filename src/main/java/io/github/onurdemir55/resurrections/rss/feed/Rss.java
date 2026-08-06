@@ -59,6 +59,26 @@ public final class Rss {
     }
 
     /**
+     * A short description for a log line or a debugger, not the feed. Effective Java asks every
+     * class to have one, and the alternative here was {@code Rss@1b6d3586}, which tells the
+     * reader nothing about which feed they are looking at.
+     * <p>
+     * Deliberately not the XML. A {@code toString} that returned the document would be
+     * expensive, would invite being used as if it were {@link
+     * io.github.onurdemir55.resurrections.rss.io.RssOutput#outputString(Rss)}, and would be
+     * wrong for the one thing it is for, which is fitting on one line.
+     *
+     * @return the version, the channel title and how many items it carries
+     */
+    @Override
+    public String toString() {
+        return "Rss[version=" + version
+                + ", channel=" + channel
+                + ", namespaces=" + namespaces.keySet()
+                + "]";
+    }
+
+    /**
      * @return a new builder for {@code <rss>}
      */
     public static Builder builder() {

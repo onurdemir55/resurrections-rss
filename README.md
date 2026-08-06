@@ -64,7 +64,7 @@ Create a feed:
                         .title(new SimpleValue("sample title"))
                         .link(new CDATAValue("https://www.google.com/"))
                         .description(new CDATAValue("sample description"))
-                        .category(Category.of("category-1"), Category.of("category-2"))
+                        .categories(Category.of("category-1"), Category.of("category-2"))
                         .pubDate(new SimpleValue(published))
                         .build();
 

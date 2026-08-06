@@ -184,7 +184,7 @@ class RssOutputTest {
                     .title(new SimpleValue("t"))
                     .link(new SimpleValue("https://example.com/"))
                     .description(new SimpleValue("d"))
-                    .category(Category.of("news"))
+                    .categories(Category.of("news"))
                     .pubDate(new SimpleValue("Sat, 07 Sep 2002 00:00:01 GMT"))
                     .build();
 
@@ -211,7 +211,7 @@ class RssOutputTest {
         void categoriesRepeatTheElementInOrder() {
             Item item = Item.builder()
                     .title(new SimpleValue("t"))
-                    .category(Category.of("first"), Category.of("second"))
+                    .categories(Category.of("first"), Category.of("second"))
                     .build();
 
             String xml = RssOutput.outputString(feedWithItems(List.of(item)));
@@ -227,11 +227,11 @@ class RssOutputTest {
         void categoryOverloadsAgree() {
             Item fromVarargs = Item.builder()
                     .title(new SimpleValue("t"))
-                    .category(Category.of("a"), Category.of("b", "urn:taxonomy"))
+                    .categories(Category.of("a"), Category.of("b", "urn:taxonomy"))
                     .build();
             Item fromList = Item.builder()
                     .title(new SimpleValue("t"))
-                    .category(List.of(Category.of("a"), Category.of("b", "urn:taxonomy")))
+                    .categories(List.of(Category.of("a"), Category.of("b", "urn:taxonomy")))
                     .build();
 
             assertEquals(
@@ -244,7 +244,7 @@ class RssOutputTest {
         void repeatedCategoryTextIsKept() {
             Item item = Item.builder()
                     .title(new SimpleValue("t"))
-                    .category(Category.of("same"), Category.of("same"))
+                    .categories(Category.of("same"), Category.of("same"))
                     .build();
 
             String xml = RssOutput.outputString(feedWithItems(List.of(item)));

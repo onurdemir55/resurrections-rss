@@ -200,7 +200,7 @@ public final class Channel {
     /**
      * @return the categories, never {@code null} and empty when none were set
      */
-    public List<Category> getCategory() {
+    public List<Category> getCategories() {
         return category;
     }
 
@@ -272,6 +272,23 @@ public final class Channel {
      */
     public List<Item> getItems() {
         return items;
+    }
+
+    /**
+     * A short description for a log line or a debugger, not the feed.
+     * <p>
+     * The title alone would be ambiguous between two feeds built from the same source, and all
+     * nineteen elements would not fit on a line, so this is the three the specification requires
+     * plus the size of the thing most likely to be wrong.
+     *
+     * @return the required elements and the number of items
+     */
+    @Override
+    public String toString() {
+        return "Channel[title=" + title
+                + ", link=" + link
+                + ", items=" + items.size()
+                + "]";
     }
 
     /**
@@ -429,20 +446,20 @@ public final class Channel {
         /**
          * Categories the channel belongs to.
          *
-         * @param category the categories
+         * @param categories the categories
          */
-        public Builder category(final List<Category> category) {
-            this.category = category == null ? null : List.copyOf(category);
+        public Builder categories(final List<Category> categories) {
+            this.category = categories == null ? null : List.copyOf(categories);
             return this;
         }
 
         /**
-         * Convenience form of {@link #category(List)}.
+         * Convenience form of {@link #categories(List)}.
          *
-         * @param category the categories
+         * @param categories the categories
          */
-        public Builder category(final Category... category) {
-            this.category = List.of(category);
+        public Builder categories(final Category... categories) {
+            this.category = List.of(categories);
             return this;
         }
 
