@@ -6,6 +6,21 @@ This release modernizes the toolchain and completes RSS 2.0 coverage. Most of th
 below are breaking; nothing was ever published under `io.github.onurdemir55`, so there was
 no compatibility to preserve.
 
+### Licence
+
+- **Apache License 2.0, replacing MIT.** Both are permissive and both are on every corporate
+  allowlist, so this is not about permission. Apache 2.0 says three things MIT is silent on, and
+  all three matter more for a library other people depend on than for an application: §3 grants
+  an express patent licence to whoever uses it, §5 states that a contribution arrives under the
+  same terms rather than leaving it to implication, and §6 is explicit about trademarks. It is
+  also what the Java ecosystem mostly uses, including this library's one dependency.
+
+  Done now because nothing has been published under this coordinate and the change costs three
+  edits; after a release it would be a change of terms for existing users. `LICENSE` is the
+  verbatim licence text and `NOTICE` carries the copyright, which is where Apache 2.0 expects it
+  when source files have no per-file header. No header was added to the source: the licence does
+  not ask for one, and 24 files of boilerplate would earn nothing.
+
 ### Toolchain
 
 - Minimum Java version raised to 17.

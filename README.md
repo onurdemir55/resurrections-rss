@@ -1,6 +1,6 @@
 # resurrections - rss
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-brightgreen.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.onurdemir55/resurrections-rss.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/io.github.onurdemir55/resurrections-rss)
 [![Java 17](https://img.shields.io/badge/Java-17%2B-blue.svg)](https://openjdk.org/projects/jdk/17/)
 
@@ -69,7 +69,7 @@ classpath — no JSON library, no annotation processor, nothing to configure.
 * [x] Immutable feed model with builders, and a getter for every element so a feed you built
   can be inspected afterwards.
 * [x] Easy and Peasy development
-* [x] MIT licensed
+* [x] Apache 2.0 licensed
 
 #### Overview Info
 * [orelly](https://www.oreilly.com/library/view/developing-feeds-with/0596008813/ch04s02.html)

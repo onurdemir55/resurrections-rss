@@ -43,6 +43,16 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 
+// Apache 2.0 obliges whoever redistributes the jar to carry the licence with it, which is far
+// easier if the jar already contains it. Nothing obliges the licensor to do this; it is here so
+// that a consumer who repackages does not have to remember.
+tasks.withType(Jar).configureEach {
+    from(rootDir) {
+        include 'LICENSE', 'NOTICE'
+        into 'META-INF'
+    }
+}
+
 tasks.withType(Javadoc).configureEach {
     options.encoding = 'UTF-8'
     // Report real javadoc errors (broken syntax and links) but do not demand
@@ -98,8 +108,8 @@ publishing {
 
                 licenses {
                     license {
-                        name = 'MIT License'
-                        url = 'https://opensource.org/licenses/MIT'
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
                         distribution = 'repo'
                     }
                 }
