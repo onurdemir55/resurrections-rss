@@ -1,15 +1,19 @@
 # resurrections - rss
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.onurdemir55/resurrections-rss.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/io.github.onurdemir55/resurrections-rss)
+[![Java 17](https://img.shields.io/badge/Java-17%2B-blue.svg)](https://openjdk.org/projects/jdk/17/)
 
 Exactly yes the project name refers [The Matrix Resurrections](https://www.youtube.com/watch?v=9ix7TUGVYIo). _Oldies but Goldies. Back to
 the RSS._
 
 ######
 
-Rss is an acronym for Really Simple Syndication. Resurrections-rss is a very easy-peasy Java project for creating
-RSS-2.0 feeds. This project code contains required mandatory and some optional rss elements. You are free to extend
-this. One more thing and biggest advantages is that Support CDATA and Plain Text.
+RSS is an acronym for Really Simple Syndication, and resurrections-rss is an easy-peasy Java
+library for creating RSS 2.0 feeds. It covers every element the specification describes — all
+19 of `<channel>` and all 10 of `<item>` — and anything it does not describe can be added
+through a namespace. Its biggest advantage is the one it was written for: every element can be
+plain text or a CDATA section, and you choose which.
 
 This is a producer, not a client: it builds and writes feeds, and does not parse an existing one. If you need to
 consume RSS, [Rome](http://rometools.github.io/rome/) does that well.
@@ -23,19 +27,48 @@ Just CDATA. Sorry but Rome not support that :(
 If your output content is HTML, CDATA output more readable. (Encoded format is not preferable). Some News Editors,
 checks the Rss News output manually, selects and decides _item_. So some customers can expect to see CDATA output.
 
+### Installation
+
+Gradle:
+
+```groovy
+dependencies {
+    implementation 'io.github.onurdemir55:resurrections-rss:2.0'
+}
+```
+
+Maven:
+
+```xml
+<dependency>
+    <groupId>io.github.onurdemir55</groupId>
+    <artifactId>resurrections-rss</artifactId>
+    <version>2.0</version>
+</dependency>
+```
+
+That is the whole dependency list. [Woodstox](https://github.com/FasterXML/woodstox) comes with
+it at runtime, because it is what writes the XML, but nothing extra reaches your compile
+classpath — no JSON library, no annotation processor, nothing to configure.
+
 ### Features
 
 * [x] Requires Java 17 or later.
+* [x] Every element the specification describes: all 19 of `<channel>`, all 10 of `<item>`.
 * [x] Elements support Plain Text and CDATA format. You can set your encoded data or you can set them as CDATA.
+* [x] Anything the specification does not describe can be added through a namespace, plain or
+  CDATA like everything else.
+* [x] The rules the specification states are checked when you build the feed, not discovered
+  later by a reader that refuses it. There is no lenient mode.
 * [x] The feed is written element by element through [StAX](https://docs.oracle.com/javase/tutorial/jaxp/stax/index.html),
   so what XML comes out is decided in one readable place rather than inferred from annotations.
 * [x] One dependency: [woodstox](https://github.com/FasterXML/woodstox), the StAX implementation.
   No annotation processor, no IDE plugin, no build-time magic, no reflection.
 * [x] A real module descriptor, named `io.github.onurdemir55.resurrections.rss`. Four packages
   are exported; the validation helpers are not, so they stay out of the API you depend on.
-* [x] Immutable feed model with builders
+* [x] Immutable feed model with builders, and a getter for every element so a feed you built
+  can be inspected afterwards.
 * [x] Easy and Peasy development
-* [x] Simple and easy to extend for optional elements if needed. Just add fields to entity classes.
 * [x] MIT licensed
 
 #### Overview Info
@@ -104,8 +137,10 @@ Create a feed:
 </rss>
 ```
 
-This exact output is asserted by `ReadmeExampleTest`, so the example cannot drift from
-what the library actually produces.
+`ReadmeExampleTest` compares this block against what the code produces, so the example cannot
+drift from the library. `ExactOutputTest` goes further and pins two whole documents byte for
+byte, indentation included, because the indentation is written by hand here rather than supplied
+by a library.
 
 ---
 
@@ -175,8 +210,9 @@ this block against the real output to keep it that way. `ExactOutputTest` pins t
 documents byte for byte, indentation included, since that is written by hand here rather than
 supplied by a library.
 
-`Rss`, `Channel` and `Item` also expose a getter for every element, so a feed you built can
-be inspected afterwards. Reading an existing feed, however, is out of scope; see
+`Rss`, `Channel` and `Item` expose a getter for every element, so a feed you built can be
+inspected afterwards, and a `toString` that fits on one line for when it is not what you
+expected. Reading an existing feed, however, is out of scope; see
 [Why this project was needed](#why-this-project-was-needed-) above.
 
 ---
