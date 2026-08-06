@@ -6,6 +6,7 @@ import io.github.onurdemir55.resurrections.rss.feed.holder.CDATAValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.PlainValue;
 import io.github.onurdemir55.resurrections.rss.feed.holder.Value;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 
@@ -79,6 +80,76 @@ class CdataFidelityTest {
     void plainTextUnchanged() {
         assertEquals("a\r\nb", readBack(new PlainValue("a\r\nb")));
         assertEquals("a\rb", readBack(new PlainValue("a\rb")));
+    }
+
+    /**
+     * Text where the whitespace is the content: an aligned table, a {@code <pre>} block, an
+     * indented listing. A feed of market data or release notes carries these, and if a column
+     * moves by one space the value is wrong on the page even though nothing threw.
+     * <p>
+     * Both forms are checked. The plain form has to escape and unescape without touching the
+     * layout, and the CDATA form has to leave it alone entirely, including the line endings -
+     * which is the case that used to fail.
+     */
+    @Nested
+    @DisplayName("Text whose whitespace carries meaning")
+    class Preformatted {
+
+        private static final String TABLE = """
+                Hisse    Fiyat    Değişim
+                -------  -------  -------
+                ODH       124,50    +1,8%
+                XYZ        88,20    -0,4%
+                """;
+
+        @Test
+        @DisplayName("an aligned table survives, in both forms")
+        void alignedTable() {
+            assertEquals(TABLE, readBack(new CDATAValue(TABLE)));
+            assertEquals(TABLE, readBack(new PlainValue(TABLE)));
+        }
+
+        @Test
+        @DisplayName("the same table written on Windows survives too")
+        void alignedTableWithCrLf() {
+            String windows = TABLE.replace("\n", "\r\n");
+
+            assertEquals(windows, readBack(new CDATAValue(windows)));
+            assertEquals(windows, readBack(new PlainValue(windows)));
+        }
+
+        @Test
+        @DisplayName("tabs are not turned into spaces, or into anything else")
+        void tabs() {
+            String tabbed = "Hisse\tFiyat\tDeğişim\nODH\t124,50\t+1,8%\n";
+
+            assertEquals(tabbed, readBack(new CDATAValue(tabbed)));
+            assertEquals(tabbed, readBack(new PlainValue(tabbed)));
+        }
+
+        @Test
+        @DisplayName("a pre block keeps both its tags and its layout")
+        void preBlock() {
+            String pre = "<pre>\n" + TABLE + "</pre>";
+
+            assertEquals(pre, readBack(new CDATAValue(pre)));
+        }
+
+        @Test
+        @DisplayName("leading and trailing whitespace is not trimmed away")
+        void edgesAreKept() {
+            assertEquals("    indented", readBack(new CDATAValue("    indented")));
+            assertEquals("trailing    ", readBack(new CDATAValue("trailing    ")));
+            assertEquals("\nstarts on line two", readBack(new CDATAValue("\nstarts on line two")));
+            assertEquals("     ", readBack(new CDATAValue("     ")));
+        }
+
+        @Test
+        @DisplayName("runs of spaces are not collapsed, which is what alignment depends on")
+        void runsOfSpaces() {
+            assertEquals("a     b     c", readBack(new CDATAValue("a     b     c")));
+            assertEquals("a     b     c", readBack(new PlainValue("a     b     c")));
+        }
     }
 
     /** Text with no carriage return must still be written as one unbroken section. */

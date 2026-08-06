@@ -99,6 +99,12 @@ Neither is more correct than the other. Plain text is right when the value *is* 
 reader that renders the escaped ampersand shows the character you meant. CDATA is right when the
 value is markup you want a reader to render, which is the case this library was written for.
 
+Either way the text arrives as you wrote it. Runs of spaces are not collapsed, tabs stay tabs,
+leading and trailing whitespace is kept, and a carriage return survives even inside a CDATA
+section, where nothing can be escaped — so an aligned table, a `<pre>` block or an indented
+listing comes out of a reader with its columns still lined up. The indentation you see in the
+XML below is between elements, never inside one.
+
 ---
 
 Create a feed. The title is plain text and the description is markup, which is the choice this
