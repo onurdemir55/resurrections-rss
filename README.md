@@ -244,6 +244,26 @@ expected. Reading an existing feed, however, is out of scope; see
 
 ---
 
+### Serving it over HTTP
+
+Almost every feed ends up behind an HTTP endpoint, and two headers decide whether a reader
+handles it or a browser downloads it as a file:
+
+| Header | Value | Why |
+|---|---|---|
+| `Content-Type` | `application/rss+xml; charset=UTF-8` | Without it a framework may send `text/plain`, and a browser then shows the markup instead of subscribing. The media type is also available as `AtomLink.RSS_MEDIA_TYPE`, since `atom:link` needs the same string. |
+| `Last-Modified` | when the feed last changed | Readers poll in minutes. Answering `304 Not Modified` to a conditional request costs nothing to send and saves almost all of the bandwidth. |
+
+The charset is not optional. The document declares `UTF-8` in its own prolog, so a header that
+says something else, or says nothing and lets the framework guess, leaves a reader with two
+answers and no way to choose. That is where non-ASCII titles turn into question marks.
+
+For a large feed prefer `output(rss, outputStream)` over `outputString`: it writes straight to
+the response and never holds the whole document in memory. The stream is flushed and left open,
+which is what a servlet container expects.
+
+---
+
 ### Validation
 
 The rules the specification states are enforced when you build, not discovered later by a
