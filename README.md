@@ -76,7 +76,7 @@ classpath — no JSON library, no annotation processor, nothing to configure.
 * [x] Apache 2.0 licensed
 
 #### Overview Info
-* [orelly](https://www.oreilly.com/library/view/developing-feeds-with/0596008813/ch04s02.html)
+* [O'Reilly](https://www.oreilly.com/library/view/developing-feeds-with/0596008813/ch04s02.html)
 * [w3](https://validator.w3.org/feed/docs/rss2.html)
 * [RSS 2.0 Specification](https://www.rssboard.org/rss-specification)
 
