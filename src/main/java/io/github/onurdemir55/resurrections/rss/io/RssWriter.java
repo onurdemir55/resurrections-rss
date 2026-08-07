@@ -51,6 +51,9 @@ final class RssWriter {
     /** Broken out of a CDATA section, because XML normalizes it away otherwise. */
     private static final char CARRIAGE_RETURN = '\r';
 
+    /** {@code String.valueOf(CARRIAGE_RETURN)}, cached: {@code char} has no such cache of its own. */
+    private static final String CARRIAGE_RETURN_STRING = String.valueOf(CARRIAGE_RETURN);
+
     private final XMLStreamWriter out;
     private int depth;
 
@@ -338,7 +341,7 @@ final class RssWriter {
                 if (i > start) {
                     out.writeCData(text.substring(start, i));
                 }
-                out.writeCharacters(String.valueOf(CARRIAGE_RETURN));
+                out.writeCharacters(CARRIAGE_RETURN_STRING);
                 start = i + 1;
             }
         }

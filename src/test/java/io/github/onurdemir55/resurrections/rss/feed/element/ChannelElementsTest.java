@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -154,6 +155,20 @@ class ChannelElementsTest {
                             () -> Cloud.of("rpc.sys.com", 80, "/RPC2", null, "xml-rpc")),
                     () -> assertThrows(NullPointerException.class,
                             () -> Cloud.of("rpc.sys.com", 80, "/RPC2", "p", null)));
+        }
+
+        @Test
+        @DisplayName("the port is a TCP port, so it is between 0 and 65535")
+        void portRange() {
+            assertAll(
+                    () -> assertThrows(IllegalArgumentException.class,
+                            () -> Cloud.of("rpc.sys.com", -1, "/RPC2", "p", "xml-rpc")),
+                    () -> assertThrows(IllegalArgumentException.class,
+                            () -> Cloud.of("rpc.sys.com", Cloud.MAX_PORT + 1, "/RPC2", "p", "xml-rpc")),
+                    () -> assertDoesNotThrow(
+                            () -> Cloud.of("rpc.sys.com", 0, "/RPC2", "p", "xml-rpc")),
+                    () -> assertDoesNotThrow(
+                            () -> Cloud.of("rpc.sys.com", Cloud.MAX_PORT, "/RPC2", "p", "xml-rpc")));
         }
     }
 
